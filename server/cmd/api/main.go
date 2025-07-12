@@ -2,8 +2,7 @@ package main
 
 import (
 	"fmt"
-	"errors"
-	//"encoding/json"	
+	"encoding/json"	
 )
 
 type Project struct {
@@ -22,7 +21,4 @@ type Technology struct {
 func main() {
 	const salve string = "salve"
 	fmt.Println("Server Running on 3333!")
-
-	var result, remainder, error int = returnTwoTimes(10, 2)
-	fmt.Printf("The result: %v, and the remainder: %v", result, remainder)
 }
