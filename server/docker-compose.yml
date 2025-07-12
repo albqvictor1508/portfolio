@@ -1,0 +1,12 @@
+name: portfolio-api-db
+
+services:
+  pg:
+    ports:
+      - "6002:5432"
+    image: postgres
+    env_file:
+      - .env
+
+# Colocar volume e pasta com sql
+
