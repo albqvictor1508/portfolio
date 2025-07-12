@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"encoding/json"	
+	"errors"
+	//"encoding/json"	
 )
 
 type Project struct {
@@ -19,12 +20,21 @@ type Technology struct {
 }
 
 func returnTwoTimes(number1 int, number2 int) (int, int) {
-	return number1 / number2, number1 % number2
+	var error error
+	if(number2 == 0) {
+		error = errors.New("Cannot divide by zero")
+		return 0,0,error
+	}
+	return number1 / number2, number1 % number2, error
 }
-
-var result, remainder int = returnTwoTimes(10, 2)
 
 func main() {
 	const salve string = "salve"
 	fmt.Println("Server Running on 3333!")
+
+	var result, remainder, error int = returnTwoTimes(10, 2)
+	if(error != nil) {
+		fmt.Println(error.Error())
+	}
+	fmt.Printf("The result: %v, and the remainder: %v", result, remainder)
 }
