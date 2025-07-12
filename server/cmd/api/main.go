@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"encoding/json"
+	"encoding/json"	
 )
 
 type Project struct {
@@ -19,4 +19,6 @@ type Technology struct {
 }
 
 func main() {
+	const salve string = "salve"
+	fmt.Println("Server Running on 3333!")
 }
