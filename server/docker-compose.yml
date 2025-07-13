@@ -3,13 +3,12 @@ name: portfolio
 services:
   postgres:
     image: postgres:13-alpine
-    restart: always
     environment:
       - POSTGRES_USER=albqvxc
       - POSTGRES_PASSWORD=lexsa1508
       - POSTGRES_DB=portfolio
     ports:
-      - '5432:5432'
+      - '6005:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
