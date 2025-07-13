@@ -10,7 +10,7 @@ import (
 
 func main() {
 	log.SetReporterCaller(true)
-	var r *chi.Mux := chi.NewRouter()
+	var r *chi.Mux = chi.NewRouter()
 	handlers.Handler(r)
 	r.Use(middleware.Logger)
 
