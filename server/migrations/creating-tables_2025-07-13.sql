@@ -10,20 +10,13 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Tabela para categorizar os projetos (Ex: "Back-end", "Front-end", "Mobile").
 CREATE TABLE categories(
-  -- SERIAL é o tipo do PostgreSQL para um inteiro que se auto-incrementa (como AUTO_INCREMENT).
   id SERIAL PRIMARY KEY,
-  -- UNIQUE garante que não haverá duas categorias com o mesmo nome.
   name VARCHAR(50) UNIQUE NOT NULL
 );
 
--- Tabela principal para os seus projetos.
 CREATE TABLE projects(
-  -- Usando UUID como chave primária, como você mesmo sugeriu.
-  -- `gen_random_uuid()` é a função do PostgreSQL para gerar um UUID.
-  -- Isso é ótimo para expor o ID em URLs sem revelar a contagem de projetos.
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+ id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   category_id INT,
   name VARCHAR(100) UNIQUE NOT NULL,
   -- TEXT é mais apropriado para descrições longas do que VARCHAR.
@@ -59,11 +52,7 @@ CREATE TABLE technologies(
   name VARCHAR(50) UNIQUE NOT NULL
 );
 
--- Esta é uma "tabela de junção" (ou tabela "pivot").
--- A função dela é conectar as tabelas `projects` e `technologies`,
--- criando uma relação de "Muitos-para-Muitos" (N-N).
--- Um projeto pode ter várias tecnologias, e uma tecnologia pode estar em vários projetos.
-CREATE TABLE project_technologies(
+REATE TABLE project_technologies(
   project_id UUID NOT NULL,
   technology_id INT NOT NULL,
 
