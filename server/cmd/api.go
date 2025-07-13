@@ -19,10 +19,24 @@ type Project struct {
 
 type Technologies struct {
 	id int64
-	projectId int64
-	categoryId int64
 	name string
 	createdAt time.Time
 	updatedAt time.Time
 }
 
+type ProjectTechnologies struct {
+	id int64
+	createdAt time.Time
+	updatedAt time.Time
+	projectId int64
+}
+
+type Categories struct {
+	id int64
+	name string
+}
+
+type Error struct {
+	code int
+	message string
+}
