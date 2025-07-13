@@ -1,24 +1,22 @@
 package main
 
 import (
-	"fmt"
-	"encoding/json"	
+	"log"
+	"net/http"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 )
 
-type Project struct {
-	ID int64 `json:"id"`
-	GithubUrl string `json:"github_url"`
-	DemoUrl string `json:"demo_url"`
-	Description string `json:"description"`
-}
-
-type Technology struct {
-	ID int64 `json:"id"`
-	ProjectId int64 `json:"project_id"`
-	Name string `json:"name"`
-}
-
 func main() {
-	const salve string = "salve"
-	fmt.Println("Server Running on 3333!")
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+	
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("Olá, Mundo!"))
+	})
+
+	log.Println("Servidor iniciando na porta :8080")
+	if err := http.ListenAndServe(":8080", r); err != nil {
+		log.Fatalf("Erro ao iniciar o servidor: %v", err)
+	}
 }

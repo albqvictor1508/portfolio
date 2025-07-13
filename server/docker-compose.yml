@@ -1,12 +1,17 @@
-name: portfolio-api-db
+name: portfolio
 
 services:
-  pg:
+  postgres:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=albqvxc
+      - POSTGRES_PASSWORD=lexsa1508
+      - POSTGRES_DB=portfolio
     ports:
-      - "6002:5432"
-    image: postgres
-    env_file:
-      - .env
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
-# Colocar volume e pasta com sql
-
+volumes:
+  postgres_data:
