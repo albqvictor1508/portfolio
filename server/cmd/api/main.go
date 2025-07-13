@@ -3,8 +3,7 @@ package main
 import (
 	log "github.com/sirupsen/logrus"
 	"net/http"
-	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/chi"
 	"github.com/portfolio-api/server/internal/handlers"
 )
 
