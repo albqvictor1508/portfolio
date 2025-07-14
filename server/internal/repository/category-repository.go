@@ -1,6 +1,7 @@
 package repository
 
-import (
-	"database/sql"
-	"github.com/albqvictor1508/server/cmd"
-)
+type categoryRepository struct {
+	db *sql.DB
+}
+
+func CreateCategory(repository *categoryRepository)

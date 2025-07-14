@@ -45,7 +45,6 @@ func main() {
 	r.Route("/projects", func(r chi.Router) {
 		r.Post("/", projectHandler.CreateProject)       
 		r.Get("/", projectHandler.GetProjects)         
-		r.Get("/", projectHandler.GetProjects)         
 		r.Get("/{id}", projectHandler.GetProjectByID) 
 		r.Put("/{id}", projectHandler.UpdateProject)    
 		r.Delete("/{id}", projectHandler.DeleteProject) 

@@ -5,7 +5,7 @@ import (
 )
 
 type Project struct {
-	ID          int64     `json:"id"`
+	ID          string    `json:"id"`
 	CategoryID  int64     `json:"categoryId"`
 	Name        string    `json:"name"`
 	Description string    `json:"description"`

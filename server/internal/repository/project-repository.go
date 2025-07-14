@@ -7,11 +7,11 @@ import (
 )
 
 type ProjectRepository interface {
-	CreateProject(project *api.Project) (int64, error)
-	GetProjectByID(id int64) (*api.Project, error)
+	CreateProject(project *api.Project) (string, error)
+	GetProjectByID(id string) (*api.Project, error)
 	GetProjects() ([]*api.Project, error)
 	UpdateProject(project *api.Project) error
-	DeleteProject(id int64) error
+	DeleteProject(id string) error
 }
 
 type projectRepository struct {
@@ -22,22 +22,22 @@ func NewProjectRepository(db *sql.DB) ProjectRepository {
 	return &projectRepository{db: db}
 }
 
-func (r *projectRepository) CreateProject(p *api.Project) (int64, error) {
-query := `
+func (r *projectRepository) CreateProject(p *api.Project) (string, error) {
+	query := `
 		INSERT INTO projects (category_id, name, description, github_url, demo_url)
 		VALUES ($1, $2, $3, $4, $5)
 		RETURNING id
 	`
-	var projectID int64
+	var projectID string
 	err := r.db.QueryRow(query, p.CategoryID, p.Name, p.Description, p.GithubURL, p.DemoURL).Scan(&projectID)
 
 	if err != nil {
-		return 0, err
+		return "", err
 	}
 	return projectID, nil
 }
 
-func (r *projectRepository) GetProjectByID(id int64) (*api.Project, error) {
+func (r *projectRepository) GetProjectByID(id string) (*api.Project, error) {
 	query := `
 		SELECT id, category_id, name, description, github_url, demo_url, created_at, updated_at
 		FROM projects
@@ -104,7 +104,7 @@ func (r *projectRepository) UpdateProject(p *api.Project) error {
 	return nil
 }
 
-func (r *projectRepository) DeleteProject(id int64) error {
+func (r *projectRepository) DeleteProject(id string) error {
 	query := "DELETE FROM projects WHERE id = $1"
 	result, err := r.db.Exec(query, id)
 	if err != nil {

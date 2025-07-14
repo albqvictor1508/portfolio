@@ -3,12 +3,23 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/albqvictor1508/server/cmd"
 	"github.com/albqvictor1508/server/internal/service"
 	"github.com/go-chi/chi/v5"
 )
+
+func respondWithError(w http.ResponseWriter, code int, message string) {
+	respondWithJSON(w, code, map[string]string{"error": message})
+}
+
+func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+	response, _ := json.Marshal(payload)
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	w.Write(response)
+}
 
 type ProjectHandler struct {
 	service service.ProjectService
@@ -21,96 +32,76 @@ func NewProjectHandler(service service.ProjectService) *ProjectHandler {
 func (h *ProjectHandler) CreateProject(w http.ResponseWriter, r *http.Request) {
 	var p api.Project
 	if err := json.NewDecoder(r.Body).Decode(&p); err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		respondWithError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
 	projectID, err := h.service.CreateProject(&p)
 
 	if err != nil {
-		http.Error(w, "Failed to create project", http.StatusInternalServerError)
+		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	p.ID = projectID
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(p)
+	respondWithJSON(w, http.StatusCreated, p)
 }
 
 func (h *ProjectHandler) GetProjectByID(w http.ResponseWriter, r *http.Request) {
-	idStr := chi.URLParam(r, "id")
-	id, err := strconv.ParseInt(idStr, 10, 64)
-
-	if err != nil {
-		http.Error(w, "Invalid project ID", http.StatusBadRequest)
-		return
-	}
+	id := chi.URLParam(r, "id")
 
 	project, err := h.service.GetProjectByID(id)
 
 	if err != nil {
-		http.Error(w, "Failed to get project", http.StatusInternalServerError)
+		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	if project == nil {
-		http.Error(w, "Project not found", http.StatusNotFound)
+		respondWithError(w, http.StatusNotFound, "Project not found")
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(project)
+	respondWithJSON(w, http.StatusOK, project)
 }
 
 func (h *ProjectHandler) GetProjects(w http.ResponseWriter, r *http.Request) {
 	projects, err := h.service.GetProjects()
 
 	if err != nil {
-		http.Error(w, "Failed to get projects", http.StatusInternalServerError)
+		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(projects)
+	respondWithJSON(w, http.StatusOK, projects)
 }
 
 func (h *ProjectHandler) UpdateProject(w http.ResponseWriter, r *http.Request) {
-	idStr := chi.URLParam(r, "id")
-	id, err := strconv.ParseInt(idStr, 10, 64)
-	if err != nil {
-		http.Error(w, "Invalid project ID", http.StatusBadRequest)
-		return
-	}
+	id := chi.URLParam(r, "id")
 
 	var p api.Project
 	if err := json.NewDecoder(r.Body).Decode(&p); err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		respondWithError(w, http.StatusBadRequest, "Invalid request body")
 		return
 	}
 
 	p.ID = id
 
 	if err := h.service.UpdateProject(&p); err != nil {
-		http.Error(w, "Failed to update project", http.StatusInternalServerError)
+		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	w.WriteHeader(http.StatusNoContent)
+	respondWithJSON(w, http.StatusNoContent, nil)
 }
 
 func (h *ProjectHandler) DeleteProject(w http.ResponseWriter, r *http.Request) {
-	idStr := chi.URLParam(r, "id")
-	id, err := strconv.ParseInt(idStr, 10, 64)
-	if err != nil {
-		http.Error(w, "Invalid project ID", http.StatusBadRequest)
-		return
-	}
+	id := chi.URLParam(r, "id")
 
 	if err := h.service.DeleteProject(id); err != nil {
-		http.Error(w, "Failed to delete project", http.StatusInternalServerError)
+		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	w.WriteHeader(http.StatusNoContent)
+	respondWithJSON(w, http.StatusNoContent, nil)
 }
