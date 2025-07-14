@@ -10,31 +10,27 @@ import (
 	"github.com/albqvictor1508/server/internal/service"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	_ "github.com/mattn/go-postgres"
+	_ "github.com/lib/pq"
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
 func main() {
-	db, err := sql.Open("postgres", "")
+	db, err := sql.Open("postgres", "postgres://albqvxc:lexsa1508@localhost:6005/portfolio?sslmode=disable")
 	if err != nil {
 		log.Fatalf("Erro ao conectar ao banco de dados: %v", err)
 	}
 	defer db.Close()
 
-createTableSQL := `
-	CREATE TABLE IF NOT EXISTS projects (
-		"id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-		"category_id" INTEGER,
-		"name" TEXT,
-		"description" TEXT,
-		"github_url" TEXT,
-		"demo_url" TEXT,
-		"created_at" DATETIME DEFAULT CURRENT_TIMESTAMP,
-		"updated_at" DATETIME DEFAULT CURRENT_TIMESTAMP
-	);
-	`
-	_, err = db.Exec(createTableSQL)
+	m, err := migrate.New(
+		"file://migrations",
+		"postgres://albqvxc:lexsa1508@localhost:6005/portfolio?sslmode=disable")
 	if err != nil {
-		log.Fatalf("Erro ao criar a tabela: %v", err)
+		log.Fatal(err)
+	}
+	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
+		log.Fatal(err)
 	}
 
 	projectRepo := repository.NewProjectRepository(db)

@@ -52,7 +52,7 @@ CREATE TABLE technologies(
   name VARCHAR(50) UNIQUE NOT NULL
 );
 
-REATE TABLE project_technologies(
+CREATE TABLE project_technologies(
   project_id UUID NOT NULL,
   technology_id INT NOT NULL,
 
