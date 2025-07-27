@@ -1,9 +1,0 @@
-# Binaries
-app
-
-# Config
-config.yml
-.env
-
-# Vendor
-vendor/
