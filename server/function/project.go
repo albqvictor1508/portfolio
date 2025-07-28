@@ -33,7 +33,14 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 	}
 
 	// validar se o projeto já existe pelo nome q é unique
-	pf.projectRepo.
-		pf.projectRepo.Insert(p)
-	fmt.Print("salve")
+	_, err := pf.projectRepo.FindByName(p.Name)
+	if err != nil {
+		return 0, errors.New("PROJECT WITH THIS NAME ALREADY EXISTS")
+	}
+
+	id, err := pf.projectRepo.Insert(p)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
 }

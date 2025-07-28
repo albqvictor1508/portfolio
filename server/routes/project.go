@@ -1,7 +1,16 @@
 package routes
 
-import "fmt"
+import (
+	"github.com/albqvictor1508/portfolio/function"
+	"github.com/gin-gonic/gin"
+)
 
-func ProjectRoutes() {
-	fmt.Print("salve")
+type ProjectRoutes struct {
+	function function.ProjectFunction
+}
+
+// dar uma olhada nessa questão
+func (r *ProjectRoutes) ProjectRoutes() {
+	g := gin.Default()
+	g.POST("/projects", r.function.CreateProject)
 }
