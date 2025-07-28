@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/albqvictor1508/portfolio/cmd/db"
-	"github.com/albqvictor1508/portfolio/internal"
-	"github.com/albqvictor1508/portfolio/internal/project"
+	"github.com/albqvictor1508/portfolio/entity"
+	"github.com/albqvictor1508/portfolio/repository"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 	"github.com/joho/godotenv"
@@ -29,7 +29,7 @@ func main() {
 	defer conn.Close()
 	g := gin.Default()
 
-	repo := project.RepositoryPg{
+	repo := repository.RepositoryPg{
 		Conn: conn,
 	}
 
@@ -40,7 +40,7 @@ func main() {
 	})
 
 	g.POST("/projects", func(ctx *gin.Context) {
-		var project internal.InsertProjectParams
+		var project entity.InsertProjectParams
 
 		if err := ctx.BindJSON(&project); err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{
@@ -50,7 +50,7 @@ func main() {
 			return
 		}
 
-		newProject := internal.Project{
+		newProject := entity.Project{
 			ID:        uuid.New(),
 			Name:      project.Name,
 			GithubURL: project.GithubURL,
@@ -63,10 +63,10 @@ func main() {
 		ctx.JSON(200, gin.H{"project": newProject})
 		insertedProject, err := repo.Insert(newProject)
 		if err != nil {
-			ctx.JSON(400, gin.H{"error": err.Error()})
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		ctx.JSON(200, insertedProject)
+		ctx.JSON(http.StatusCreated, insertedProject)
 	})
 
 	if err := g.Run(":3333"); err != nil {
