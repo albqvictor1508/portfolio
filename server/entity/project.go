@@ -7,13 +7,14 @@ import (
 )
 
 type Project struct {
-	ID        uuid.UUID `json:"id"`
-	Name      string    `json:"name"`
-	GithubURL string    `json:"github_url"`
-	DemoURL   string    `json:"demo_url"`
-	IsPinned  bool      `json:"is_pinned"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	ID          uuid.UUID `json:"id"`
+	Name        string    `json:"name"`
+	Description string    `json:"description"`
+	GithubURL   string    `json:"github_url"`
+	DemoURL     string    `json:"demo_url"`
+	IsPinned    bool      `json:"is_pinned"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 }
 
 type InsertProjectParams struct {
