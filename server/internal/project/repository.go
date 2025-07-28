@@ -62,8 +62,8 @@ func (r *RepositoryPg) Update(ctx context.Context, project internal.Project) err
 	return nil
 }
 
-func (r *RepositoryPg) FindById(ctx context.Context, id uuid.UUID) (internal.Project, error) {
-	var project internal.Project = internal.Project{ID: id}
+func (r *RepositoryPg) FindByID(ctx context.Context, id uuid.UUID) (internal.Project, error) {
+	project := internal.Project{ID: id}
 	err := r.Conn.QueryRow(
 		ctx,
 		"SELECT p.github_url, p.demo_url, p.is_pinned FROM projects p WHERE p.id = $1",
