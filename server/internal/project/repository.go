@@ -6,6 +6,7 @@ import (
 
 	"github.com/albqvictor1508/portfolio/internal"
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
@@ -43,4 +44,39 @@ func (r *RepositoryPg) Delete(ctx context.Context, id uuid.UUID) error {
 	}
 
 	return err
+}
+
+func (r *RepositoryPg) Update(ctx context.Context, project internal.Project) error {
+	_, err := r.Conn.Exec(
+		ctx,
+		"UPDATE projects p SET github_url = $1, demo_url = $2, is_pinned = $3 WHERE p.id = $4",
+		project.GithubURL,
+		project.DemoURL,
+		project.IsPinned,
+		project.ID,
+	)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *RepositoryPg) FindById(ctx context.Context, id uuid.UUID) (internal.Project, error) {
+	var project internal.Project = internal.Project{ID: id}
+	err := r.Conn.QueryRow(
+		ctx,
+		"SELECT p.github_url, p.demo_url, p.is_pinned FROM projects p WHERE p.id = $1",
+		id,
+	).Scan(&project.GithubURL, &project.DemoURL, &project.IsPinned)
+
+	if err == pgx.ErrNoRows {
+		return internal.Project{}, nil
+	}
+
+	if err != nil {
+		return internal.Project{}, nil
+	}
+
+	return project, nil
 }
