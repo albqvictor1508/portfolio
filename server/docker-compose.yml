@@ -1,14 +1,14 @@
 services:
   pg:
-  image: postgres
-  ports:
-    - "6008:5432"
-  environments:
-    - POSTGRES_USER: albqvxc
-    - POSTGRES_PASSWORD: lexsa
-    - POSTGRES_DB: portfolio
-  volumes:
-    - portfolio-volume:/var/lib/postgresql/data
+    image: postgres:16-alpine
+    ports:
+      - "6008:5432"
+    environment:
+    - POSTGRES_USER=albqvxc
+    - POSTGRES_PASSWORD=lexsa
+    - POSTGRES_DB=portfolio
+    volumes:
+     - portfolio-volume:/var/lib/postgresql/data
 
 volumes:
   portfolio-volume:

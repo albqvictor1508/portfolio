@@ -4,7 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+	"github.com/jackc/pgx/v4/pgxpool" // essa pool é um connection manager thread safe, faz o gerenciamento e por ser thread safe,
+	// se houver várias conexões em paralelo com go routines, ele n vai quebrar
 )
 
 var Connect pgxpool.Conn
