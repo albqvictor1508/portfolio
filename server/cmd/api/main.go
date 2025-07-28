@@ -15,8 +15,10 @@ func main() {
 	databaseURL := os.Getenv("DATABASE_URL")
 	conn, err := db.NewConnection(databaseURL)
 	if err != nil {
-		log.Fatal("ERROR TO CONNECT TO DATABASE: ", err)
+		panic(err)
 	}
+
+	defer conn.Close()
 	g := gin.Default()
 
 	repo := project.RepositoryPg{

@@ -11,7 +11,7 @@ import (
 )
 
 type RepositoryPg struct {
-	Conn *pgxpool.Conn
+	Conn *pgxpool.Pool
 }
 
 func (r *RepositoryPg) Insert(project internal.Project) (internal.Project, error) {
