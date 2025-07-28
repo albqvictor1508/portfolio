@@ -5,14 +5,15 @@ import (
 	"time"
 
 	"github.com/albqvictor1508/portfolio/internal"
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-type Repository struct {
+type RepositoryPg struct {
 	Conn *pgxpool.Conn
 }
 
-func (r *Repository) Insert(project internal.Project) (internal.Project, error) {
+func (r *RepositoryPg) Insert(project internal.Project) (internal.Project, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -28,4 +29,18 @@ func (r *Repository) Insert(project internal.Project) (internal.Project, error) 
 	}
 
 	return project, nil
+}
+
+func (r *RepositoryPg) Delete(ctx context.Context, id uuid.UUID) error {
+	tag, err := r.Conn.Exec(
+		ctx,
+		"DELETE FROM projects p WHERE p.id = $1",
+		id,
+	)
+
+	if tag.RowsAffected() == 0 {
+		return nil
+	}
+
+	return err
 }
