@@ -7,6 +7,7 @@ POST {{baseUrl}}/projects
 Content-Type: application/json
 
 {
+  "name": "salve project",
   "github_url": "salve",
   "demo_url": "salve",
   "is_pinned": true
