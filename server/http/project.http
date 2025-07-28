@@ -1,5 +1,13 @@
 @baseUrl = http://localhost:3333
 
-GET {{baseUrl}}
+GET {{baseUrl}}/health
 
 ###
+POST {{baseUrl}}/projects
+Content-Type: application/json
+
+{
+  "github_url": "salve",
+  "demo_url": "salve",
+  "is_pinned": true
+}

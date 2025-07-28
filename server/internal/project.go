@@ -15,6 +15,12 @@ type Project struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
+type InsertProjectParams struct {
+	GithubURL string `json:"github_url"`
+	DemoURL   string `json:"demo_url"`
+	IsPinned  bool   `json:"is_pinned"`
+}
+
 type UpdateProjectParams struct {
 	ID        string
 	GithubURL string
