@@ -52,6 +52,7 @@ func main() {
 
 		newProject := internal.Project{
 			ID:        uuid.New(),
+			Name:      project.Name,
 			GithubURL: project.GithubURL,
 			DemoURL:   project.DemoURL,
 			IsPinned:  project.IsPinned,
@@ -59,17 +60,13 @@ func main() {
 			UpdatedAt: time.Now(),
 		}
 
+		ctx.JSON(200, gin.H{"project": newProject})
 		insertedProject, err := repo.Insert(newProject)
 		if err != nil {
-			ctx.JSON(http.StatusUnprocessableEntity, gin.H{
-				"error":   true,
-				"message": err.Error(),
-			})
+			ctx.JSON(400, gin.H{"error": err.Error()})
+			return
 		}
-
-		ctx.JSON(http.StatusCreated, gin.H{
-			"project": insertedProject,
-		})
+		ctx.JSON(200, insertedProject)
 	})
 
 	if err := g.Run(":3333"); err != nil {

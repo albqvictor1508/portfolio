@@ -8,6 +8,7 @@ import (
 
 type Project struct {
 	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
 	GithubURL string    `json:"github_url"`
 	DemoURL   string    `json:"demo_url"`
 	IsPinned  bool      `json:"is_pinned"`
@@ -16,6 +17,7 @@ type Project struct {
 }
 
 type InsertProjectParams struct {
+	Name      string `json:"name"`
 	GithubURL string `json:"github_url"`
 	DemoURL   string `json:"demo_url"`
 	IsPinned  bool   `json:"is_pinned"`
@@ -23,6 +25,7 @@ type InsertProjectParams struct {
 
 type UpdateProjectParams struct {
 	ID        string
+	Name      string
 	GithubURL string
 	DemoURL   string
 	IsPinned  bool
