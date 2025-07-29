@@ -72,8 +72,12 @@ func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
 	return project, nil
 }
 
-func (pr *ProjectRepository) Delete(ctx context.Context, id int) error {
-	query, err := pr.Conn.Exec(ctx,
+func (pr *ProjectRepository) Delete(id int) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	query, err := pr.Conn.Exec(
+		ctx,
 		"DELETE FROM projects WHERE id = $1",
 		id,
 	)
@@ -88,7 +92,10 @@ func (pr *ProjectRepository) Delete(ctx context.Context, id int) error {
 	return nil
 }
 
-func (pr *ProjectRepository) Update(ctx context.Context, project entity.Project) error {
+func (pr *ProjectRepository) Update(project entity.Project) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
 	_, err := pr.Conn.Exec(ctx,
 		"UPDATE projects SET github_url = $1, demo_url = $2, is_pinned = $3, updated_at = NOW() WHERE id = $4",
 		project.GithubURL,
@@ -103,7 +110,10 @@ func (pr *ProjectRepository) Update(ctx context.Context, project entity.Project)
 	return nil
 }
 
-func (pr *ProjectRepository) FindByID(ctx context.Context, id int) (entity.Project, error) {
+func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
 	project := entity.Project{}
 	err := pr.Conn.QueryRow(
 		ctx,

@@ -109,7 +109,17 @@ func (cr *CategoryRepository) GetCategories() ([]entity.Category, error) {
 	return categoryList, nil
 }
 
-func (cr *CategoryRepository) DeleteCategoryByID(id int) {
+func (cr *CategoryRepository) DeleteCategoryByID(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+
+	_, err := cr.Conn.Exec(
+		ctx,
+		"DELETE FROM categories c WHERE c.id = $1",
+		id,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
