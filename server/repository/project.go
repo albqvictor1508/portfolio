@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/albqvictor1508/portfolio/entity"
-	"github.com/google/uuid"
+	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
@@ -26,7 +26,7 @@ func (r *ProjectRepository) Insert(project *entity.Project) (int, error) {
 
 	var id int
 	err := r.Conn.QueryRow(ctx,
-		"INSERT INTO projects (name, description, github_url, demo_url, is_pinned) VALUES($1, $2, $3, $4) RETURNING id",
+		"INSERT INTO projects (name, description, github_url, demo_url, is_pinned) VALUES($1, $2, $3, $4 ,$5) RETURNING id",
 		project.Name,
 		project.Description,
 		project.GithubURL,
@@ -50,6 +50,10 @@ func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
 		"SELECT p.id, p.name, p.description, p.github_url, p.demo_url, p.is_pinned FROM projects p WHERE p.name = $1",
 		name,
 	).Scan(&project.ID, &project.Name, &project.Description, &project.GithubURL, &project.DemoURL, &project.IsPinned)
+	if err == pgx.ErrNoRows {
+		return entity.Project{}, nil
+	}
+
 	if err != nil {
 		return entity.Project{}, err
 	}
@@ -57,7 +61,7 @@ func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
 	return project, nil
 }
 
-func (pr *ProjectRepository) Delete(ctx context.Context, id uuid.UUID) error {
+func (pr *ProjectRepository) Delete(ctx context.Context, id int) error {
 	query, err := pr.Conn.Exec(ctx,
 		"DELETE FROM projects WHERE id = $1",
 		id,
@@ -88,13 +92,17 @@ func (pr *ProjectRepository) Update(ctx context.Context, project entity.Project)
 	return nil
 }
 
-func (pr *ProjectRepository) FindByID(ctx context.Context, id uuid.UUID) (entity.Project, error) {
+func (pr *ProjectRepository) FindByID(ctx context.Context, id int) (entity.Project, error) {
 	project := entity.Project{ID: id}
 	err := pr.Conn.QueryRow(
 		ctx,
 		"SELECT p.github_url, p.demo_url, p.is_pinned FROM projects p WHERE p.id = $1",
 		id,
 	).Scan(&project.GithubURL, &project.DemoURL, &project.IsPinned)
+	if err == pgx.ErrNoRows {
+		return entity.Project{}, nil
+	}
+
 	if err != nil {
 		return entity.Project{}, err
 	}

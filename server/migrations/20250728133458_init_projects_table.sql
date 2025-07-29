@@ -17,13 +17,13 @@ CREATE TABLE projects (
     is_pinned BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    category_id INTEGER, -- CORRIGIDO: De BOOLEAN para INTEGER
+    category_id INTEGER, 
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
 );
 
-CREATE TABLE project_technologies ( -- CORRIGIDO: Erro de digitação no nome da tabela
+CREATE TABLE project_technologies ( 
     project_id INTEGER NOT NULL,
-    technology_id INTEGER NOT NULL, -- CORRIGIDO: Erro de digitação e vírgula adicionada
+    technology_id INTEGER NOT NULL, 
     PRIMARY KEY (project_id, technology_id),
     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
     FOREIGN KEY (technology_id) REFERENCES technologies(id) ON DELETE CASCADE
@@ -31,7 +31,7 @@ CREATE TABLE project_technologies ( -- CORRIGIDO: Erro de digitação no nome da
 
 CREATE TABLE experiences (
     id SERIAL PRIMARY KEY,
-    company_name TEXT NOT NULL, -- CORRIGIDO: Vírgulas adicionadas
+    company_name TEXT NOT NULL, 
     role TEXT NOT NULL,
     description TEXT,
     start_date DATE NOT NULL,

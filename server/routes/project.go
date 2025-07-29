@@ -39,8 +39,7 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 func (p *projectRoute) GetProjects(ctx *gin.Context) {
 	projects, err := p.projectFunc.GetProjects()
 	if err != nil {
-		fmt.Println(err.Error())
-		ctx.JSON(900, err)
+		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 

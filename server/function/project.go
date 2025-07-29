@@ -40,12 +40,15 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 	}
 
 	// validar se o projeto já existe pelo nome q é unique
-	_, err := pf.projectRepo.FindByName(p.Name)
+	project, err := pf.projectRepo.FindByName(p.Name)
 	if err != nil {
 		errorMessage := fmt.Sprintf("ERROR TO FIND PROJECT BY NAME IN REPOSITORY: %v", err)
 		return 0, errors.New(errorMessage)
 	}
 
+	if project != (entity.Project{}) {
+		return 0, errors.New("PROJECT WITH THIS NAME ALREADY EXIST")
+	}
 	id, err := pf.projectRepo.Insert(p)
 	if err != nil {
 		errorMessage := fmt.Sprintf("ERROR TO INSERT PROJECT IN REPOSITORY: %v", err)
