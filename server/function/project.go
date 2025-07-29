@@ -11,12 +11,13 @@ import (
 )
 
 type ProjectFunction struct {
-	projectRepo repository.ProjectRepository
+	projectRepo  repository.ProjectRepository
+	categoryRepo repository.CategoryRepository
 }
 
-func NewProjectFunc(repo repository.ProjectRepository) ProjectFunction {
+func NewProjectFunc(projectRepo repository.ProjectRepository, categoryRepo repository.CategoryRepository) ProjectFunction {
 	return ProjectFunction{
-		projectRepo: repo,
+		projectRepo:  repo,
 	}
 }
 
@@ -39,7 +40,6 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 		return 0, errors.New("INVALID DEMO URL")
 	}
 
-	// validar se o projeto já existe pelo nome q é unique
 	project, err := pf.projectRepo.FindByName(p.Name)
 	if err != nil {
 		errorMessage := fmt.Sprintf("ERROR TO FIND PROJECT BY NAME IN REPOSITORY: %v", err)
@@ -49,6 +49,9 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 	if project != (entity.Project{}) {
 		return 0, errors.New("PROJECT WITH THIS NAME ALREADY EXIST")
 	}
+
+	category, err := pf.categoryFunc.
+
 	id, err := pf.projectRepo.Insert(p)
 	if err != nil {
 		errorMessage := fmt.Sprintf("ERROR TO INSERT PROJECT IN REPOSITORY: %v", err)

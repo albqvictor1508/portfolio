@@ -19,7 +19,13 @@ func NewCategoryRoute(categoryFunc function.CategoryFunc) CategoryRoutes {
 	}
 }
 
-func (cr *CategoryRoutes) CreateCategory(ctx *gin.Context, category *entity.Category) {
+func (cr *CategoryRoutes) CreateCategory(ctx *gin.Context) {
+	var category *entity.Category
+	if err := ctx.ShouldBindJSON(&category); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
 	id, err := cr.categoryFunc.CreateCategory(category)
 	if err != nil {
 		errorMessage := fmt.Sprintf("ERROR ON CREATE CATEGORY: %v", err)

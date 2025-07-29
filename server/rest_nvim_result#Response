@@ -1,7 +1,0 @@
-### project#20
-POST http://localhost:3333/projects
-HTTP/1.1 850 status code 850
-
-# @_RES (formatted)
-"PROJECT WITH THIS NAME ALREADY EXIST"
-# @_END

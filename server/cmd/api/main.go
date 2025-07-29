@@ -43,8 +43,8 @@ func main() {
 	g.GET("/projects", ProjectController.GetProjects)
 	g.POST("/projects", ProjectController.CreateProject)
 
-	g.POST("/projects", CategoryController.CreateCategory)
-	g.GET("/projects", CategoryController.)
+	g.POST("/categories", CategoryController.CreateCategory)
+	g.GET("/categories", CategoryController.GetCategories)
 
 	if err := g.Run(":3333"); err != nil {
 		log.Fatal("Fail to initialize server: ", err)

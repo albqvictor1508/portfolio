@@ -26,12 +26,13 @@ func (r *ProjectRepository) Insert(project *entity.Project) (int, error) {
 
 	var id int
 	err := r.Conn.QueryRow(ctx,
-		"INSERT INTO projects (name, description, github_url, demo_url, is_pinned) VALUES($1, $2, $3, $4 ,$5) RETURNING id",
+		"INSERT INTO projects (name, description, github_url, demo_url, is_pinned, category_id) VALUES($1, $2, $3, $4 ,$5, $6) RETURNING id",
 		project.Name,
 		project.Description,
 		project.GithubURL,
 		project.DemoURL,
 		project.IsPinned,
+		project.CategoryID,
 	).Scan(&id)
 	if err != nil {
 		return 0, err
@@ -44,12 +45,22 @@ func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	project := entity.Project{Name: name}
+	project := entity.Project{}
 	err := pr.Conn.QueryRow(
 		ctx,
-		"SELECT p.id, p.name, p.description, p.github_url, p.demo_url, p.is_pinned FROM projects p WHERE p.name = $1",
+		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects WHERE name = $1",
 		name,
-	).Scan(&project.ID, &project.Name, &project.Description, &project.GithubURL, &project.DemoURL, &project.IsPinned)
+	).Scan(
+		&project.ID,
+		&project.Name,
+		&project.Description,
+		&project.GithubURL,
+		&project.DemoURL,
+		&project.IsPinned,
+		&project.CategoryID,
+		&project.CreatedAt,
+		&project.UpdatedAt,
+	)
 	if err == pgx.ErrNoRows {
 		return entity.Project{}, nil
 	}
@@ -93,12 +104,22 @@ func (pr *ProjectRepository) Update(ctx context.Context, project entity.Project)
 }
 
 func (pr *ProjectRepository) FindByID(ctx context.Context, id int) (entity.Project, error) {
-	project := entity.Project{ID: id}
+	project := entity.Project{}
 	err := pr.Conn.QueryRow(
 		ctx,
-		"SELECT p.github_url, p.demo_url, p.is_pinned FROM projects p WHERE p.id = $1",
+		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects WHERE id = $1",
 		id,
-	).Scan(&project.GithubURL, &project.DemoURL, &project.IsPinned)
+	).Scan(
+		&project.ID,
+		&project.Name,
+		&project.Description,
+		&project.GithubURL,
+		&project.DemoURL,
+		&project.IsPinned,
+		&project.CategoryID,
+		&project.CreatedAt,
+		&project.UpdatedAt,
+	)
 	if err == pgx.ErrNoRows {
 		return entity.Project{}, nil
 	}
@@ -112,20 +133,21 @@ func (pr *ProjectRepository) FindByID(ctx context.Context, id int) (entity.Proje
 
 func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 	var projectList []entity.Project
-	var projectObj entity.Project
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	rows, err := pr.Conn.Query(
 		ctx,
-		"SELECT * FROM projects p",
+		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects",
 	)
 	if err != nil {
 		return []entity.Project{}, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
+		var projectObj entity.Project
 		err := rows.Scan(
 			&projectObj.ID,
 			&projectObj.Name,
@@ -144,6 +166,5 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 		projectList = append(projectList, projectObj)
 	}
 
-	rows.Close()
 	return projectList, nil
 }
