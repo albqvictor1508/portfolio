@@ -14,7 +14,7 @@ type ProjectRepository struct {
 	Conn *pgxpool.Pool
 }
 
-func NewProject(connection *pgxpool.Pool) ProjectRepository {
+func NewProjectRepo(connection *pgxpool.Pool) ProjectRepository {
 	return ProjectRepository{
 		Conn: connection,
 	}

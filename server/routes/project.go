@@ -13,7 +13,7 @@ type projectRoute struct {
 	projectFunc function.ProjectFunction
 }
 
-func New(projectFunc function.ProjectFunction) projectRoute {
+func NewProjectRoute(projectFunc function.ProjectFunction) projectRoute {
 	return projectRoute{
 		projectFunc: projectFunc,
 	}

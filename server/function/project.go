@@ -14,7 +14,7 @@ type ProjectFunction struct {
 	projectRepo repository.ProjectRepository
 }
 
-func New(repo repository.ProjectRepository) ProjectFunction {
+func NewProjectFunc(repo repository.ProjectRepository) ProjectFunction {
 	return ProjectFunction{
 		projectRepo: repo,
 	}
