@@ -10,7 +10,7 @@ import (
 )
 
 type ProjectFunction struct {
-	projectRepo repository.Repository
+	projectRepo repository.ProductRepository
 }
 
 func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {

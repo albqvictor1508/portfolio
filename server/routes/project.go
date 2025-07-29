@@ -2,7 +2,6 @@ package routes
 
 import (
 	"github.com/albqvictor1508/portfolio/function"
-	"github.com/gin-gonic/gin"
 )
 
 type ProjectRoutes struct {
@@ -10,7 +9,5 @@ type ProjectRoutes struct {
 }
 
 // dar uma olhada nessa questão
-func (r *ProjectRoutes) ProjectRoutes() {
-	g := gin.Default()
-	g.POST("/projects", r.function.CreateProject)
-}
+// olhar também sobre o porque que a glr geralmente cria uma função de inicialização vinculada
+// a uma struct quando vai começar um modulo novo

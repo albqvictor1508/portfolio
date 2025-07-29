@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/albqvictor1508/portfolio/entity"
@@ -10,11 +11,17 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-type Repository struct {
+type ProjectRepository struct {
 	Conn *pgxpool.Pool
 }
 
-func (r *Repository) Insert(project *entity.Project) (int, error) {
+func New(connection *pgxpool.Pool) ProjectRepository {
+	return ProjectRepository{
+		Conn: connection,
+	}
+}
+
+func (r *ProjectRepository) Insert(project *entity.Project) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -34,12 +41,12 @@ func (r *Repository) Insert(project *entity.Project) (int, error) {
 	return id, nil
 }
 
-func (r *Repository) FindByName(name string) (entity.Project, error) {
+func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	project := entity.Project{Name: name}
-	err := r.Conn.QueryRow(
+	err := pr.Conn.QueryRow(
 		ctx,
 		"SELECT p.id, p.name, p.description, p.github_url, p.demo_url, p.is_pinned FROM projects p WHERE p.name = $1",
 	).Scan(&project.ID, &project.Name, &project.Description, &project.GithubURL, &project.DemoURL, &project.IsPinned)
@@ -50,8 +57,8 @@ func (r *Repository) FindByName(name string) (entity.Project, error) {
 	return project, nil
 }
 
-func (r *Repository) Delete(ctx context.Context, id uuid.UUID) error {
-	query, err := r.Conn.Exec(ctx,
+func (pr *ProjectRepository) Delete(ctx context.Context, id uuid.UUID) error {
+	query, err := pr.Conn.Exec(ctx,
 		"DELETE FROM projects WHERE id = $1",
 		id,
 	)
@@ -66,8 +73,8 @@ func (r *Repository) Delete(ctx context.Context, id uuid.UUID) error {
 	return nil
 }
 
-func (r *Repository) Update(ctx context.Context, project entity.Project) error {
-	_, err := r.Conn.Exec(ctx,
+func (pr *ProjectRepository) Update(ctx context.Context, project entity.Project) error {
+	_, err := pr.Conn.Exec(ctx,
 		"UPDATE projects SET github_url = $1, demo_url = $2, is_pinned = $3, updated_at = NOW() WHERE id = $4",
 		project.GithubURL,
 		project.DemoURL,
@@ -81,9 +88,9 @@ func (r *Repository) Update(ctx context.Context, project entity.Project) error {
 	return nil
 }
 
-func (r *Repository) FindByID(ctx context.Context, id uuid.UUID) (entity.Project, error) {
+func (pr *ProjectRepository) FindByID(ctx context.Context, id uuid.UUID) (entity.Project, error) {
 	project := entity.Project{ID: id}
-	err := r.Conn.QueryRow(
+	err := pr.Conn.QueryRow(
 		ctx,
 		"SELECT p.github_url, p.demo_url, p.is_pinned FROM projects p WHERE p.id = $1",
 		id,
@@ -93,4 +100,34 @@ func (r *Repository) FindByID(ctx context.Context, id uuid.UUID) (entity.Project
 	}
 
 	return project, nil
+}
+
+func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
+	var projectList []entity.Project
+	var projectObj entity.Project
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	rows, err := pr.Conn.Query(
+		ctx,
+		"SELECT * FROM projects p",
+	)
+	for rows.Next() {
+		err := rows.Scan(
+			&projectObj.ID,
+			&projectObj.Name,
+			&projectObj.Description,
+			&projectObj.GithubURL,
+			&projectObj.DemoURL,
+			&projectObj.IsPinned,
+			&projectObj.CreatedAt,
+			&projectObj.UpdatedAt,
+		)
+		if err != nil {
+			fmt.Println(err)
+			return []entity.Project{}, err
+		}
+	}
+	return projectList, nil
 }
