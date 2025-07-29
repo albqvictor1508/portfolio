@@ -14,7 +14,7 @@ type ProjectRepository struct {
 	Conn *pgxpool.Pool
 }
 
-func New(connection *pgxpool.Pool) ProjectRepository {
+func NewProject(connection *pgxpool.Pool) ProjectRepository {
 	return ProjectRepository{
 		Conn: connection,
 	}
@@ -133,6 +133,7 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 			&projectObj.GithubURL,
 			&projectObj.DemoURL,
 			&projectObj.IsPinned,
+			&projectObj.CategoryID,
 			&projectObj.CreatedAt,
 			&projectObj.UpdatedAt,
 		)
