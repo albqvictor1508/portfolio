@@ -3,6 +3,7 @@ package function
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/albqvictor1508/portfolio/entity"
@@ -10,7 +11,13 @@ import (
 )
 
 type ProjectFunction struct {
-	projectRepo repository.ProductRepository
+	projectRepo repository.ProjectRepository
+}
+
+func New(repo repository.ProjectRepository) ProjectFunction {
+	return ProjectFunction{
+		projectRepo: repo,
+	}
 }
 
 func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
@@ -22,25 +29,31 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 		return 0, errors.New("THE Description MUST TO BE BETWEEN 100 CHARACTERS")
 	}
 
-	if _, err := http.Get(p.GithubURL); err != nil {
-		fmt.Println(err)
-		return 0, errors.New("INVALID GITHUB URL")
+	if _, err := http.Get(p.GithubURL); p.GithubURL != "" && err != nil {
+		errorMessage := fmt.Sprintf("INVALID GITHUB URL: %v", err)
+		return 0, errors.New(errorMessage)
 	}
 
-	if _, err := http.Get(p.GithubURL); err != nil {
-		fmt.Println(err)
+	if _, err := http.Get(p.DemoURL); p.DemoURL != "" && err != nil {
+		log.Fatal(err)
 		return 0, errors.New("INVALID DEMO URL")
 	}
 
 	// validar se o projeto já existe pelo nome q é unique
 	_, err := pf.projectRepo.FindByName(p.Name)
 	if err != nil {
-		return 0, errors.New("PROJECT WITH THIS NAME ALREADY EXISTS")
+		errorMessage := fmt.Sprintf("ERROR TO FIND PROJECT BY NAME IN REPOSITORY: %v", err)
+		return 0, errors.New(errorMessage)
 	}
 
 	id, err := pf.projectRepo.Insert(p)
 	if err != nil {
-		return 0, err
+		errorMessage := fmt.Sprintf("ERROR TO INSERT PROJECT IN REPOSITORY: %v", err)
+		return 0, errors.New(errorMessage)
 	}
 	return id, nil
+}
+
+func (pf *ProjectFunction) GetProjects() ([]entity.Project, error) {
+	return pf.projectRepo.GetProjects()
 }

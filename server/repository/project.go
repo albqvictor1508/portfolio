@@ -3,7 +3,6 @@ package repository
 import (
 	"context"
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/albqvictor1508/portfolio/entity"
@@ -49,6 +48,7 @@ func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
 	err := pr.Conn.QueryRow(
 		ctx,
 		"SELECT p.id, p.name, p.description, p.github_url, p.demo_url, p.is_pinned FROM projects p WHERE p.name = $1",
+		name,
 	).Scan(&project.ID, &project.Name, &project.Description, &project.GithubURL, &project.DemoURL, &project.IsPinned)
 	if err != nil {
 		return entity.Project{}, err
@@ -96,7 +96,7 @@ func (pr *ProjectRepository) FindByID(ctx context.Context, id uuid.UUID) (entity
 		id,
 	).Scan(&project.GithubURL, &project.DemoURL, &project.IsPinned)
 	if err != nil {
-		return entity.Project{}, nil
+		return entity.Project{}, err
 	}
 
 	return project, nil
@@ -113,6 +113,10 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 		ctx,
 		"SELECT * FROM projects p",
 	)
+	if err != nil {
+		return []entity.Project{}, err
+	}
+
 	for rows.Next() {
 		err := rows.Scan(
 			&projectObj.ID,
@@ -125,9 +129,9 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 			&projectObj.UpdatedAt,
 		)
 		if err != nil {
-			fmt.Println(err)
 			return []entity.Project{}, err
 		}
+
 		projectList = append(projectList, projectObj)
 	}
 

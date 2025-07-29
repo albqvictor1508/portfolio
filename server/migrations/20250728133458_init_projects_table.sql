@@ -12,7 +12,7 @@ CREATE TABLE technologies (
 CREATE TABLE projects (
     id SERIAL PRIMARY KEY,
     name TEXT UNIQUE NOT NULL,
-    github_url TEXT NOT NULL,
+    github_url TEXT,
     demo_url TEXT,
     is_pinned BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,

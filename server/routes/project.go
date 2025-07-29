@@ -1,13 +1,50 @@
 package routes
 
 import (
+	"fmt"
+	"net/http"
+
+	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/function"
+	"github.com/gin-gonic/gin"
 )
 
-type ProjectRoutes struct {
-	function function.ProjectFunction
+type projectRoute struct {
+	projectFunc function.ProjectFunction
 }
 
-// dar uma olhada nessa questão
-// olhar também sobre o porque que a glr geralmente cria uma função de inicialização vinculada
-// a uma struct quando vai começar um modulo novo
+func New(projectFunc function.ProjectFunction) projectRoute {
+	return projectRoute{
+		projectFunc: projectFunc,
+	}
+}
+
+func (p *projectRoute) CreateProject(ctx *gin.Context) {
+	var project *entity.Project
+	if err := ctx.ShouldBindJSON(&project); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	id, err := p.projectFunc.CreateProject(project)
+	if err != nil {
+		fmt.Print(err.Error())
+		ctx.JSON(850, err.Error())
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, gin.H{"id": id})
+}
+
+func (p *projectRoute) GetProjects(ctx *gin.Context) {
+	projects, err := p.projectFunc.GetProjects()
+	if err != nil {
+		fmt.Println(err.Error())
+		ctx.JSON(900, err)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"projects": projects,
+	})
+}
