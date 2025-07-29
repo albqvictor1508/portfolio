@@ -128,6 +128,9 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 			fmt.Println(err)
 			return []entity.Project{}, err
 		}
+		projectList = append(projectList, projectObj)
 	}
+
+	rows.Close()
 	return projectList, nil
 }
