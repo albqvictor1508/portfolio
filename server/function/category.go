@@ -38,3 +38,12 @@ func (cf *CategoryFunc) GetCategories() ([]entity.Category, error) {
 func (cf *CategoryFunc) GetCategoryByID(id int) (entity.Category, error) {
 	return cf.repo.FindByID(id)
 }
+
+func (cf *CategoryFunc) GetCategoryByName(name string) (entity.Category, error) {
+	return cf.repo.FindByName(name)
+}
+
+/*
+func (cf *CategoryFunc) GetCategoryByName(name string) error {
+}
+*/

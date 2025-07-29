@@ -108,3 +108,8 @@ func (cr *CategoryRepository) GetCategories() ([]entity.Category, error) {
 
 	return categoryList, nil
 }
+
+func (cr *CategoryRepository) DeleteCategoryByID(id int) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+}
