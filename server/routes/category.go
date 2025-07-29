@@ -40,7 +40,18 @@ func (cr *CategoryRoutes) CreateCategory(ctx *gin.Context) {
 }
 
 func (cr *CategoryRoutes) GetCategories(ctx *gin.Context) {
+	categories, err := cr.categoryFunc.GetCategories()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"categories": categories,
+	})
 }
 
 func (cr *CategoryRoutes) FindByID(ctx *gin.Context) {
+	// category, err := cr.categoryFunc.
 }

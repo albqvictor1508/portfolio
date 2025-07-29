@@ -27,13 +27,13 @@ func main() {
 	defer conn.Close()
 	g := gin.Default()
 
-	ProjectRepository := repository.NewProjectRepo(conn)
-	ProjectFunction := function.NewProjectFunc(ProjectRepository)
-	ProjectController := routes.NewProjectRoute(ProjectFunction)
-
 	CategoryRepository := repository.NewCategory(conn)
 	CategoryFunction := function.NewCategoryFunc(CategoryRepository)
 	CategoryController := routes.NewCategoryRoute(CategoryFunction)
+
+	ProjectRepository := repository.NewProjectRepo(conn)
+	ProjectFunction := function.NewProjectFunc(ProjectRepository, CategoryRepository)
+	ProjectController := routes.NewProjectRoute(ProjectFunction)
 
 	g.GET("/health", func(context *gin.Context) {
 		context.JSON(200, gin.H{

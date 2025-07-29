@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/albqvictor1508/portfolio/entity"
+	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
@@ -25,7 +26,7 @@ func (cr *CategoryRepository) Insert(category *entity.Category) (int, error) {
 	var id int
 	err := cr.Conn.QueryRow(
 		ctx,
-		"INSERT INTO categories c VALUES ($1)",
+		"INSERT INTO categories (name) VALUES ($1) RETURNING id",
 		category.Name,
 	).Scan(&id)
 	if err != nil {
@@ -33,6 +34,50 @@ func (cr *CategoryRepository) Insert(category *entity.Category) (int, error) {
 	}
 
 	return id, nil
+}
+
+func (cr *CategoryRepository) FindByID(id int) (entity.Category, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	var category entity.Category
+	err := cr.Conn.QueryRow(
+		ctx,
+		"SELECT c.id, c.name FROM categories c WHERE c.id = $1",
+		id,
+	).Scan(&category.ID, &category.Name)
+
+	if err == pgx.ErrNoRows {
+		return entity.Category{}, nil
+	}
+
+	if err != nil {
+		return entity.Category{}, err
+	}
+
+	return category, nil
+}
+
+func (cr *CategoryRepository) FindByName(name string) (entity.Category, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	var category entity.Category
+	err := cr.Conn.QueryRow(
+		ctx,
+		"SELECT c.id, c.name FROM categories c WHERE c.name = $1",
+		name,
+	).Scan(&category.ID, &category.Name)
+
+	if err == pgx.ErrNoRows {
+		return entity.Category{}, nil
+	}
+
+	if err != nil {
+		return entity.Category{}, err
+	}
+
+	return category, nil
 }
 
 func (cr *CategoryRepository) GetCategories() ([]entity.Category, error) {

@@ -17,7 +17,8 @@ type ProjectFunction struct {
 
 func NewProjectFunc(projectRepo repository.ProjectRepository, categoryRepo repository.CategoryRepository) ProjectFunction {
 	return ProjectFunction{
-		projectRepo:  repo,
+		projectRepo:  projectRepo,
+		categoryRepo: categoryRepo,
 	}
 }
 
@@ -47,10 +48,17 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 	}
 
 	if project != (entity.Project{}) {
-		return 0, errors.New("PROJECT WITH THIS NAME ALREADY EXIST")
+		return 0, errors.New("PROJECT WITH THIS NAME ALREADY EXISTS")
+	}
+	category, err := pf.categoryRepo.FindByID(p.CategoryID)
+	if err != nil {
+		errorMessage := fmt.Sprintf("ERROR TO FIND CATEGORY BY ID: %v", err)
+		return 0, errors.New(errorMessage)
 	}
 
-	category, err := pf.categoryFunc.
+	if category.ID == 0 {
+		return 0, errors.New("CATEGORY WITH THIS ID NOT EXISTS")
+	}
 
 	id, err := pf.projectRepo.Insert(p)
 	if err != nil {
