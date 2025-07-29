@@ -31,6 +31,10 @@ func main() {
 	ProjectFunction := function.NewProjectFunc(ProjectRepository)
 	ProjectController := routes.NewProjectRoute(ProjectFunction)
 
+	CategoryRepository := repository.NewCategory(conn)
+	CategoryFunction := function.NewCategoryFunc(CategoryRepository)
+	CategoryController := routes.NewCategoryRoute(CategoryFunction)
+
 	g.GET("/health", func(context *gin.Context) {
 		context.JSON(200, gin.H{
 			"health": "OK",
@@ -38,6 +42,9 @@ func main() {
 	})
 	g.GET("/projects", ProjectController.GetProjects)
 	g.POST("/projects", ProjectController.CreateProject)
+
+	g.POST("/projects", CategoryController.CreateCategory)
+	g.GET("/projects", CategoryController.)
 
 	if err := g.Run(":3333"); err != nil {
 		log.Fatal("Fail to initialize server: ", err)

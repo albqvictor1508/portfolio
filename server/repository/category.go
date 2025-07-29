@@ -34,3 +34,32 @@ func (cr *CategoryRepository) Insert(category *entity.Category) (int, error) {
 
 	return id, nil
 }
+
+func (cr *CategoryRepository) GetCategories() ([]entity.Category, error) {
+	var categoryList []entity.Category
+	var categoryObj entity.Category
+
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	rows, err := cr.Conn.Query(
+		ctx,
+		"SELECT * FROM categories c",
+	)
+	if err != nil {
+		return []entity.Category{}, err
+	}
+
+	for rows.Next() {
+		err := rows.Scan(
+			&categoryObj.ID,
+			&categoryObj.Name,
+		)
+		if err != nil {
+			return []entity.Category{}, err
+		}
+		categoryList = append(categoryList, categoryObj)
+	}
+
+	return categoryList, nil
+}

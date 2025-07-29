@@ -33,5 +33,8 @@ func (cr *CategoryRoutes) CreateCategory(ctx *gin.Context, category *entity.Cate
 	})
 }
 
+func (cr *CategoryRoutes) GetCategories(ctx *gin.Context) {
+}
+
 func (cr *CategoryRoutes) FindByID(ctx *gin.Context) {
 }

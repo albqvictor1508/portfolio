@@ -18,3 +18,7 @@ func NewCategoryFunc(repo repository.CategoryRepository) CategoryFunc {
 func (cf *CategoryFunc) CreateCategory(category *entity.Category) (int, error) {
 	return cf.repo.Insert(category)
 }
+
+func (cf *CategoryFunc) GetProjects() ([]entity.Category, error) {
+	return cf.repo.GetCategories()
+}
