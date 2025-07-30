@@ -77,3 +77,51 @@ func (pf *ProjectFunction) GetProjects() ([]entity.Project, error) {
 func (pf *ProjectFunction) DeleteProject(id int) error {
 	return pf.projectRepo.Delete(id)
 }
+
+func (pf *ProjectFunction) UpdateProject(p *entity.Project) (int, error) {
+	if len(p.Name) < 4 {
+		return 0, errors.New("THE NAME MUST TO BE BETWEEN 3 CHARACTERS")
+	}
+
+	if len(p.Description) < 100 {
+		return 0, errors.New("THE Description MUST TO BE BETWEEN 100 CHARACTERS")
+	}
+
+	if _, err := http.Get(p.GithubURL); p.GithubURL != "" && err != nil {
+		errorMessage := fmt.Sprintf("INVALID GITHUB URL: %v", err)
+		return 0, errors.New(errorMessage)
+	}
+
+	if _, err := http.Get(p.DemoURL); p.DemoURL != "" && err != nil {
+		log.Fatal(err)
+		return 0, errors.New("INVALID DEMO URL")
+	}
+
+	project, err := pf.projectRepo.FindByName(p.Name)
+	if err != nil {
+		errorMessage := fmt.Sprintf("ERROR TO FIND PROJECT BY NAME IN REPOSITORY: %v", err)
+		return 0, errors.New(errorMessage)
+	}
+
+	if project != (entity.Project{}) {
+		return 0, errors.New("PROJECT WITH THIS NAME ALREADY EXISTS")
+	}
+	if p.CategoryID != nil {
+		category, err := pf.categoryRepo.FindByID(*p.CategoryID)
+		if err != nil {
+			errorMessage := fmt.Sprintf("ERROR TO FIND CATEGORY BY ID: %v", err)
+			return 0, errors.New(errorMessage)
+		}
+
+		if category.ID == 0 {
+			return 0, errors.New("CATEGORY WITH THIS ID NOT EXISTS")
+		}
+	}
+
+	id, err := pf.projectRepo.Update(p)
+	if err != nil {
+		errorMessage := fmt.Sprintf("ERROR TO INSERT PROJECT IN REPOSITORY: %v", err)
+		return 0, errors.New(errorMessage)
+	}
+	return id, nil
+}

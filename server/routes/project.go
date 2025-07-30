@@ -3,6 +3,7 @@ package routes
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/function"
@@ -49,6 +50,14 @@ func (p *projectRoute) GetProjects(ctx *gin.Context) {
 }
 
 func (p *projectRoute) UpdateProject(ctx *gin.Context) {
+	vars := ctx.Param("id")
+	id, err := strconv.Atoi(vars)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
+
 	var project *entity.Project
 	if err := ctx.ShouldBindJSON(&project); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})

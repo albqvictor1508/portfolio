@@ -92,22 +92,23 @@ func (pr *ProjectRepository) Delete(id int) error {
 	return nil
 }
 
-func (pr *ProjectRepository) Update(project entity.Project) error {
+func (pr *ProjectRepository) Update(project *entity.Project) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	_, err := pr.Conn.Exec(ctx,
+	var id int
+	err := pr.Conn.QueryRow(ctx,
 		"UPDATE projects SET github_url = $1, demo_url = $2, is_pinned = $3, updated_at = NOW() WHERE id = $4",
 		project.GithubURL,
 		project.DemoURL,
 		project.IsPinned,
 		project.ID,
-	)
+	).Scan(&id)
 	if err != nil {
-		return err
+		return 0, err
 	}
 
-	return nil
+	return id, nil
 }
 
 func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
