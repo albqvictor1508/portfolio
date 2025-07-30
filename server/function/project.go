@@ -50,14 +50,16 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 	if project != (entity.Project{}) {
 		return 0, errors.New("PROJECT WITH THIS NAME ALREADY EXISTS")
 	}
-	category, err := pf.categoryRepo.FindByID(p.CategoryID)
-	if err != nil {
-		errorMessage := fmt.Sprintf("ERROR TO FIND CATEGORY BY ID: %v", err)
-		return 0, errors.New(errorMessage)
-	}
+	if p.CategoryID != nil {
+		category, err := pf.categoryRepo.FindByID(*p.CategoryID)
+		if err != nil {
+			errorMessage := fmt.Sprintf("ERROR TO FIND CATEGORY BY ID: %v", err)
+			return 0, errors.New(errorMessage)
+		}
 
-	if category.ID == 0 {
-		return 0, errors.New("CATEGORY WITH THIS ID NOT EXISTS")
+		if category.ID == 0 {
+			return 0, errors.New("CATEGORY WITH THIS ID NOT EXISTS")
+		}
 	}
 
 	id, err := pf.projectRepo.Insert(p)
@@ -70,4 +72,8 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 
 func (pf *ProjectFunction) GetProjects() ([]entity.Project, error) {
 	return pf.projectRepo.GetProjects()
+}
+
+func (pf *ProjectFunction) DeleteProject(id int) error {
+	return pf.projectRepo.Delete(id)
 }
