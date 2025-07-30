@@ -58,64 +58,64 @@ func (cr *TechnologyRepository) FindByID(id int) (entity.Technology, error) {
 	return technology, nil
 }
 
-func (cr *CategoryRepository) FindByName(name string) (entity.Category, error) {
+func (cr *TechnologyRepository) FindByName(name string) (entity.Technology, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	var category entity.Category
+	var technology entity.Technology
 	err := cr.Conn.QueryRow(
 		ctx,
 		"SELECT c.id, c.name FROM categories c WHERE c.name = $1",
 		name,
-	).Scan(&category.ID, &category.Name)
+	).Scan(&technology.ID, &technology.Name)
 
 	if err == pgx.ErrNoRows {
-		return entity.Category{}, nil
+		return entity.Technology{}, nil
 	}
 
 	if err != nil {
-		return entity.Category{}, err
+		return entity.Technology{}, err
 	}
 
-	return category, nil
+	return technology, nil
 }
 
-func (cr *CategoryRepository) GetCategories() ([]entity.Category, error) {
-	var categoryList []entity.Category
-	var categoryObj entity.Category
+func (cr *TechnologyRepository) GetTechnologies() ([]entity.Technology, error) {
+	var technologyList []entity.Technology
+	var technologyObj entity.Technology
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	rows, err := cr.Conn.Query(
 		ctx,
-		"SELECT * FROM categories c",
+		"SELECT * FROM technologies t",
 	)
 	if err != nil {
-		return []entity.Category{}, err
+		return []entity.Technology{}, err
 	}
 
 	for rows.Next() {
 		err := rows.Scan(
-			&categoryObj.ID,
-			&categoryObj.Name,
+			&technologyObj.ID,
+			&technologyObj.Name,
 		)
 		if err != nil {
-			return []entity.Category{}, err
+			return []entity.Technology{}, err
 		}
-		categoryList = append(categoryList, categoryObj)
+		technologyList = append(technologyList, technologyObj)
 	}
 
-	return categoryList, nil
+	return technologyList, nil
 }
 
-func (cr *CategoryRepository) DeleteCategoryByID(id int) error {
+func (cr *CategoryRepository) DeleteTechnologyByID(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	_, err := cr.Conn.Exec(
 		ctx,
-		"DELETE FROM categories c WHERE c.id = $1",
+		"DELETE FROM technology t WHERE t.id = $1",
 		id,
 	)
 	if err != nil {
