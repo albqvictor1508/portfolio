@@ -40,22 +40,22 @@ func (cr *TechnologyRepository) FindByID(id int) (entity.Technology, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	var category entity.Category
+	var technology entity.Technology
 	err := cr.Conn.QueryRow(
 		ctx,
-		"SELECT c.id, c.name FROM categories c WHERE c.id = $1",
+		"SELECT t.id, t.name FROM technologies t WHERE t.id = $1",
 		id,
-	).Scan(&category.ID, &category.Name)
+	).Scan(&technology.ID, &technology.Name)
 
 	if err == pgx.ErrNoRows {
-		return entity.Category{}, nil
+		return entity.Technology{}, nil
 	}
 
 	if err != nil {
-		return entity.Category{}, err
+		return entity.Technology{}, err
 	}
 
-	return category, nil
+	return technology, nil
 }
 
 func (cr *CategoryRepository) FindByName(name string) (entity.Category, error) {
