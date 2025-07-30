@@ -16,5 +16,10 @@ GET {{baseUrl}}/categories/1
 ###
 DELETE {{baseUrl}}/categories/1
 
+###
+PUT {{baseUrl}}/categories/1
+
+
+
 
 
