@@ -9,25 +9,25 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-type CategoryRepository struct {
+type TechnologyRepository struct {
 	Conn *pgxpool.Pool
 }
 
-func NewCategory(conn *pgxpool.Pool) CategoryRepository {
-	return CategoryRepository{
+func NewTechnology(conn *pgxpool.Pool) TechnologyRepository {
+	return TechnologyRepository{
 		Conn: conn,
 	}
 }
 
-func (cr *CategoryRepository) Insert(category *entity.Category) (int, error) {
+func (cr *TechnologyRepository) Insert(technology *entity.Technology) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	var id int
 	err := cr.Conn.QueryRow(
 		ctx,
-		"INSERT INTO categories (name) VALUES ($1) RETURNING id",
-		category.Name,
+		"INSERT INTO technologies (name) VALUES ($1) RETURNING id",
+		technology.Name,
 	).Scan(&id)
 	if err != nil {
 		return 0, err
@@ -36,7 +36,7 @@ func (cr *CategoryRepository) Insert(category *entity.Category) (int, error) {
 	return id, nil
 }
 
-func (cr *CategoryRepository) FindByID(id int) (entity.Category, error) {
+func (cr *TechnologyRepository) FindByID(id int) (entity.Technology, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
