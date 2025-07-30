@@ -50,10 +50,3 @@ func (tf *TechnologyFunc) GetTechnologyByName(name string) (entity.Technology, e
 func (tf *TechnologyFunc) DeleteByID(id int) error {
 	return tf.repo.DeleteTechnologyByID(id)
 }
-
-func (tf *TechnologyFunc) UpdateTechnology(technology *entity.Technology) (int, error) {
-	if !isValidURL(technology.PhotoURL) {
-		return 0, errors.New("invalid photo url")
-	}
-	return tf.repo.Update(technology)
-}
