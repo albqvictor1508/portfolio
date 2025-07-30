@@ -1,0 +1,21 @@
+@baseUrl = http://localhost:3333
+
+POST {{baseUrl}}/categories
+Content-Type: application/json
+
+{
+  "name": "Back-end"
+}
+
+###
+GET {{baseUrl}}/technologies
+
+###
+GET {{baseUrl}}/technologies/1
+
+###
+DELETE {{baseUrl}}/technologies/1
+
+###
+PUT {{baseUrl}}/technologies/1
+
