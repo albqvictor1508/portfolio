@@ -4,7 +4,7 @@ POST {{baseUrl}}/categories
 Content-Type: application/json
 
 {
-  "name": "Full-Stack"
+  "name": "Back-end"
 }
 
 ###

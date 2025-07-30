@@ -42,7 +42,7 @@ func main() {
 	})
 	g.GET("/projects", ProjectController.GetProjects)
 	g.POST("/projects", ProjectController.CreateProject)
-	g.PUT("/projects/:id", ProjectController.CreateProject)
+	g.PUT("/projects/:id", ProjectController.UpdateProject)
 	g.DELETE("/projects/:id", ProjectController.CreateProject)
 
 	g.POST("/categories", CategoryController.CreateCategory)

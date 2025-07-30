@@ -54,22 +54,23 @@ func (p *projectRoute) UpdateProject(ctx *gin.Context) {
 	id, err := strconv.Atoi(vars)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
+			"error": "Invalid project ID",
 		})
+		return
 	}
 
-	var project *entity.Project
+	var project entity.Project
 	if err := ctx.ShouldBindJSON(&project); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
-	id, err := p.projectFunc.CreateProject(project)
-	if err != nil {
-		fmt.Print(err.Error())
-		ctx.JSON(850, err.Error())
+	project.ID = id
+
+	if _, err := p.projectFunc.UpdateProject(&project); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"id": id})
+	ctx.JSON(http.StatusOK, gin.H{"id": id})
 }

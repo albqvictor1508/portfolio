@@ -96,19 +96,21 @@ func (pr *ProjectRepository) Update(project *entity.Project) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	var id int
-	err := pr.Conn.QueryRow(ctx,
-		"UPDATE projects SET github_url = $1, demo_url = $2, is_pinned = $3, updated_at = NOW() WHERE id = $4",
+	_, err := pr.Conn.Exec(ctx,
+		"UPDATE projects SET name = $1, description = $2, github_url = $3, demo_url = $4, is_pinned = $5, category_id = $6, updated_at = NOW() WHERE id = $7",
+		project.Name,
+		project.Description,
 		project.GithubURL,
 		project.DemoURL,
 		project.IsPinned,
+		project.CategoryID,
 		project.ID,
-	).Scan(&id)
+	)
 	if err != nil {
 		return 0, err
 	}
 
-	return id, nil
+	return project.ID, nil
 }
 
 func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
