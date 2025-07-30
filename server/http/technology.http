@@ -4,7 +4,7 @@ POST {{baseUrl}}/technologies
 Content-Type: application/json
 
 {
-  "name": "Golang",
+  "name": "test 22",
   "photo_url": "https://duckduckgo.com/?t=ffab&q=golang&ia=images&iax=images&iai=https%3A%2F%2Fmillennia-solusi.id%2Fwp-content%2Fwebp-express%2Fwebp-images%2Fuploads%2F2022%2F09%2Fgolang-1.png.webp"
 }
 
@@ -18,5 +18,11 @@ GET {{baseUrl}}/technologies/1
 DELETE {{baseUrl}}/technologies/1
 
 ###
-PUT {{baseUrl}}/technologies/1
+PUT {{baseUrl}}/technologies/2
+Content-Type: application/json
+
+{
+  "name": "Node.js",
+  "photo_url": "https://duckduckgo.com/?t=ffab&q=golang&ia=images&iax=images&iai=https%3A%2F%2Fmillennia-solusi.id%2Fwp-content%2Fwebp-express%2Fwebp-images%2Fuploads%2F2022%2F09%2Fgolang-1.png.webp"
+}
 

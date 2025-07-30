@@ -50,3 +50,32 @@ func (tf *TechnologyFunc) GetTechnologyByName(name string) (entity.Technology, e
 func (tf *TechnologyFunc) DeleteByID(id int) error {
 	return tf.repo.DeleteTechnologyByID(id)
 }
+
+func (tf *TechnologyFunc) UpdateTechnology(t *entity.Technology) (int, error) {
+	technologyToUpdate, err := tf.repo.FindByID(t.ID)
+	if err != nil {
+		return 0, fmt.Errorf("error finding technology by id: %w", err)
+	}
+	if technologyToUpdate.ID == 0 {
+		return 0, errors.New("technology not found")
+	}
+
+	if len(t.Name) < 2 {
+		return 0, errors.New("the name must be at least 4 characters long")
+	}
+
+	if !isValidURL(t.PhotoURL) {
+		return 0, errors.New("invalid photo url")
+	}
+
+	existingTechnology, err := tf.repo.FindByName(t.Name)
+	if err != nil {
+		return 0, fmt.Errorf("error finding technology by name: %w", err)
+	}
+
+	if existingTechnology.ID != 0 && existingTechnology.ID != t.ID {
+		return 0, errors.New("a technology with this name already exists")
+	}
+
+	return tf.repo.Update(t)
+}

@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-ALTER TABLE technologies ADD COLUMN photo_url TEXT NOT NULL
+ALTER TABLE technologies DROP COLUMN photourl
 -- +goose StatementEnd
 
 -- +goose Down

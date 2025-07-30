@@ -127,31 +127,12 @@ func (cr *TechnologyRepository) DeleteTechnologyByID(id int) error {
 	return nil
 }
 
-func (cr *TechnologyRepository) Update(technology entity.Technology) (int, error) {
+func (cr *TechnologyRepository) Update(technology *entity.Technology) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	var id int
-	err := cr.Conn.QueryRow(
-		ctx,
-		"UPDATE technologies t SET t.name = $1, t.photo_url = $2 WHERE t.id = $3",
-		&technology.Name,
-		&technology.PhotoURL,
-		&technology.ID,
-	).Scan(&id)
-	if err != nil {
-		return 0, err
-	}
-
-	return id, nil
-}
-
-func (tr *TechnologyRepository) UpdateTecnology(technology *entity.Technology) (int, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-
-	_, err := tr.Conn.Exec(ctx,
-		"UPDATE technologies SET name = $1, photo_url = $2, updated_at = NOW() WHERE id = $3",
+	_, err := cr.Conn.Exec(ctx,
+		"UPDATE technologies SET name = $1, photo_url = $2 WHERE id = $3",
 		technology.Name,
 		technology.PhotoURL,
 		technology.ID,

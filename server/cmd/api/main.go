@@ -58,4 +58,9 @@ func main() {
 	g.GET("/technologies", TechnologyController.GetTechnologies)
 	g.GET("/technologies/:id", TechnologyController.FindByID)
 	g.DELETE("/technologies/:id", TechnologyController.DeleteByID)
+	g.PUT("/technologies/:id", TechnologyController.UpdateTechnology)
+
+	if err := g.Run(":3333"); err != nil {
+		log.Fatal("Fail to initialize server: ", err)
+	}
 }
