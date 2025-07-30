@@ -29,3 +29,6 @@ Content-Type: application/json
   "is_pinned": true
 }
 
+### Update Projects
+DELETE {{baseUrl}}/projects/6
+

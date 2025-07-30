@@ -74,3 +74,25 @@ func (p *projectRoute) UpdateProject(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, gin.H{"id": id})
 }
+
+func (p *projectRoute) DeleteProject(ctx *gin.Context) {
+	vars := ctx.Param("id")
+	id, err := strconv.Atoi(vars)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid project ID",
+		})
+		return
+	}
+
+	if err := p.projectFunc.DeleteProject(id); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"success": true,
+	})
+}
