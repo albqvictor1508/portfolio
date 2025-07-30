@@ -18,31 +18,42 @@ func NewTechnologyFunc(repo repository.TechnologyRepository) TechnologyFunc {
 	}
 }
 
-func (cf *TechnologyFunc) CreateTechnology(technology *entity.Technology) (int, error) {
-	existingTechnology, err := cf.repo.FindByName(technology.Name)
+func (tf *TechnologyFunc) CreateTechnology(technology *entity.Technology) (int, error) {
+	if !isValidURL(technology.PhotoURL) {
+		return 0, errors.New("invalid photo url")
+	}
+
+	existingTechnology, err := tf.repo.FindByName(technology.Name)
 	if err != nil {
-		return 0, fmt.Errorf("error checking for existing category: %w", err)
+		return 0, fmt.Errorf("error checking for existing technology: %w", err)
 	}
 
 	if existingTechnology.ID != 0 {
-		return 0, errors.New("category with this name already exists")
+		return 0, errors.New("technology with this name already exists")
 	}
 
-	return cf.repo.Insert(technology)
+	return tf.repo.Insert(technology)
 }
 
-func (cf *TechnologyFunc) GetTechnologies() ([]entity.Technology, error) {
-	return cf.repo.GetTechnologies()
+func (tf *TechnologyFunc) GetTechnologies() ([]entity.Technology, error) {
+	return tf.repo.GetTechnologies()
 }
 
-func (cf *TechnologyFunc) GetTechnologyByID(id int) (entity.Technology, error) {
-	return cf.repo.FindByID(id)
+func (tf *TechnologyFunc) GetTechnologyByID(id int) (entity.Technology, error) {
+	return tf.repo.FindByID(id)
 }
 
-func (cf *TechnologyFunc) GetTechnologyByName(name string) (entity.Technology, error) {
-	return cf.repo.FindByName(name)
+func (tf *TechnologyFunc) GetTechnologyByName(name string) (entity.Technology, error) {
+	return tf.repo.FindByName(name)
 }
 
-func (cf *TechnologyFunc) DeleteByID(id int) error {
-	return cf.repo.DeleteTechnologyByID(id)
+func (tf *TechnologyFunc) DeleteByID(id int) error {
+	return tf.repo.DeleteTechnologyByID(id)
+}
+
+func (tf *TechnologyFunc) UpdateTechnology(technology *entity.Technology) (int, error) {
+	if !isValidURL(technology.PhotoURL) {
+		return 0, errors.New("invalid photo url")
+	}
+	return tf.repo.Update(technology)
 }

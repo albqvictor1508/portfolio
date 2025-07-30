@@ -35,6 +35,10 @@ func main() {
 	ProjectFunction := function.NewProjectFunc(ProjectRepository, CategoryRepository)
 	ProjectController := routes.NewProjectRoute(ProjectFunction)
 
+	TechnologyRepository := repository.NewTechnology(conn)
+	TechnologyFunction := function.NewTechnologyFunc(TechnologyRepository)
+	TechnologyController := routes.NewTechnologyRoute(TechnologyFunction)
+
 	g.GET("/health", func(context *gin.Context) {
 		context.JSON(200, gin.H{
 			"health": "OK",
@@ -50,7 +54,8 @@ func main() {
 	g.GET("/categories/:id", CategoryController.FindByID)
 	g.DELETE("/categories/:id", CategoryController.DeleteByID)
 
-	if err := g.Run(":3333"); err != nil {
-		log.Fatal("Fail to initialize server: ", err)
-	}
+	g.POST("/technologies", TechnologyController.CreateTechnology)
+	g.GET("/technologies", TechnologyController.GetTechnologies)
+	g.GET("/technologies/:id", TechnologyController.FindByID)
+	g.DELETE("/technologies/:id", TechnologyController.DeleteByID)
 }

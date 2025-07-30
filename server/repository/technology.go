@@ -26,8 +26,9 @@ func (cr *TechnologyRepository) Insert(technology *entity.Technology) (int, erro
 	var id int
 	err := cr.Conn.QueryRow(
 		ctx,
-		"INSERT INTO technologies (name) VALUES ($1) RETURNING id",
+		"INSERT INTO technologies (name, photo_url) VALUES ($1, $2) RETURNING id",
 		technology.Name,
+		technology.PhotoURL,
 	).Scan(&id)
 	if err != nil {
 		return 0, err
@@ -43,9 +44,9 @@ func (cr *TechnologyRepository) FindByID(id int) (entity.Technology, error) {
 	var technology entity.Technology
 	err := cr.Conn.QueryRow(
 		ctx,
-		"SELECT t.id, t.name FROM technologies t WHERE t.id = $1",
+		"SELECT t.id, t.name, t.photo_url FROM technologies t WHERE t.id = $1",
 		id,
-	).Scan(&technology.ID, &technology.Name)
+	).Scan(&technology.ID, &technology.Name, &technology.PhotoURL)
 
 	if err == pgx.ErrNoRows {
 		return entity.Technology{}, nil
@@ -65,9 +66,9 @@ func (cr *TechnologyRepository) FindByName(name string) (entity.Technology, erro
 	var technology entity.Technology
 	err := cr.Conn.QueryRow(
 		ctx,
-		"SELECT c.id, c.name FROM categories c WHERE c.name = $1",
+		"SELECT t.id, t.name, t.photo_url FROM technologies t WHERE t.name = $1",
 		name,
-	).Scan(&technology.ID, &technology.Name)
+	).Scan(&technology.ID, &technology.Name, &technology.PhotoURL)
 
 	if err == pgx.ErrNoRows {
 		return entity.Technology{}, nil
@@ -82,23 +83,25 @@ func (cr *TechnologyRepository) FindByName(name string) (entity.Technology, erro
 
 func (cr *TechnologyRepository) GetTechnologies() ([]entity.Technology, error) {
 	var technologyList []entity.Technology
-	var technologyObj entity.Technology
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	rows, err := cr.Conn.Query(
 		ctx,
-		"SELECT * FROM technologies t",
+		"SELECT id, name, photo_url FROM technologies",
 	)
 	if err != nil {
 		return []entity.Technology{}, err
 	}
+	defer rows.Close()
 
 	for rows.Next() {
+		var technologyObj entity.Technology
 		err := rows.Scan(
 			&technologyObj.ID,
 			&technologyObj.Name,
+			&technologyObj.PhotoURL,
 		)
 		if err != nil {
 			return []entity.Technology{}, err
@@ -115,7 +118,7 @@ func (cr *TechnologyRepository) DeleteTechnologyByID(id int) error {
 
 	_, err := cr.Conn.Exec(
 		ctx,
-		"DELETE FROM technology t WHERE t.id = $1",
+		"DELETE FROM technologies WHERE id = $1",
 		id,
 	)
 	if err != nil {

@@ -3,8 +3,6 @@ package function
 import (
 	"errors"
 	"fmt"
-	"log"
-	"net/http"
 
 	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/repository"
@@ -24,50 +22,41 @@ func NewProjectFunc(projectRepo repository.ProjectRepository, categoryRepo repos
 
 func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 	if len(p.Name) < 4 {
-		return 0, errors.New("THE NAME MUST TO BE BETWEEN 3 CHARACTERS")
+		return 0, errors.New("the name must be at least 4 characters long")
 	}
 
 	if len(p.Description) < 100 {
-		return 0, errors.New("THE Description MUST TO BE BETWEEN 100 CHARACTERS")
+		return 0, errors.New("the description must be at least 100 characters long")
 	}
 
-	if _, err := http.Get(p.GithubURL); p.GithubURL != "" && err != nil {
-		errorMessage := fmt.Sprintf("INVALID GITHUB URL: %v", err)
-		return 0, errors.New(errorMessage)
+	if !isValidURL(p.GithubURL) {
+		return 0, errors.New("invalid github url")
 	}
 
-	if _, err := http.Get(p.DemoURL); p.DemoURL != "" && err != nil {
-		log.Fatal(err)
-		return 0, errors.New("INVALID DEMO URL")
+	if !isValidURL(p.DemoURL) {
+		return 0, errors.New("invalid demo url")
 	}
 
 	project, err := pf.projectRepo.FindByName(p.Name)
 	if err != nil {
-		errorMessage := fmt.Sprintf("ERROR TO FIND PROJECT BY NAME IN REPOSITORY: %v", err)
-		return 0, errors.New(errorMessage)
+		return 0, fmt.Errorf("error finding project by name: %w", err)
 	}
 
-	if project != (entity.Project{}) {
-		return 0, errors.New("PROJECT WITH THIS NAME ALREADY EXISTS")
+	if project.ID != 0 {
+		return 0, errors.New("a project with this name already exists")
 	}
+
 	if p.CategoryID != nil {
 		category, err := pf.categoryRepo.FindByID(*p.CategoryID)
 		if err != nil {
-			errorMessage := fmt.Sprintf("ERROR TO FIND CATEGORY BY ID: %v", err)
-			return 0, errors.New(errorMessage)
+			return 0, fmt.Errorf("error finding category by id: %w", err)
 		}
-
 		if category.ID == 0 {
-			return 0, errors.New("CATEGORY WITH THIS ID NOT EXISTS")
+			return 0, errors.New("category not found")
 		}
 	}
 
-	id, err := pf.projectRepo.Insert(p)
-	if err != nil {
-		errorMessage := fmt.Sprintf("ERROR TO INSERT PROJECT IN REPOSITORY: %v", err)
-		return 0, errors.New(errorMessage)
-	}
-	return id, nil
+	return pf.projectRepo.Insert(p)
 }
 
 func (pf *ProjectFunction) GetProjects() ([]entity.Project, error) {
@@ -88,23 +77,19 @@ func (pf *ProjectFunction) UpdateProject(p *entity.Project) (int, error) {
 	}
 
 	if len(p.Name) < 4 {
-		return 0, errors.New("THE NAME MUST TO BE BETWEEN 3 CHARACTERS")
+		return 0, errors.New("the name must be at least 4 characters long")
 	}
 
 	if len(p.Description) < 100 {
-		return 0, errors.New("THE Description MUST TO BE BETWEEN 100 CHARACTERS")
+		return 0, errors.New("the description must be at least 100 characters long")
 	}
 
-	if p.GithubURL != "" {
-		if _, err := http.Get(p.GithubURL); err != nil {
-			return 0, fmt.Errorf("invalid github url: %w", err)
-		}
+	if !isValidURL(p.GithubURL) {
+		return 0, errors.New("invalid github url")
 	}
 
-	if p.DemoURL != "" {
-		if _, err := http.Get(p.DemoURL); err != nil {
-			return 0, fmt.Errorf("invalid demo url: %w", err)
-		}
+	if !isValidURL(p.DemoURL) {
+		return 0, errors.New("invalid demo url")
 	}
 
 	existingProject, err := pf.projectRepo.FindByName(p.Name)
@@ -126,9 +111,5 @@ func (pf *ProjectFunction) UpdateProject(p *entity.Project) (int, error) {
 		}
 	}
 
-	id, err := pf.projectRepo.Update(p)
-	if err != nil {
-		return 0, fmt.Errorf("error updating project: %w", err)
-	}
-	return id, nil
+	return pf.projectRepo.Update(p)
 }

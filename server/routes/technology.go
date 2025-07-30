@@ -29,14 +29,13 @@ func (tr *TechnologyRoutes) CreateTechnology(ctx *gin.Context) {
 
 	id, err := tr.technologyFunc.CreateTechnology(technology)
 	if err != nil {
-		errorMessage := fmt.Sprintf("ERROR ON CREATE CATEGORY: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": errorMessage,
+			"error": err.Error(),
 		})
 		return
 	}
 	ctx.JSON(http.StatusCreated, gin.H{
-		"category_id": id,
+		"technology_id": id,
 	})
 }
 
@@ -71,8 +70,8 @@ func (tr *TechnologyRoutes) FindByID(ctx *gin.Context) {
 	}
 
 	if technology.ID == 0 {
-		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": "category with this id not exists",
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"error": "technology with this id not exists",
 		})
 		return
 	}
@@ -100,4 +99,30 @@ func (tr *TechnologyRoutes) DeleteByID(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{
 		"success": true,
 	})
+}
+
+func (tr *TechnologyRoutes) UpdateTechnology(ctx *gin.Context) {
+	vars := ctx.Param("id")
+	id, err := strconv.Atoi(vars)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid technology ID",
+		})
+		return
+	}
+
+	var technology entity.Technology
+	if err := ctx.ShouldBindJSON(&technology); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	technology.ID = id
+
+	if _, err := tr.technologyFunc.UpdateTechnology(&technology); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{"id": id})
 }
