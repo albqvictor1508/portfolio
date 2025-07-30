@@ -47,3 +47,20 @@ func (p *projectRoute) GetProjects(ctx *gin.Context) {
 		"projects": projects,
 	})
 }
+
+func (p *projectRoute) UpdateProject(ctx *gin.Context) {
+	var project *entity.Project
+	if err := ctx.ShouldBindJSON(&project); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
+	id, err := p.projectFunc.CreateProject(project)
+	if err != nil {
+		fmt.Print(err.Error())
+		ctx.JSON(850, err.Error())
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, gin.H{"id": id})
+}
