@@ -11,23 +11,23 @@ import (
 )
 
 type TechnologyRoutes struct {
-	technologyFunc function.
+	technologyFunc function.TechnologyFunc
 }
 
-func NewTechnologyRoute(categoryFunc function.CategoryFunc) CategoryRoutes {
-	return CategoryRoutes{
-		categoryFunc: categoryFunc,
+func NewTechnologyRoute(technologyFunc function.TechnologyFunc) TechnologyRoutes {
+	return TechnologyRoutes{
+		technologyFunc: technologyFunc,
 	}
 }
 
-func (cr *CategoryRoutes) CreateTechnology(ctx *gin.Context) {
+func (tr *TechnologyRoutes) CreateTechnology(ctx *gin.Context) {
 	var technology *entity.Technology
 	if err := ctx.ShouldBindJSON(&technology); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
-	id, err := cr.tech.CreateTechnology(technology)
+	id, err := tr.technologyFunc.CreateTechnology(technology)
 	if err != nil {
 		errorMessage := fmt.Sprintf("ERROR ON CREATE CATEGORY: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -40,8 +40,8 @@ func (cr *CategoryRoutes) CreateTechnology(ctx *gin.Context) {
 	})
 }
 
-func (cr *CategoryRoutes) GetCategories(ctx *gin.Context) {
-	categories, err := cr.categoryFunc.GetCategories()
+func (tr *TechnologyRoutes) GetTechnologies(ctx *gin.Context) {
+	technologies, err := tr.technologyFunc.GetTechnologies()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
@@ -49,11 +49,11 @@ func (cr *CategoryRoutes) GetCategories(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
-		"categories": categories,
+		"technologies": technologies,
 	})
 }
 
-func (cr *CategoryRoutes) FindByID(ctx *gin.Context) {
+func (tr *TechnologyRoutes) FindByID(ctx *gin.Context) {
 	vars := ctx.Param("id")
 	id, err := strconv.Atoi(vars)
 	if err != nil {
@@ -62,7 +62,7 @@ func (cr *CategoryRoutes) FindByID(ctx *gin.Context) {
 		})
 	}
 
-	category, err := cr.categoryFunc.GetCategoryByID(id)
+	technology, err := tr.technologyFunc.GetTechnologyByID(id)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
@@ -70,18 +70,18 @@ func (cr *CategoryRoutes) FindByID(ctx *gin.Context) {
 		return
 	}
 
-	if category.ID == 0 {
+	if technology.ID == 0 {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": "category with this id not exists",
 		})
 		return
 	}
 	ctx.JSON(http.StatusOK, gin.H{
-		"category": category,
+		"technology": technology,
 	})
 }
 
-func (cr *CategoryRoutes) DeleteByID(ctx *gin.Context) {
+func (tr *TechnologyRoutes) DeleteByID(ctx *gin.Context) {
 	vars := ctx.Param("id")
 	id, err := strconv.Atoi(vars)
 	if err != nil {
@@ -90,7 +90,7 @@ func (cr *CategoryRoutes) DeleteByID(ctx *gin.Context) {
 		})
 	}
 
-	if err := cr.categoryFunc.DeleteByID(id); err != nil {
+	if err := tr.technologyFunc.DeleteByID(id); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
 		})

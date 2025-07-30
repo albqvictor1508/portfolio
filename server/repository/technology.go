@@ -109,7 +109,7 @@ func (cr *TechnologyRepository) GetTechnologies() ([]entity.Technology, error) {
 	return technologyList, nil
 }
 
-func (cr *CategoryRepository) DeleteTechnologyByID(id int) error {
+func (cr *TechnologyRepository) DeleteTechnologyByID(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
