@@ -3,6 +3,7 @@ package routes
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/function"
@@ -53,5 +54,50 @@ func (cr *CategoryRoutes) GetCategories(ctx *gin.Context) {
 }
 
 func (cr *CategoryRoutes) FindByID(ctx *gin.Context) {
-	// category, err := cr.categoryFunc.
+	vars := ctx.Param("id")
+	id, err := strconv.Atoi(vars)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	category, err := cr.categoryFunc.GetCategoryByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err,
+		})
+		return
+	}
+
+	if category.ID == 0 {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": "category with this id not exists",
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"category": category,
+	})
+}
+
+func (cr *CategoryRoutes) DeleteByID(ctx *gin.Context) {
+	vars := ctx.Param("id")
+	id, err := strconv.Atoi(vars)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	if err := cr.categoryFunc.DeleteByID(id); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error": err,
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"success": true,
+	})
 }

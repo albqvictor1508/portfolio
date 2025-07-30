@@ -43,7 +43,6 @@ func (cf *CategoryFunc) GetCategoryByName(name string) (entity.Category, error) 
 	return cf.repo.FindByName(name)
 }
 
-/*
-func (cf *CategoryFunc) GetCategoryByName(name string) error {
+func (cf *CategoryFunc) DeleteByID(id int) error {
+	return cf.repo.DeleteCategoryByID(id)
 }
-*/

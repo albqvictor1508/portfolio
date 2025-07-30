@@ -45,6 +45,8 @@ func main() {
 
 	g.POST("/categories", CategoryController.CreateCategory)
 	g.GET("/categories", CategoryController.GetCategories)
+	g.GET("/categories/:id", CategoryController.FindByID)
+	g.DELETE("/categories/:id", CategoryController.DeleteByID)
 
 	if err := g.Run(":3333"); err != nil {
 		log.Fatal("Fail to initialize server: ", err)

@@ -10,4 +10,11 @@ Content-Type: application/json
 ###
 GET {{baseUrl}}/categories
 
+###
+GET {{baseUrl}}/categories/1
+
+###
+DELETE {{baseUrl}}/categories/5
+
+
 
