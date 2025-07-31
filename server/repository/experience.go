@@ -20,19 +20,20 @@ func (er *ExperienceRepository) NewExperience(conn *pgxpool.Pool) ExperienceRepo
 	}
 }
 
-func (er *ExperienceRepository) Insert(project *entity.Project) (int, error) {
+func (er *ExperienceRepository) Insert(experience *entity.Experience) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	var id int
 	err := er.Conn.QueryRow(ctx,
-		"INSERT INTO experiences (name, description, github_url, demo_url, is_pinned, category_id) VALUES($1, $2, $3, $4 ,$5, $6) RETURNING id",
-		project.Name,
-		project.Description,
-		project.GithubURL,
-		project.DemoURL,
-		project.IsPinned,
-		project.CategoryID,
+		"INSERT INTO experiences (name, description, photo_url, role, start_date, end_date, category_id) VALUES($1, $2, $3, $4 ,$5, $6) RETURNING id",
+		&experience.CompanyName,
+		experience.Description,
+		experience.PhotoURL,
+		experience.Role,
+		experience.StartDate,
+		experience.EndDate,
+		experience.CategoryID,
 	).Scan(&id)
 	if err != nil {
 		return 0, err
@@ -41,35 +42,33 @@ func (er *ExperienceRepository) Insert(project *entity.Project) (int, error) {
 	return id, nil
 }
 
-func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
+func (pr *ExperienceRepository) FindByName(name string) (entity.Experience, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	project := entity.Project{}
+	experience := entity.Experience{}
 	err := pr.Conn.QueryRow(
 		ctx,
-		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects WHERE name = $1",
+		"SELECT id, company_name, description, photo_url, start_date, end_date, category_id, created_at, updated_at FROM experiences WHERE company_name = $1",
 		name,
 	).Scan(
-		&project.ID,
-		&project.Name,
-		&project.Description,
-		&project.GithubURL,
-		&project.DemoURL,
-		&project.IsPinned,
-		&project.CategoryID,
-		&project.CreatedAt,
-		&project.UpdatedAt,
+		&experience.ID,
+		&experience.CompanyName,
+		&experience.Description,
+		&experience.PhotoURL,
+		&experience.StartDate,
+		&experience.EndDate,
+		&experience.CategoryID,
 	)
 	if err == pgx.ErrNoRows {
-		return entity.Project{}, nil
+		return entity.Experience{}, nil
 	}
 
 	if err != nil {
-		return entity.Project{}, err
+		return entity.Experience{}, err
 	}
 
-	return project, nil
+	return experience, nil
 }
 
 func (pr *ProjectRepository) Delete(id int) error {
