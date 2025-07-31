@@ -7,32 +7,32 @@ POST {{baseUrl}}/experiences
 Content-Type: application/json
 
 {
-  "company_name": "teste experience my boy",
+  "company_name": "loucura company",
   "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee",
   "role": "Back-end Developer",
   "photo_url": "https://github.com/albqvictor1508/plush-api",
   "category_id": 4,
-  "start_date": "2025-08-19",
-  "end_date": "2025-08-19"
+  "start_date": "2025-08-19T00:00:00Z",
+  "end_date": "2025-08-19T00:00:00Z"
 }
 
 ### Get Experiences
 GET {{baseUrl}}/experiences
 
 ### Update Experiences
-PUT {{baseUrl}}/experiences/8
+PUT {{baseUrl}}/experiences/1
 Content-Type: application/json
 
 {
-  "company_name": "teste experience my boy",
+  "company_name": "agility",
   "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee",
   "role": "Back-end Developer",
   "photo_url": "https://github.com/albqvictor1508/plush-api",
   "category_id": 6,
-  "start_date": 6,
-  "end_date": 6,
+  "start_date": "2025-08-19T00:00:00Z",
+  "end_date": "2025-08-19T00:00:00Z"
 }
 
 ### Delete Experiences
-DELETE {{baseUrl}}/experiences/6
+DELETE {{baseUrl}}/experiences/1
 

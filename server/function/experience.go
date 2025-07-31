@@ -30,16 +30,16 @@ func (ef *ExperienceFunction) CreateExperience(e *entity.Experience) (int, error
 	}
 
 	if e.PhotoURL != nil && !isValidURL(*e.PhotoURL) {
-		return 0, errors.New("invalid github url")
+		return 0, errors.New("invalid photo url")
 	}
 
 	experience, err := ef.experienceRepo.FindByName(e.CompanyName)
 	if err != nil {
-		return 0, fmt.Errorf("error finding project by name: %w", err)
+		return 0, fmt.Errorf("error finding experience by name: %w", err)
 	}
 
 	if experience.ID != 0 {
-		return 0, errors.New("a project with this name already exists")
+		return 0, errors.New("a experience with this name already exists")
 	}
 
 	if e.CategoryID != nil {
@@ -64,10 +64,10 @@ func (pf *ExperienceFunction) DeleteExperience(id int) error {
 }
 
 func (ef *ExperienceFunction) UpdateExperience(e *entity.Experience) (int, error) {
-	experienceToUpdate, err := ef.experienceRepo.FindByID(e.ID)
+	experienceToUpdate, _ := ef.experienceRepo.FindByID(e.ID)
 
 	if experienceToUpdate.ID == 0 {
-		return 0, errors.New("project not found")
+		return 0, errors.New("experience not found")
 	}
 
 	if len(e.CompanyName) < 3 {

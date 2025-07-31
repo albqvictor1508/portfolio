@@ -97,7 +97,7 @@ func (er *ExperienceRepository) Update(experience *entity.Experience) (int, erro
 	defer cancel()
 
 	_, err := er.Conn.Exec(ctx,
-		"UPDATE experiences SET company_name = $1, description = $2, photo_url = $3, role = $4, start_date = $5, end_date = $6, category_id = $7, updated_at = NOW() WHERE id = $8",
+		"UPDATE experiences SET company_name = $1, description = $2, photo_url = $3, role = $4, start_date = $5, end_date = $6, category_id = $7 WHERE id = $8",
 		experience.CompanyName,
 		experience.Description,
 		experience.PhotoURL,
