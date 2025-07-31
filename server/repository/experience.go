@@ -14,7 +14,7 @@ type ExperienceRepository struct {
 	Conn *pgxpool.Pool
 }
 
-func (er *ExperienceRepository) NewExperience(conn *pgxpool.Pool) ExperienceRepository {
+func NewExperience(conn *pgxpool.Pool) ExperienceRepository {
 	return ExperienceRepository{
 		Conn: conn,
 	}

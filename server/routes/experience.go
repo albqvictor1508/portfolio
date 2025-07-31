@@ -23,6 +23,7 @@ func NewExperienceRoutes(experienceFunc function.ExperienceFunction) ExperienceR
 func (e *ExperienceRoutes) CreateExperience(ctx *gin.Context) {
 	var experience *entity.Experience
 	if err := ctx.ShouldBindJSON(&experience); err != nil {
+		fmt.Errorf("Error to format request.body: %v", err)
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
@@ -96,3 +97,4 @@ func (e *ExperienceRoutes) DeleteExperience(ctx *gin.Context) {
 		"success": true,
 	})
 }
+
