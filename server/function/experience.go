@@ -6,6 +6,7 @@ import (
 
 	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/repository"
+	"github.com/albqvictor1508/portfolio/utils"
 )
 
 type ExperienceFunction struct {
@@ -29,7 +30,7 @@ func (ef *ExperienceFunction) CreateExperience(e *entity.Experience) (int, error
 		return 0, errors.New("the description must be at least 100 characters long")
 	}
 
-	if e.PhotoURL != nil && !isValidURL(*e.PhotoURL) {
+	if e.PhotoURL != nil && !utils.IsValidURL(*e.PhotoURL) {
 		return 0, errors.New("invalid photo url")
 	}
 
@@ -78,7 +79,7 @@ func (ef *ExperienceFunction) UpdateExperience(e *entity.Experience) (int, error
 		return 0, errors.New("the description must be at least 100 characters long")
 	}
 
-	if e.PhotoURL != nil && !isValidURL(*e.PhotoURL) {
+	if e.PhotoURL != nil && !utils.IsValidURL(*e.PhotoURL) {
 		return 0, errors.New("invalid PhotoURL")
 	}
 

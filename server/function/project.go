@@ -6,6 +6,7 @@ import (
 
 	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/repository"
+	"github.com/albqvictor1508/portfolio/utils"
 )
 
 type ProjectFunction struct {
@@ -31,11 +32,11 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 		return 0, errors.New("the description must be at least 100 characters long")
 	}
 
-	if !isValidURL(p.GithubURL) {
+	if !utils.IsValidURL(p.GithubURL) {
 		return 0, errors.New("invalid github url")
 	}
 
-	if !isValidURL(p.DemoURL) {
+	if !utils.IsValidURL(p.DemoURL) {
 		return 0, errors.New("invalid demo url")
 	}
 
@@ -98,11 +99,11 @@ func (pf *ProjectFunction) UpdateProject(p *entity.Project) (int, error) {
 		return 0, errors.New("the description must be at least 100 characters long")
 	}
 
-	if !isValidURL(p.GithubURL) {
+	if !utils.IsValidURL(p.GithubURL) {
 		return 0, errors.New("invalid github url")
 	}
 
-	if !isValidURL(p.DemoURL) {
+	if !utils.IsValidURL(p.DemoURL) {
 		return 0, errors.New("invalid demo url")
 	}
 
