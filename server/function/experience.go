@@ -55,50 +55,44 @@ func (ef *ExperienceFunction) CreateExperience(e *entity.Experience) (int, error
 	return ef.experienceRepo.Insert(e)
 }
 
-func (pf *ProjectFunction) GetProjects() ([]entity.Project, error) {
-	return pf.projectRepo.GetProjects()
+func (ef *ExperienceFunction) GetExperiences() ([]entity.Experience, error) {
+	return ef.experienceRepo.GetExperiences()
 }
 
-func (pf *ProjectFunction) DeleteProject(id int) error {
-	return pf.projectRepo.Delete(id)
+func (pf *ExperienceFunction) DeleteExperience(id int) error {
+	return pf.experienceRepo.Delete(id)
 }
 
-func (pf *ProjectFunction) UpdateProject(p *entity.Project) (int, error) {
-	projectToUpdate, err := pf.projectRepo.FindByID(p.ID)
-	if err != nil {
-		return 0, fmt.Errorf("error finding project by id: %w", err)
-	}
-	if projectToUpdate.ID == 0 {
+func (ef *ExperienceFunction) UpdateExperience(e *entity.Experience) (int, error) {
+	experienceToUpdate, err := ef.experienceRepo.FindByID(e.ID)
+
+	if experienceToUpdate.ID == 0 {
 		return 0, errors.New("project not found")
 	}
 
-	if len(p.Name) < 4 {
-		return 0, errors.New("the name must be at least 4 characters long")
+	if len(e.CompanyName) < 3 {
+		return 0, errors.New("the name must be at least 3 characters long")
 	}
 
-	if len(p.Description) < 100 {
+	if len(e.Description) < 100 {
 		return 0, errors.New("the description must be at least 100 characters long")
 	}
 
-	if !isValidURL(p.GithubURL) {
-		return 0, errors.New("invalid github url")
+	if !isValidURL(e.PhotoURL) {
+		return 0, errors.New("invalid PhotoURL")
 	}
 
-	if !isValidURL(p.DemoURL) {
-		return 0, errors.New("invalid demo url")
-	}
-
-	existingProject, err := pf.projectRepo.FindByName(p.Name)
+	existingExperience, err := ef.experienceRepo.FindByName(e.CompanyName)
 	if err != nil {
-		return 0, fmt.Errorf("error finding project by name: %w", err)
+		return 0, fmt.Errorf("error finding experience by name: %w", err)
 	}
 
-	if existingProject.ID != 0 && existingProject.ID != p.ID {
-		return 0, errors.New("a project with this name already exists")
+	if existingExperience.ID != 0 && existingExperience.ID != p.ID {
+		return 0, errors.New("a experience with this name already exists")
 	}
 
-	if p.CategoryID != nil {
-		category, err := pf.categoryRepo.FindByID(*p.CategoryID)
+	if e.CategoryID != nil {
+		category, err := ef.categoryRepo.FindByID(*e.CategoryID)
 		if err != nil {
 			return 0, fmt.Errorf("error finding category by id: %w", err)
 		}
@@ -107,5 +101,5 @@ func (pf *ProjectFunction) UpdateProject(p *entity.Project) (int, error) {
 		}
 	}
 
-	return pf.projectRepo.Update(p)
+	return ef.experienceRepo.Update(e)
 }
