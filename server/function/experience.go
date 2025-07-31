@@ -29,7 +29,7 @@ func (ef *ExperienceFunction) CreateExperience(e *entity.Experience) (int, error
 		return 0, errors.New("the description must be at least 100 characters long")
 	}
 
-	if !isValidURL(e.PhotoURL) {
+	if e.PhotoURL != nil && !isValidURL(*e.PhotoURL) {
 		return 0, errors.New("invalid github url")
 	}
 
@@ -78,7 +78,7 @@ func (ef *ExperienceFunction) UpdateExperience(e *entity.Experience) (int, error
 		return 0, errors.New("the description must be at least 100 characters long")
 	}
 
-	if !isValidURL(e.PhotoURL) {
+	if e.PhotoURL != nil && !isValidURL(*e.PhotoURL) {
 		return 0, errors.New("invalid PhotoURL")
 	}
 
@@ -87,7 +87,7 @@ func (ef *ExperienceFunction) UpdateExperience(e *entity.Experience) (int, error
 		return 0, fmt.Errorf("error finding experience by name: %w", err)
 	}
 
-	if existingExperience.ID != 0 && existingExperience.ID != p.ID {
+	if existingExperience.ID != 0 && existingExperience.ID != e.ID {
 		return 0, errors.New("a experience with this name already exists")
 	}
 

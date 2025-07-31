@@ -5,7 +5,7 @@ import "time"
 type Experience struct {
 	ID          int       `json:"id"`
 	CompanyName string    `json:"company_name"`
-	PhotoURL    string    `json:"photo_url"`
+	PhotoURL    *string   `json:"photo_url,omitempty"`
 	Description string    `json:"description"`
 	Role        string    `json:"role"`
 	CategoryID  *int      `json:"category_id,omitempty"`

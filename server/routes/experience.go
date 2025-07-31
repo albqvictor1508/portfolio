@@ -20,14 +20,14 @@ func NewExperienceRoutes(experienceFunc function.ExperienceFunction) ExperienceR
 	}
 }
 
-func (p *projectRoute) CreateProject(ctx *gin.Context) {
-	var project *entity.Project
-	if err := ctx.ShouldBindJSON(&project); err != nil {
+func (e *ExperienceRoutes) CreateExperience(ctx *gin.Context) {
+	var experience *entity.Experience
+	if err := ctx.ShouldBindJSON(&experience); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
-	id, err := p.projectFunc.CreateProject(project)
+	id, err := e.experienceFunc.CreateExperience(experience)
 	if err != nil {
 		fmt.Print(err.Error())
 		ctx.JSON(850, err.Error())
@@ -37,37 +37,37 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, gin.H{"id": id})
 }
 
-func (p *projectRoute) GetProjects(ctx *gin.Context) {
-	projects, err := p.projectFunc.GetProjects()
+func (e *ExperienceRoutes) GetExperiences(ctx *gin.Context) {
+	experiences, err := e.experienceFunc.GetExperiences()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, err.Error())
 		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"projects": projects,
+		"experiences": experiences,
 	})
 }
 
-func (p *projectRoute) UpdateProject(ctx *gin.Context) {
+func (e *ExperienceRoutes) UpdateExperience(ctx *gin.Context) {
 	vars := ctx.Param("id")
 	id, err := strconv.Atoi(vars)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": "Invalid project ID",
+			"error": "Invalid experience ID",
 		})
 		return
 	}
 
-	var project entity.Project
-	if err := ctx.ShouldBindJSON(&project); err != nil {
+	var experience entity.Experience
+	if err := ctx.ShouldBindJSON(&experience); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
-	project.ID = id
+	experience.ID = id
 
-	if _, err := p.projectFunc.UpdateProject(&project); err != nil {
+	if _, err := e.experienceFunc.UpdateExperience(&experience); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
@@ -75,17 +75,17 @@ func (p *projectRoute) UpdateProject(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"id": id})
 }
 
-func (p *projectRoute) DeleteProject(ctx *gin.Context) {
+func (e *ExperienceRoutes) DeleteExperience(ctx *gin.Context) {
 	vars := ctx.Param("id")
 	id, err := strconv.Atoi(vars)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": "Invalid project ID",
+			"error": "Invalid experience ID",
 		})
 		return
 	}
 
-	if err := p.projectFunc.DeleteProject(id); err != nil {
+	if err := e.experienceFunc.DeleteExperience(id); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err,
 		})

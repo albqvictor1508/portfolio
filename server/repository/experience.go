@@ -26,7 +26,7 @@ func (er *ExperienceRepository) Insert(experience *entity.Experience) (int, erro
 
 	var id int
 	err := er.Conn.QueryRow(ctx,
-		"INSERT INTO experiences (name, description, photo_url, role, start_date, end_date, category_id) VALUES($1, $2, $3, $4 ,$5, $6) RETURNING id",
+		"INSERT INTO experiences (company_name, description, photo_url, role, start_date, end_date, category_id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id",
 		&experience.CompanyName,
 		experience.Description,
 		experience.PhotoURL,
@@ -49,13 +49,14 @@ func (er *ExperienceRepository) FindByName(name string) (entity.Experience, erro
 	experience := entity.Experience{}
 	err := er.Conn.QueryRow(
 		ctx,
-		"SELECT id, company_name, description, photo_url, start_date, end_date, category_id, created_at, updated_at FROM experiences WHERE company_name = $1",
+		"SELECT id, company_name, description, photo_url, role, start_date, end_date, category_id FROM experiences WHERE company_name = $1",
 		name,
 	).Scan(
 		&experience.ID,
 		&experience.CompanyName,
 		&experience.Description,
 		&experience.PhotoURL,
+		&experience.Role,
 		&experience.StartDate,
 		&experience.EndDate,
 		&experience.CategoryID,
@@ -96,10 +97,11 @@ func (er *ExperienceRepository) Update(experience *entity.Experience) (int, erro
 	defer cancel()
 
 	_, err := er.Conn.Exec(ctx,
-		"UPDATE experiences SET company_name = $1, description = $2, photo_url = $3,  start_date = $4, end_date = $5,category_id = $6, updated_at = NOW() WHERE id = $7",
+		"UPDATE experiences SET company_name = $1, description = $2, photo_url = $3, role = $4, start_date = $5, end_date = $6, category_id = $7, updated_at = NOW() WHERE id = $8",
 		experience.CompanyName,
 		experience.Description,
 		experience.PhotoURL,
+		experience.Role,
 		experience.StartDate,
 		experience.EndDate,
 		experience.CategoryID,
@@ -119,10 +121,17 @@ func (er *ExperienceRepository) FindByID(id int) (entity.Experience, error) {
 	experience := entity.Experience{}
 	err := er.Conn.QueryRow(
 		ctx,
-		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM experiences WHERE id = $1",
+		"SELECT id, company_name, description, photo_url, role, start_date, end_date, category_id FROM experiences WHERE id = $1",
 		id,
 	).Scan(
 		&experience.ID,
+		&experience.CompanyName,
+		&experience.Description,
+		&experience.PhotoURL,
+		&experience.Role,
+		&experience.StartDate,
+		&experience.EndDate,
+		&experience.CategoryID,
 	)
 	if err == pgx.ErrNoRows {
 		return entity.Experience{}, nil
@@ -143,7 +152,7 @@ func (pr *ExperienceRepository) GetExperiences() ([]entity.Experience, error) {
 
 	rows, err := pr.Conn.Query(
 		ctx,
-		"SELECT id, company_name, description, photo_url, category_id, start_date, end_date FROM experiences",
+		"SELECT id, company_name, description, photo_url, role, category_id, start_date, end_date FROM experiences",
 	)
 	if err != nil {
 		return []entity.Experience{}, err
@@ -157,6 +166,7 @@ func (pr *ExperienceRepository) GetExperiences() ([]entity.Experience, error) {
 			&experienceObj.CompanyName,
 			&experienceObj.Description,
 			&experienceObj.PhotoURL,
+			&experienceObj.Role,
 			&experienceObj.CategoryID,
 			&experienceObj.StartDate,
 			&experienceObj.EndDate,

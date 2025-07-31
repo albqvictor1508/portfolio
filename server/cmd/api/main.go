@@ -31,6 +31,10 @@ func main() {
 	CategoryFunction := function.NewCategoryFunc(CategoryRepository)
 	CategoryController := routes.NewCategoryRoute(CategoryFunction)
 
+	ExperienceRepository := repository.NewExperience(conn)
+	ExperienceFunc := function.NewExperienceFunc(ExperienceRepository, CategoryRepository)
+	ExperienceController := routes.NewExperienceRoutes(ExperienceFunc)
+
 	ProjectRepository := repository.NewProjectRepo(conn)
 	ProjectFunction := function.NewProjectFunc(ProjectRepository, CategoryRepository)
 	ProjectController := routes.NewProjectRoute(ProjectFunction)
@@ -48,6 +52,11 @@ func main() {
 	g.POST("/projects", ProjectController.CreateProject)
 	g.PUT("/projects/:id", ProjectController.UpdateProject)
 	g.DELETE("/projects/:id", ProjectController.DeleteProject)
+
+	g.GET("/experiences", ExperienceController.GetExperiences)
+	g.POST("/experiences", ExperienceController.CreateExperience)
+	g.PUT("/experiences/:id", ExperienceController.UpdateExperience)
+	g.DELETE("/experiences/:id", ExperienceController.DeleteExperience)
 
 	g.POST("/categories", CategoryController.CreateCategory)
 	g.GET("/categories", CategoryController.GetCategories)
