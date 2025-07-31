@@ -52,6 +52,7 @@ func main() {
 	g.POST("/projects", ProjectController.CreateProject)
 	g.PUT("/projects/:id", ProjectController.UpdateProject)
 	g.DELETE("/projects/:id", ProjectController.DeleteProject)
+	g.GET("/projects/:id", ProjectController.FindByID)
 
 	g.GET("/experiences", ExperienceController.GetExperiences)
 	g.POST("/experiences", ExperienceController.CreateExperience)

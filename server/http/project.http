@@ -36,3 +36,6 @@ Content-Type: application/json
 ### Update Projects
 DELETE {{baseUrl}}/projects/6
 
+### Get Project By ID
+GET {{baseUrl}}/projects/8
+
