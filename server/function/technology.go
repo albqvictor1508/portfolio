@@ -6,6 +6,7 @@ import (
 
 	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/repository"
+	"github.com/albqvictor1508/portfolio/utils"
 )
 
 type TechnologyFunc struct {
@@ -19,7 +20,7 @@ func NewTechnologyFunc(repo repository.TechnologyRepository) TechnologyFunc {
 }
 
 func (tf *TechnologyFunc) CreateTechnology(technology *entity.Technology) (int, error) {
-	if !isValidURL(technology.PhotoURL) {
+	if utils.IsValidURL(technology.PhotoURL) {
 		return 0, errors.New("invalid photo url")
 	}
 
@@ -64,7 +65,7 @@ func (tf *TechnologyFunc) UpdateTechnology(t *entity.Technology) (int, error) {
 		return 0, errors.New("the name must be at least 4 characters long")
 	}
 
-	if !isValidURL(t.PhotoURL) {
+	if !utils.IsValidURL(t.PhotoURL) {
 		return 0, errors.New("invalid photo url")
 	}
 
