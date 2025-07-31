@@ -42,12 +42,12 @@ func (er *ExperienceRepository) Insert(experience *entity.Experience) (int, erro
 	return id, nil
 }
 
-func (pr *ExperienceRepository) FindByName(name string) (entity.Experience, error) {
+func (er *ExperienceRepository) FindByName(name string) (entity.Experience, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	experience := entity.Experience{}
-	err := pr.Conn.QueryRow(
+	err := er.Conn.QueryRow(
 		ctx,
 		"SELECT id, company_name, description, photo_url, start_date, end_date, category_id, created_at, updated_at FROM experiences WHERE company_name = $1",
 		name,
@@ -71,18 +71,18 @@ func (pr *ExperienceRepository) FindByName(name string) (entity.Experience, erro
 	return experience, nil
 }
 
-func (pr *ProjectRepository) Delete(id int) error {
+func (er *ExperienceRepository) Delete(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	query, err := pr.Conn.Exec(
+	query, err := er.Conn.Exec(
 		ctx,
-		"DELETE FROM projects WHERE id = $1",
+		"DELETE FROM experiences WHERE id = $1",
 		id,
 	)
 
 	if query.RowsAffected() == 0 {
-		return errors.New("THIS PROJECT NOT EXISTS")
+		return errors.New("THIS EXPERIENCE NOT EXISTS")
 	}
 	if err != nil {
 		return err
@@ -91,92 +91,82 @@ func (pr *ProjectRepository) Delete(id int) error {
 	return nil
 }
 
-func (pr *ProjectRepository) Update(project *entity.Project) (int, error) {
+func (er *ExperienceRepository) Update(experience *entity.Experience) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	_, err := pr.Conn.Exec(ctx,
-		"UPDATE projects SET name = $1, description = $2, github_url = $3, demo_url = $4, is_pinned = $5, category_id = $6, updated_at = NOW() WHERE id = $7",
-		project.Name,
-		project.Description,
-		project.GithubURL,
-		project.DemoURL,
-		project.IsPinned,
-		project.CategoryID,
-		project.ID,
+	_, err := er.Conn.Exec(ctx,
+		"UPDATE experiences SET company_name = $1, description = $2, photo_url = $3,  start_date = $4, end_date = $5,category_id = $6, updated_at = NOW() WHERE id = $7",
+		experience.CompanyName,
+		experience.Description,
+		experience.PhotoURL,
+		experience.StartDate,
+		experience.EndDate,
+		experience.CategoryID,
+		experience.ID,
 	)
 	if err != nil {
 		return 0, err
 	}
 
-	return project.ID, nil
+	return experience.ID, nil
 }
 
-func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
+func (er *ExperienceRepository) FindByID(id int) (entity.Experience, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	project := entity.Project{}
-	err := pr.Conn.QueryRow(
+	experience := entity.Experience{}
+	err := er.Conn.QueryRow(
 		ctx,
-		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects WHERE id = $1",
+		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM experiences WHERE id = $1",
 		id,
 	).Scan(
-		&project.ID,
-		&project.Name,
-		&project.Description,
-		&project.GithubURL,
-		&project.DemoURL,
-		&project.IsPinned,
-		&project.CategoryID,
-		&project.CreatedAt,
-		&project.UpdatedAt,
+		&experience.ID,
 	)
 	if err == pgx.ErrNoRows {
-		return entity.Project{}, nil
+		return entity.Experience{}, nil
 	}
 
 	if err != nil {
-		return entity.Project{}, err
+		return entity.Experience{}, err
 	}
 
-	return project, nil
+	return experience, nil
 }
 
-func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
-	var projectList []entity.Project
+func (pr *ExperienceRepository) GetExperiences() ([]entity.Experience, error) {
+	var experienceList []entity.Experience
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	rows, err := pr.Conn.Query(
 		ctx,
-		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects",
+		"SELECT id, company_name, description, photo_url, category_id, start_date, end_date FROM experiences",
 	)
 	if err != nil {
-		return []entity.Project{}, err
+		return []entity.Experience{}, err
 	}
 	defer rows.Close()
 
 	for rows.Next() {
-		var projectObj entity.Project
+		var experienceObj entity.Experience
 		err := rows.Scan(
-			&projectObj.ID,
-			&projectObj.Name,
-			&projectObj.Description,
-			&projectObj.GithubURL,
-			&projectObj.DemoURL,
-			&projectObj.IsPinned,
-			&projectObj.CategoryID,
-			&projectObj.CreatedAt,
-			&projectObj.UpdatedAt,
+			&experienceObj.ID,
+			&experienceObj.CompanyName,
+			&experienceObj.Description,
+			&experienceObj.PhotoURL,
+			&experienceObj.CategoryID,
+			&experienceObj.StartDate,
+			&experienceObj.EndDate,
 		)
 		if err != nil {
-			return []entity.Project{}, err
+			return []entity.Experience{}, err
 		}
 
-		projectList = append(projectList, projectObj)
+		experienceList = append(experienceList, experienceObj)
 	}
 
-	return projectList, nil
+	return experienceList, nil
 }
