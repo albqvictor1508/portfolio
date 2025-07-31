@@ -35,13 +35,13 @@ func main() {
 	ExperienceFunc := function.NewExperienceFunc(ExperienceRepository, CategoryRepository)
 	ExperienceController := routes.NewExperienceRoutes(ExperienceFunc)
 
-	ProjectRepository := repository.NewProjectRepo(conn)
-	ProjectFunction := function.NewProjectFunc(ProjectRepository, CategoryRepository, TechnologyRepository)
-	ProjectController := routes.NewProjectRoute(ProjectFunction)
-
 	TechnologyRepository := repository.NewTechnology(conn)
 	TechnologyFunction := function.NewTechnologyFunc(TechnologyRepository)
 	TechnologyController := routes.NewTechnologyRoute(TechnologyFunction)
+
+	ProjectRepository := repository.NewProjectRepo(conn)
+	ProjectFunction := function.NewProjectFunc(ProjectRepository, CategoryRepository, TechnologyRepository)
+	ProjectController := routes.NewProjectRoute(ProjectFunction)
 
 	g.GET("/health", func(context *gin.Context) {
 		context.JSON(200, gin.H{
@@ -50,9 +50,9 @@ func main() {
 	})
 	g.GET("/projects", ProjectController.GetProjects)
 	g.POST("/projects", ProjectController.CreateProject)
+	g.GET("/projects/:id", ProjectController.FindByID)
 	g.PUT("/projects/:id", ProjectController.UpdateProject)
 	g.DELETE("/projects/:id", ProjectController.DeleteProject)
-	g.GET("/projects/:id", ProjectController.FindByID)
 
 	g.GET("/experiences", ExperienceController.GetExperiences)
 	g.POST("/experiences", ExperienceController.CreateExperience)

@@ -182,6 +182,7 @@ func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
 	}
 	defer rows.Close()
 
+	project.Technologies = []entity.Technology{}
 	for rows.Next() {
 		var tech entity.Technology
 		if err := rows.Scan(&tech.ID, &tech.Name, &tech.PhotoURL); err != nil {
@@ -201,9 +202,7 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 
 	rows, err := pr.Conn.Query(
 		ctx,
-		"SELECT p.id, p.name, p.description, p.github_url, p.demo_url, p.is_pinned, p.category_id, p.created_at, p.updated_at"+
-			"FROM projects p"+
-			"INNER JOIN project_technologies pt ON pt.project_id = p.id",
+		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects",
 	)
 	if err != nil {
 		return []entity.Project{}, err
@@ -231,8 +230,8 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 		if err != nil {
 			return []entity.Project{}, err
 		}
-		defer techRows.Close()
 
+		projectObj.Technologies = []entity.Technology{}
 		for techRows.Next() {
 			var tech entity.Technology
 			if err := techRows.Scan(&tech.ID, &tech.Name, &tech.PhotoURL); err != nil {
@@ -240,6 +239,7 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 			}
 			projectObj.Technologies = append(projectObj.Technologies, tech)
 		}
+		techRows.Close()
 
 		projectList = append(projectList, projectObj)
 	}
