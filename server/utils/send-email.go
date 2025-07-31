@@ -8,29 +8,21 @@ import (
 )
 
 type SendEmailParams struct {
-	to      string
-	subject *string
-	content string
+	To      string  `json:"user_email"`
+	Subject *string `json:"subject"`
+	Content string  `json:"content"`
 }
 
-func NewMailer(to string, subject *string, content string) SendEmailParams {
-	return SendEmailParams{
-		to:      to,
-		subject: subject,
-		content: content,
-	}
-}
-
-func SendEmail(to string) error {
-	var emailParams *SendEmailParams
+func SendEmail(params SendEmailParams) error {
 	myEmail := os.Getenv("MY_EMAIL")
 	myPassword := os.Getenv("MY_PASSWORD")
 
 	message := gomail.NewMessage()
 
 	message.SetHeader("From", fmt.Sprintf("from <%v>", myEmail))
-	message.SetHeader("To", emailParams.to)
-	message.SetHeader("Subject", *emailParams.subject)
+	message.SetHeader("To", params.To)
+	message.SetHeader("Subject", *params.Subject)
+	message.SetBody("text/plain", params.Content)
 
 	dialer := gomail.NewDialer("smtp.gmail.com", 587, myEmail, myPassword)
 
