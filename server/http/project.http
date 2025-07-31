@@ -7,11 +7,15 @@ POST {{baseUrl}}/projects
 Content-Type: application/json
 
 {
-  "name": "teste project my boy",
+  "name": "salve salve salve salve salve",
   "github_url": "https://github.com/albqvictor1508/plush-api",
   "category_id": 6,
   "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee",
-  "is_pinned": true
+  "is_pinned": true,
+  "technologies": [
+    {"id": 1},
+    {"id": 2}
+  ]
 }
 
 ### Get Projects

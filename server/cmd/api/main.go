@@ -36,7 +36,7 @@ func main() {
 	ExperienceController := routes.NewExperienceRoutes(ExperienceFunc)
 
 	ProjectRepository := repository.NewProjectRepo(conn)
-	ProjectFunction := function.NewProjectFunc(ProjectRepository, CategoryRepository)
+	ProjectFunction := function.NewProjectFunc(ProjectRepository, CategoryRepository, TechnologyRepository)
 	ProjectController := routes.NewProjectRoute(ProjectFunction)
 
 	TechnologyRepository := repository.NewTechnology(conn)

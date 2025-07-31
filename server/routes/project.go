@@ -96,3 +96,24 @@ func (p *projectRoute) DeleteProject(ctx *gin.Context) {
 		"success": true,
 	})
 }
+
+func (p *projectRoute) FindByID(ctx *gin.Context) {
+	vars := ctx.Param("id")
+	id, err := strconv.Atoi(vars)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid project ID",
+		})
+		return
+	}
+
+	project, err := p.projectFunc.FindByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"project": project,
+	})
+}

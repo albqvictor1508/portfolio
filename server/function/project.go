@@ -9,14 +9,16 @@ import (
 )
 
 type ProjectFunction struct {
-	projectRepo  repository.ProjectRepository
-	categoryRepo repository.CategoryRepository
+	projectRepo    repository.ProjectRepository
+	categoryRepo   repository.CategoryRepository
+	technologyRepo repository.TechnologyRepository
 }
 
-func NewProjectFunc(projectRepo repository.ProjectRepository, categoryRepo repository.CategoryRepository) ProjectFunction {
+func NewProjectFunc(projectRepo repository.ProjectRepository, categoryRepo repository.CategoryRepository, technologyRepo repository.TechnologyRepository) ProjectFunction {
 	return ProjectFunction{
-		projectRepo:  projectRepo,
-		categoryRepo: categoryRepo,
+		projectRepo:    projectRepo,
+		categoryRepo:   categoryRepo,
+		technologyRepo: technologyRepo,
 	}
 }
 
@@ -53,6 +55,18 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 		}
 		if category.ID == 0 {
 			return 0, errors.New("category not found")
+		}
+	}
+
+	if len(p.Technologies) > 0 {
+		for _, tech := range p.Technologies {
+			technology, err := pf.technologyRepo.FindByID(tech.ID)
+			if err != nil {
+				return 0, fmt.Errorf("error finding technology by id: %w", err)
+			}
+			if technology.ID == 0 {
+				return 0, errors.New("technology not found")
+			}
 		}
 	}
 
@@ -111,5 +125,21 @@ func (pf *ProjectFunction) UpdateProject(p *entity.Project) (int, error) {
 		}
 	}
 
+	if len(p.Technologies) > 0 {
+		for _, tech := range p.Technologies {
+			technology, err := pf.technologyRepo.FindByID(tech.ID)
+			if err != nil {
+				return 0, fmt.Errorf("error finding technology by id: %w", err)
+			}
+			if technology.ID == 0 {
+				return 0, errors.New("technology not found")
+			}
+		}
+	}
+
 	return pf.projectRepo.Update(p)
+}
+
+func (pf *ProjectFunction) FindByID(id int) (entity.Project, error) {
+	return pf.projectRepo.FindByID(id)
 }

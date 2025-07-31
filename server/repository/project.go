@@ -24,8 +24,14 @@ func (r *ProjectRepository) Insert(project *entity.Project) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	tx, err := r.Conn.Begin(ctx)
+	if err != nil {
+		return 0, err
+	}
+	defer tx.Rollback(ctx)
+
 	var id int
-	err := r.Conn.QueryRow(ctx,
+	err = tx.QueryRow(ctx,
 		"INSERT INTO projects (name, description, github_url, demo_url, is_pinned, category_id) VALUES($1, $2, $3, $4 ,$5, $6) RETURNING id",
 		project.Name,
 		project.Description,
@@ -38,7 +44,16 @@ func (r *ProjectRepository) Insert(project *entity.Project) (int, error) {
 		return 0, err
 	}
 
-	return id, nil
+	if len(project.Technologies) > 0 {
+		for _, tech := range project.Technologies {
+			_, err := tx.Exec(ctx, "INSERT INTO project_technologies (project_id, technology_id) VALUES ($1, $2)", id, tech.ID)
+			if err != nil {
+				return 0, err
+			}
+		}
+	}
+
+	return id, tx.Commit(ctx)
 }
 
 func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
@@ -96,7 +111,13 @@ func (pr *ProjectRepository) Update(project *entity.Project) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	_, err := pr.Conn.Exec(ctx,
+	tx, err := pr.Conn.Begin(ctx)
+	if err != nil {
+		return 0, err
+	}
+	defer tx.Rollback(ctx)
+
+	_, err = tx.Exec(ctx,
 		"UPDATE projects SET name = $1, description = $2, github_url = $3, demo_url = $4, is_pinned = $5, category_id = $6, updated_at = NOW() WHERE id = $7",
 		project.Name,
 		project.Description,
@@ -110,7 +131,21 @@ func (pr *ProjectRepository) Update(project *entity.Project) (int, error) {
 		return 0, err
 	}
 
-	return project.ID, nil
+	_, err = tx.Exec(ctx, "DELETE FROM project_technologies WHERE project_id = $1", project.ID)
+	if err != nil {
+		return 0, err
+	}
+
+	if len(project.Technologies) > 0 {
+		for _, tech := range project.Technologies {
+			_, err := tx.Exec(ctx, "INSERT INTO project_technologies (project_id, technology_id) VALUES ($1, $2)", project.ID, tech.ID)
+			if err != nil {
+				return 0, err
+			}
+		}
+	}
+
+	return project.ID, tx.Commit(ctx)
 }
 
 func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
@@ -141,6 +176,20 @@ func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
 		return entity.Project{}, err
 	}
 
+	rows, err := pr.Conn.Query(ctx, "SELECT t.id, t.name, t.photo_url FROM technologies t JOIN project_technologies pt ON t.id = pt.technology_id WHERE pt.project_id = $1", id)
+	if err != nil {
+		return entity.Project{}, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var tech entity.Technology
+		if err := rows.Scan(&tech.ID, &tech.Name, &tech.PhotoURL); err != nil {
+			return entity.Project{}, err
+		}
+		project.Technologies = append(project.Technologies, tech)
+	}
+
 	return project, nil
 }
 
@@ -152,7 +201,9 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 
 	rows, err := pr.Conn.Query(
 		ctx,
-		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects",
+		"SELECT p.id, p.name, p.description, p.github_url, p.demo_url, p.is_pinned, p.category_id, p.created_at, p.updated_at"+
+			"FROM projects p"+
+			"INNER JOIN project_technologies pt ON pt.project_id = p.id",
 	)
 	if err != nil {
 		return []entity.Project{}, err
@@ -174,6 +225,20 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 		)
 		if err != nil {
 			return []entity.Project{}, err
+		}
+
+		techRows, err := pr.Conn.Query(ctx, "SELECT t.id, t.name, t.photo_url FROM technologies t JOIN project_technologies pt ON t.id = pt.technology_id WHERE pt.project_id = $1", projectObj.ID)
+		if err != nil {
+			return []entity.Project{}, err
+		}
+		defer techRows.Close()
+
+		for techRows.Next() {
+			var tech entity.Technology
+			if err := techRows.Scan(&tech.ID, &tech.Name, &tech.PhotoURL); err != nil {
+				return []entity.Project{}, err
+			}
+			projectObj.Technologies = append(projectObj.Technologies, tech)
 		}
 
 		projectList = append(projectList, projectObj)

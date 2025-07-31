@@ -21,9 +21,9 @@ CREATE TABLE projects (
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
 );
 
-CREATE TABLE project_technologies ( 
+CREATE TABLE project_technologies (
     project_id INTEGER NOT NULL,
-    technology_id INTEGER NOT NULL, 
+    technology_id INTEGER NOT NULL,
     PRIMARY KEY (project_id, technology_id),
     FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE CASCADE,
     FOREIGN KEY (technology_id) REFERENCES technologies(id) ON DELETE CASCADE
@@ -39,7 +39,6 @@ CREATE TABLE experiences (
 );
 
 -- +goose Down
--- CORRIGIDO: Ordem correta e todas as tabelas incluídas
 DROP TABLE IF EXISTS experiences;
 DROP TABLE IF EXISTS project_technologies;
 DROP TABLE IF EXISTS projects;
