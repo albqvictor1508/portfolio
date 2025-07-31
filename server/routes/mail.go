@@ -8,23 +8,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type MailRoutes struct {
-	params utils.SendEmailParams
-}
-
-func NewMailRoutes(params utils.SendEmailParams) MailRoutes {
-	return MailRoutes{
-		params: params,
-	}
-}
-
-func (mr *MailRoutes) SendEmail(ctx *gin.Context) {
+func SendEmail(ctx *gin.Context) {
 	var params *utils.SendEmailParams
+	if err := ctx.ShouldBindJSON(&params); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
+		return
+	}
+
 	err := utils.SendEmail(*params)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": fmt.Errorf("ERROR TO SEND EMAIL: %v", err),
-		}),
+			"error": fmt.Errorf("ERROR ON SEND EMAIL: %v", err),
+		})
 		return
 	}
+
+	ctx.JSON(http.StatusInternalServerError, gin.H{
+		"success": true,
+	})
 }

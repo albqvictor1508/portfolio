@@ -70,6 +70,8 @@ func main() {
 	g.DELETE("/technologies/:id", TechnologyController.DeleteByID)
 	g.PUT("/technologies/:id", TechnologyController.UpdateTechnology)
 
+	g.POST("/contact", routes.SendEmail)
+
 	if err := g.Run(":3333"); err != nil {
 		log.Fatal("Fail to initialize server: ", err)
 	}
