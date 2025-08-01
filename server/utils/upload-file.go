@@ -16,13 +16,16 @@ import (
 func UploadFile() {
 	// TODO: PEGAR AMANHÃ TODOS ESSES ENVS
 	bucketName := os.Getenv("BUCKET_NAME")
-	accountId := os.Getenv("ACCOUNT_ID")
-	accessKeyId := os.Getenv("ACCESS_KEY_ID")
+	accountID := os.Getenv("ACCOUNT_ID")
+	accessKeyID := os.Getenv("ACCESS_KEY_ID")
 	accessKeySecret := os.Getenv("ACCESS_KEY_SECRET")
 
 	cfg, err := config.LoadDefaultConfig(
 		context.TODO(),
-		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(accessKeyId, accessKeySecret, "")),
+		config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(
+			accessKeyID,
+			accessKeySecret,
+			"")),
 		config.WithRegion("auto"),
 	)
 	if err != nil {
@@ -30,7 +33,7 @@ func UploadFile() {
 	}
 
 	client := s3.NewFromConfig(cfg, func(o *s3.Options) {
-		o.BaseEndpoint = aws.String(fmt.Sprintf("https://%s.r2.cloudflarestorage.com", accountId))
+		o.BaseEndpoint = aws.String(fmt.Sprintf("https://%s.r2.cloudflarestorage.com", accountID))
 	})
 
 	listObjectsOutput, err := client.ListObjectsV2(context.TODO(), &s3.ListObjectsV2Input{

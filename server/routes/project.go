@@ -27,9 +27,15 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 		return
 	}
 
-	file, _ := ctx.FormFile("file")
-	file.
-		id, err := p.projectFunc.CreateProject(project)
+	file, err := ctx.FormFile("file")
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"error": fmt.Errorf("error to upload file: %v", err),
+		})
+		return
+	}
+	file
+	id, err := p.projectFunc.CreateProject(project)
 	if err != nil {
 		fmt.Print(err.Error())
 		ctx.JSON(850, err.Error())
