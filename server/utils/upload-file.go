@@ -48,16 +48,6 @@ func UploadFile() {
 		fmt.Println(string(obj))
 	}
 
-	//  {
-	//    "ChecksumAlgorithm": null,
-	//    "ETag": "\"eb2b891dc67b81755d2b726d9110af16\"",
-	//    "Key": "ferriswasm.png",
-	//    "LastModified": "2022-05-18T17:20:21.67Z",
-	//    "Owner": null,
-	//    "Size": 87671,
-	//    "StorageClass": "STANDARD"
-	//  }
-
 	listBucketsOutput, err := client.ListBuckets(context.TODO(), &s3.ListBucketsInput{})
 	if err != nil {
 		log.Fatal(err)
@@ -67,9 +57,4 @@ func UploadFile() {
 		obj, _ := json.MarshalIndent(object, "", "\t")
 		fmt.Println(string(obj))
 	}
-
-	// {
-	//     "CreationDate": "2022-05-18T17:19:59.645Z",
-	//     "Name": "sdk-example"
-	// }
 }
