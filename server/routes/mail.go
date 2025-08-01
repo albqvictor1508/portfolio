@@ -9,21 +9,21 @@ import (
 )
 
 func SendEmail(ctx *gin.Context) {
-	var params *utils.SendEmailParams
+	var params utils.SendEmailParams
 	if err := ctx.ShouldBindJSON(&params); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
 	}
 
-	err := utils.SendEmail(*params)
+	err := utils.SendEmail(params)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
-			"error": fmt.Errorf("ERROR ON SEND EMAIL: %v", err),
+			"error": fmt.Sprintf("ERROR ON SEND EMAIL: %v", err),
 		})
 		return
 	}
 
-	ctx.JSON(http.StatusInternalServerError, gin.H{
+	ctx.JSON(http.StatusOK, gin.H{
 		"success": true,
 	})
 }

@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:3333
+
+POST {{baseUrl}}/contact
+Content-Type: application/json
+
+{
+  "user_email": "victorarruda460@gmail.com",
+  "subject": "Arrombado",
+  "content": "Só pra testar a paradinha aq viadinho"
+}

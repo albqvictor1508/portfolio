@@ -27,7 +27,9 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 		return
 	}
 
-	id, err := p.projectFunc.CreateProject(project)
+	file, _ := ctx.FormFile("file")
+	file.
+		id, err := p.projectFunc.CreateProject(project)
 	if err != nil {
 		fmt.Print(err.Error())
 		ctx.JSON(850, err.Error())

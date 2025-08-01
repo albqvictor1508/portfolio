@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"os"
 
 	gomail "gopkg.in/mail.v2"
@@ -19,7 +18,7 @@ func SendEmail(params SendEmailParams) error {
 
 	message := gomail.NewMessage()
 
-	message.SetHeader("From", fmt.Sprintf("from <%v>", myEmail))
+	message.SetHeader("From", myEmail)
 	message.SetHeader("To", params.To)
 	message.SetHeader("Subject", *params.Subject)
 	message.SetBody("text/plain", params.Content)
