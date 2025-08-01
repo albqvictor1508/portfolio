@@ -9,7 +9,11 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 )
 
-type CustomResolver struct{}
+type CustomResolver struct {
+	Endpoint string
+}
+
+func (cr CustomResolver) ResolveEndpoint()
 
 func NewBucketClient() *s3.Client {
 	accessKeyId := os.Getenv("ACCESS_KEY_ID")
