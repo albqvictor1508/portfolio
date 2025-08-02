@@ -10,6 +10,7 @@ type Project struct {
 	Description  string       `json:"description"`
 	GithubURL    string       `json:"github_url"`
 	DemoURL      string       `json:"demo_url"`
+	PhotoURL     string       `json:"photo_url"`
 	IsPinned     bool         `json:"is_pinned"`
 	CategoryID   *int         `json:"category_id,omitempty"`
 	Technologies []Technology `json:"technologies"`

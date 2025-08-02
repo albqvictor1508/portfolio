@@ -42,6 +42,7 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 	project.Name = ctx.PostForm("name")
 	project.Description = ctx.PostForm("description")
 	project.GithubURL = ctx.PostForm("github_url")
+	project. = ctx.PostForm("github_url")
 
 	id, err := p.projectFunc.CreateProject(project)
 	if err != nil {
