@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/albqvictor1508/portfolio/common/images"
 	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/function"
 	"github.com/gin-gonic/gin"
@@ -21,18 +22,27 @@ func NewProjectRoute(projectFunc function.ProjectFunction) projectRoute {
 }
 
 func (p *projectRoute) CreateProject(ctx *gin.Context) {
-	var project *entity.Project
-	fmt.Print(project)
+	file, err := ctx.FormFile("photo")
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   err.Error(),
+			"message": "photo is required, send them on form-data with name 'photo'",
+		})
+	}
+	photoURL, uploadErr := images.UploadFile(file)
+	if uploadErr != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   err.Error(),
+			"message": "Error to upload photo on R2 Cloudflare Bucket",
+		})
+		return
+	}
 
-	/*
-		file, err := ctx.FormFile("file")
-		if err != nil {
-			ctx.JSON(http.StatusOK, gin.H{
-				"error": fmt.Errorf("error to upload file: %v", err),
-			})
-			return
-		}
-	*/
+	var project *entity.Project
+	project.Name = ctx.PostForm("name")
+	project.Description = ctx.PostForm("description")
+	project.GithubURL = ctx.PostForm("github_url")
+
 	id, err := p.projectFunc.CreateProject(project)
 	if err != nil {
 		fmt.Print(err.Error())
@@ -41,8 +51,6 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusCreated, gin.H{"id": id})
-
-	ctx.JSON(http.StatusCreated, gin.H{"salve": "olha os logs"})
 }
 
 func (p *projectRoute) GetProjects(ctx *gin.Context) {
