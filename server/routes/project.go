@@ -64,7 +64,7 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 	techIDsStr := ctx.PostForm("technologies")
 	if techIDsStr != "" {
 		techIDs := []int{}
-		for _, idStr := range strings.Split(techIDsStr, ",") {
+		for idStr := range strings.SplitSeq(techIDsStr, ",") {
 			id, err := strconv.Atoi(strings.TrimSpace(idStr))
 			if err != nil {
 				ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'technologies' format, must be a comma-separated string of integers"})
