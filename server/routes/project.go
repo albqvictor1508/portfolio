@@ -1,9 +1,9 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/albqvictor1508/portfolio/common/images"
 	"github.com/albqvictor1508/portfolio/entity"
@@ -22,36 +22,68 @@ func NewProjectRoute(projectFunc function.ProjectFunction) projectRoute {
 }
 
 func (p *projectRoute) CreateProject(ctx *gin.Context) {
+	// 1. Handle the file upload first
 	file, err := ctx.FormFile("photo")
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
-			"message": "photo is required, send them on form-data with name 'photo'",
-		})
-	}
-	photoURL, uploadErr := images.UploadFile(file)
-	if uploadErr != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error":   err.Error(),
-			"message": "Error to upload photo on R2 Cloudflare Bucket",
+			"message": "'photo' is required, send it as form-data with the name 'photo'",
 		})
 		return
 	}
 
-	var project *entity.Project
+	photoURL, uploadErr := images.UploadFile(file)
+	if uploadErr != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error":   uploadErr.Error(),
+			"message": "Error uploading photo to Cloudflare R2 Bucket",
+		})
+		return
+	}
+
+	var project entity.Project
 	project.Name = ctx.PostForm("name")
 	project.Description = ctx.PostForm("description")
 	project.GithubURL = ctx.PostForm("github_url")
-	project. = ctx.PostForm("github_url")
+	project.DemoURL = ctx.PostForm("demo_url")
+	project.PhotoURL = photoURL
 
-	id, err := p.projectFunc.CreateProject(project)
+	categoryIDStr := ctx.PostForm("category_id")
+	if categoryIDStr != "" {
+		categoryID, err := strconv.Atoi(categoryIDStr)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'category_id' format, must be an integer"})
+			return
+		}
+		project.CategoryID = &categoryID
+	}
+
+	isPinned, _ := strconv.ParseBool(ctx.PostForm("is_pinned"))
+	project.IsPinned = isPinned
+
+	techIDsStr := ctx.PostForm("technologies")
+	if techIDsStr != "" {
+		techIDs := []int{}
+		for _, idStr := range strings.Split(techIDsStr, ",") {
+			id, err := strconv.Atoi(strings.TrimSpace(idStr))
+			if err != nil {
+				ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'technologies' format, must be a comma-separated string of integers"})
+				return
+			}
+			techIDs = append(techIDs, id)
+		}
+		for _, id := range techIDs {
+			project.Technologies = append(project.Technologies, entity.Technology{ID: id})
+		}
+	}
+
+	newProject, err := p.projectFunc.CreateProject(&project)
 	if err != nil {
-		fmt.Print(err.Error())
-		ctx.JSON(850, err.Error())
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"id": id})
+	ctx.JSON(http.StatusCreated, newProject)
 }
 
 func (p *projectRoute) GetProjects(ctx *gin.Context) {
