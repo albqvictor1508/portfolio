@@ -7,7 +7,6 @@ import (
 
 	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/function"
-	"github.com/albqvictor1508/portfolio/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,24 +24,23 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 	var project *entity.Project
 	fmt.Print(project)
 
-	file, err := ctx.FormFile("file")
+	/*
+		file, err := ctx.FormFile("file")
+		if err != nil {
+			ctx.JSON(http.StatusOK, gin.H{
+				"error": fmt.Errorf("error to upload file: %v", err),
+			})
+			return
+		}
+	*/
+	id, err := p.projectFunc.CreateProject(project)
 	if err != nil {
-		ctx.JSON(http.StatusOK, gin.H{
-			"error": fmt.Errorf("error to upload file: %v", err),
-		})
+		fmt.Print(err.Error())
+		ctx.JSON(850, err.Error())
 		return
 	}
-	utils.UploadFile(file)
-	/*
-			id, err := p.projectFunc.CreateProject(project)
-			if err != nil {
-				fmt.Print(err.Error())
-				ctx.JSON(850, err.Error())
-				return
-			}
 
-		ctx.JSON(http.StatusCreated, gin.H{"id": id})
-	*/
+	ctx.JSON(http.StatusCreated, gin.H{"id": id})
 
 	ctx.JSON(http.StatusCreated, gin.H{"salve": "olha os logs"})
 }

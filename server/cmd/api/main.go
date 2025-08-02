@@ -71,6 +71,7 @@ func main() {
 	g.PUT("/technologies/:id", TechnologyController.UpdateTechnology)
 
 	g.POST("/contact", routes.SendEmail)
+	g.POST("/upload", routes.UploadRoute)
 
 	if err := g.Run(":3333"); err != nil {
 		log.Fatal("Fail to initialize server: ", err)
