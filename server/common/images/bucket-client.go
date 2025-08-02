@@ -15,4 +15,10 @@ func init() {
 }
 
 func ListBuckets() (resp *s3.ListBucketsOutput) {
+	resp, err := s3Session.ListBuckets(&s3.ListBucketsInput{})
+	if err != nil {
+		panic(err)
+	}
+
+	return resp
 }
