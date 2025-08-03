@@ -45,7 +45,7 @@ func NewBucket() (*s3.Client, error) {
 	return s3.NewFromConfig(cfg), nil
 }
 
-func UploadFile(fileHeader *multipart.FileHeader) (string, error) {
+func UploadFile(fileHeader *multipart.FileHeader, path string) (string, error) {
 	client, err := NewBucket()
 	if err != nil {
 		return "", fmt.Errorf("failed to create S3 client: %w", err)
@@ -61,6 +61,9 @@ func UploadFile(fileHeader *multipart.FileHeader) (string, error) {
 		return "", fmt.Errorf("R2_PUBLIC_URL environment variable not set")
 	}
 
+	log.Printf("[UPLOADER] R2_PUBLIC_URL: %s", r2PublicURL)
+	log.Printf("[UPLOADER] Uploading to path: %s", path)
+
 	f, err := fileHeader.Open()
 	if err != nil {
 		return "", fmt.Errorf("failed to open file: %w", err)
@@ -69,14 +72,17 @@ func UploadFile(fileHeader *multipart.FileHeader) (string, error) {
 
 	_, err = client.PutObject(context.TODO(), &s3.PutObjectInput{
 		Bucket: aws.String(bucketName),
-		Key:    aws.String(fileHeader.Filename),
+		Key:    aws.String(path),
 		Body:   f,
 	})
 	if err != nil {
+		log.Printf("[UPLOADER] Error from PutObject: %v", err)
 		return "", fmt.Errorf("failed to upload file to R2: %w", err)
 	}
 
-	url := fmt.Sprintf("https://%s/%s", r2PublicURL, fileHeader.Filename)
+	// Construct the final URL
+	url := fmt.Sprintf("https://%s/%s", r2PublicURL, path)
+	log.Printf("[UPLOADER] Final URL: %s", url)
 
 	return url, nil
 }

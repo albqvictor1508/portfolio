@@ -15,7 +15,8 @@ func UploadRoute(ctx *gin.Context) {
 			"message": "Missing file, send them on form-data with name 'file'",
 		})
 	}
-	if _, err := images.UploadFile(file); err != nil {
+	url, error := images.UploadFile(file, "whatsapp-photo")
+	if error != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error":   err.Error(),
 			"message": "Error to upload file on R2 Cloudflare Bucket",
@@ -24,6 +25,6 @@ func UploadRoute(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"success": true,
+		"url": url,
 	})
 }

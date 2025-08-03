@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -22,7 +23,6 @@ func NewProjectRoute(projectFunc function.ProjectFunction) projectRoute {
 }
 
 func (p *projectRoute) CreateProject(ctx *gin.Context) {
-	// 1. Handle the file upload first
 	file, err := ctx.FormFile("photo")
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
@@ -32,7 +32,16 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 		return
 	}
 
-	photoURL, uploadErr := images.UploadFile(file)
+	var project entity.Project
+	project.Name = ctx.PostForm("name")
+	project.Description = ctx.PostForm("description")
+	project.GithubURL = ctx.PostForm("github_url")
+	project.DemoURL = ctx.PostForm("demo_url")
+	filename := strings.ReplaceAll(file.Filename, " ", "-")
+	projectName := strings.ReplaceAll(project.Name, " ", "-")
+	filePath := fmt.Sprintf("%v/%v", projectName, filename)
+
+	photoURL, uploadErr := images.UploadFile(file, filePath)
 	if uploadErr != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error":   uploadErr.Error(),
@@ -41,21 +50,16 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 		return
 	}
 
-	var project entity.Project
-	project.Name = ctx.PostForm("name")
-	project.Description = ctx.PostForm("description")
-	project.GithubURL = ctx.PostForm("github_url")
-	project.DemoURL = ctx.PostForm("demo_url")
 	project.PhotoURL = photoURL
-
 	categoryIDStr := ctx.PostForm("category_id")
+
 	if categoryIDStr != "" {
 		categoryID, err := strconv.Atoi(categoryIDStr)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'category_id' format, must be an integer"})
 			return
 		}
-		project.Category = &entity.Category{ID: categoryID} // Correctly assign the category object
+		project.Category = &entity.Category{ID: categoryID}
 	}
 
 	isPinned, _ := strconv.ParseBool(ctx.PostForm("is_pinned"))
@@ -63,7 +67,7 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 
 	techIDsStr := ctx.PostForm("technologies")
 	if techIDsStr != "" {
-		for _, idStr := range strings.Split(techIDsStr, ",") { // Corrected to strings.Split
+		for idStr := range strings.SplitSeq(techIDsStr, ",") {
 			id, err := strconv.Atoi(strings.TrimSpace(idStr))
 			if err != nil {
 				ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'technologies' format, must be a comma-separated string of integers"})
@@ -73,10 +77,8 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 		}
 	}
 
-	// The function layer now returns the created project object
 	createdProject, err := p.projectFunc.CreateProject(&project)
 	if err != nil {
-		// Assuming the function layer provides specific error messages
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
