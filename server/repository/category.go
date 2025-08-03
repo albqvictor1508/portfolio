@@ -23,10 +23,16 @@ func (cr *CategoryRepository) Insert(category *entity.Category) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		INSERT INTO categories (name)
+		VALUES ($1)
+		RETURNING id
+	`
+
 	var id int
 	err := cr.Conn.QueryRow(
 		ctx,
-		"INSERT INTO categories (name) VALUES ($1) RETURNING id",
+		query,
 		category.Name,
 	).Scan(&id)
 	if err != nil {
@@ -40,10 +46,20 @@ func (cr *CategoryRepository) FindByID(id int) (entity.Category, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		SELECT
+			id,
+			name
+		FROM
+			categories
+		WHERE
+			id = $1
+	`
+
 	var category entity.Category
 	err := cr.Conn.QueryRow(
 		ctx,
-		"SELECT c.id, c.name FROM categories c WHERE c.id = $1",
+		query,
 		id,
 	).Scan(&category.ID, &category.Name)
 
@@ -62,10 +78,20 @@ func (cr *CategoryRepository) FindByName(name string) (entity.Category, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		SELECT
+			id,
+			name
+		FROM
+			categories
+		WHERE
+			name = $1
+	`
+
 	var category entity.Category
 	err := cr.Conn.QueryRow(
 		ctx,
-		"SELECT c.id, c.name FROM categories c WHERE c.name = $1",
+		query,
 		name,
 	).Scan(&category.ID, &category.Name)
 
@@ -82,20 +108,28 @@ func (cr *CategoryRepository) FindByName(name string) (entity.Category, error) {
 
 func (cr *CategoryRepository) GetCategories() ([]entity.Category, error) {
 	var categoryList []entity.Category
-	var categoryObj entity.Category
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		SELECT
+			id,
+			name
+		FROM
+			categories
+	`
+
 	rows, err := cr.Conn.Query(
 		ctx,
-		"SELECT * FROM categories c",
+		query,
 	)
 	if err != nil {
 		return []entity.Category{}, err
 	}
 
 	for rows.Next() {
+		var categoryObj entity.Category
 		err := rows.Scan(
 			&categoryObj.ID,
 			&categoryObj.Name,
@@ -113,9 +147,16 @@ func (cr *CategoryRepository) DeleteCategoryByID(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		DELETE FROM
+			categories
+		WHERE
+			id = $1
+	`
+
 	_, err := cr.Conn.Exec(
 		ctx,
-		"DELETE FROM categories c WHERE c.id = $1",
+		query,
 		id,
 	)
 	if err != nil {

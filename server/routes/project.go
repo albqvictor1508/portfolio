@@ -49,6 +49,7 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 	project.PhotoURL = photoURL
 
 	categoryIDStr := ctx.PostForm("category_id")
+
 	if categoryIDStr != "" {
 		categoryID, err := strconv.Atoi(categoryIDStr)
 		if err != nil {

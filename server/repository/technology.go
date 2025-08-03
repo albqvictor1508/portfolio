@@ -23,10 +23,18 @@ func (cr *TechnologyRepository) Insert(technology *entity.Technology) (int, erro
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		INSERT INTO technologies
+			(name, photo_url)
+		VALUES
+			($1, $2)
+		RETURNING id
+	`
+
 	var id int
 	err := cr.Conn.QueryRow(
 		ctx,
-		"INSERT INTO technologies (name, photo_url) VALUES ($1, $2) RETURNING id",
+		query,
 		technology.Name,
 		technology.PhotoURL,
 	).Scan(&id)
@@ -41,10 +49,19 @@ func (cr *TechnologyRepository) FindByID(id int) (entity.Technology, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		SELECT
+			t.id, t.name, t.photo_url
+		FROM
+			technologies t
+		WHERE
+			t.id = $1
+	`
+
 	var technology entity.Technology
 	err := cr.Conn.QueryRow(
 		ctx,
-		"SELECT t.id, t.name, t.photo_url FROM technologies t WHERE t.id = $1",
+		query,
 		id,
 	).Scan(&technology.ID, &technology.Name, &technology.PhotoURL)
 
@@ -63,10 +80,19 @@ func (cr *TechnologyRepository) FindByName(name string) (entity.Technology, erro
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		SELECT
+			t.id, t.name, t.photo_url
+		FROM
+			technologies t
+		WHERE
+			t.name = $1
+	`
+
 	var technology entity.Technology
 	err := cr.Conn.QueryRow(
 		ctx,
-		"SELECT t.id, t.name, t.photo_url FROM technologies t WHERE t.name = $1",
+		query,
 		name,
 	).Scan(&technology.ID, &technology.Name, &technology.PhotoURL)
 
@@ -87,9 +113,16 @@ func (cr *TechnologyRepository) GetTechnologies() ([]entity.Technology, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		SELECT
+			id, name, photo_url
+		FROM
+			technologies
+	`
+
 	rows, err := cr.Conn.Query(
 		ctx,
-		"SELECT id, name, photo_url FROM technologies",
+		query,
 	)
 	if err != nil {
 		return []entity.Technology{}, err
@@ -116,9 +149,16 @@ func (cr *TechnologyRepository) DeleteTechnologyByID(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		DELETE FROM
+			technologies
+		WHERE
+			id = $1
+	`
+
 	_, err := cr.Conn.Exec(
 		ctx,
-		"DELETE FROM technologies WHERE id = $1",
+		query,
 		id,
 	)
 	if err != nil {
@@ -131,8 +171,17 @@ func (cr *TechnologyRepository) Update(technology *entity.Technology) (int, erro
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		UPDATE
+			technologies
+		SET
+			name = $1, photo_url = $2
+		WHERE
+			id = $3
+	`
+
 	_, err := cr.Conn.Exec(ctx,
-		"UPDATE technologies SET name = $1, photo_url = $2 WHERE id = $3",
+		query,
 		technology.Name,
 		technology.PhotoURL,
 		technology.ID,

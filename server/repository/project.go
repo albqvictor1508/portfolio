@@ -30,9 +30,17 @@ func (r *ProjectRepository) Insert(project *entity.Project) (int, error) {
 	}
 	defer tx.Rollback(ctx)
 
+	projectQuery := `
+		INSERT INTO projects
+			(name, description, github_url, demo_url, is_pinned, category_id)
+		VALUES
+			($1, $2, $3, $4 ,$5, $6)
+		RETURNING id
+	`
+
 	var id int
 	err = tx.QueryRow(ctx,
-		"INSERT INTO projects (name, description, github_url, demo_url, is_pinned, category_id) VALUES($1, $2, $3, $4 ,$5, $6) RETURNING id",
+		projectQuery,
 		project.Name,
 		project.Description,
 		project.GithubURL,
@@ -45,8 +53,14 @@ func (r *ProjectRepository) Insert(project *entity.Project) (int, error) {
 	}
 
 	if len(project.Technologies) > 0 {
+		techQuery := `
+			INSERT INTO project_technologies
+				(project_id, technology_id)
+			VALUES
+				($1, $2)
+		`
 		for _, tech := range project.Technologies {
-			_, err := tx.Exec(ctx, "INSERT INTO project_technologies (project_id, technology_id) VALUES ($1, $2)", id, tech.ID)
+			_, err := tx.Exec(ctx, techQuery, id, tech.ID)
 			if err != nil {
 				return 0, err
 			}
@@ -60,10 +74,19 @@ func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		SELECT
+			id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at
+		FROM
+			projects
+		WHERE
+			name = $1
+	`
+
 	project := entity.Project{}
 	err := pr.Conn.QueryRow(
 		ctx,
-		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects WHERE name = $1",
+		query,
 		name,
 	).Scan(
 		&project.ID,
@@ -91,13 +114,20 @@ func (pr *ProjectRepository) Delete(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	query, err := pr.Conn.Exec(
+	query := `
+		DELETE FROM
+			projects
+		WHERE
+			id = $1
+	`
+
+	cmd, err := pr.Conn.Exec(
 		ctx,
-		"DELETE FROM projects WHERE id = $1",
+		query,
 		id,
 	)
 
-	if query.RowsAffected() == 0 {
+	if cmd.RowsAffected() == 0 {
 		return errors.New("THIS PROJECT NOT EXISTS")
 	}
 	if err != nil {
@@ -117,8 +147,17 @@ func (pr *ProjectRepository) Update(project *entity.Project) (int, error) {
 	}
 	defer tx.Rollback(ctx)
 
+	updateQuery := `
+		UPDATE
+			projects
+		SET
+			name = $1, description = $2, github_url = $3, demo_url = $4, is_pinned = $5, category_id = $6, updated_at = NOW()
+		WHERE
+			id = $7
+	`
+
 	_, err = tx.Exec(ctx,
-		"UPDATE projects SET name = $1, description = $2, github_url = $3, demo_url = $4, is_pinned = $5, category_id = $6, updated_at = NOW() WHERE id = $7",
+		updateQuery,
 		project.Name,
 		project.Description,
 		project.GithubURL,
@@ -131,14 +170,21 @@ func (pr *ProjectRepository) Update(project *entity.Project) (int, error) {
 		return 0, err
 	}
 
-	_, err = tx.Exec(ctx, "DELETE FROM project_technologies WHERE project_id = $1", project.ID)
+	deleteTechQuery := `DELETE FROM project_technologies WHERE project_id = $1`
+	_, err = tx.Exec(ctx, deleteTechQuery, project.ID)
 	if err != nil {
 		return 0, err
 	}
 
 	if len(project.Technologies) > 0 {
+		insertTechQuery := `
+			INSERT INTO project_technologies
+				(project_id, technology_id)
+			VALUES
+				($1, $2)
+		`
 		for _, tech := range project.Technologies {
-			_, err := tx.Exec(ctx, "INSERT INTO project_technologies (project_id, technology_id) VALUES ($1, $2)", project.ID, tech.ID)
+			_, err := tx.Exec(ctx, insertTechQuery, project.ID, tech.ID)
 			if err != nil {
 				return 0, err
 			}
@@ -152,10 +198,19 @@ func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	projectQuery := `
+		SELECT
+			id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at
+		FROM
+			projects
+		WHERE
+			id = $1
+	`
+
 	project := entity.Project{}
 	err := pr.Conn.QueryRow(
 		ctx,
-		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects WHERE id = $1",
+		projectQuery,
 		id,
 	).Scan(
 		&project.ID,
@@ -176,7 +231,17 @@ func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
 		return entity.Project{}, err
 	}
 
-	rows, err := pr.Conn.Query(ctx, "SELECT t.id, t.name, t.photo_url FROM technologies t JOIN project_technologies pt ON t.id = pt.technology_id WHERE pt.project_id = $1", id)
+	techQuery := `
+		SELECT
+			t.id, t.name, t.photo_url
+		FROM
+			technologies t
+		JOIN
+			project_technologies pt ON t.id = pt.technology_id
+		WHERE
+			pt.project_id = $1
+	`
+	rows, err := pr.Conn.Query(ctx, techQuery, id)
 	if err != nil {
 		return entity.Project{}, err
 	}
@@ -200,9 +265,16 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	projectQuery := `
+		SELECT
+			id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at
+		FROM
+			projects
+	`
+
 	rows, err := pr.Conn.Query(
 		ctx,
-		"SELECT id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at FROM projects",
+		projectQuery,
 	)
 	if err != nil {
 		return []entity.Project{}, err
@@ -226,7 +298,17 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 			return []entity.Project{}, err
 		}
 
-		techRows, err := pr.Conn.Query(ctx, "SELECT t.id, t.name, t.photo_url FROM technologies t JOIN project_technologies pt ON t.id = pt.technology_id WHERE pt.project_id = $1", projectObj.ID)
+		techQuery := `
+			SELECT
+				t.id, t.name, t.photo_url
+			FROM
+				technologies t
+			JOIN
+				project_technologies pt ON t.id = pt.technology_id
+			WHERE
+				pt.project_id = $1
+		`
+		techRows, err := pr.Conn.Query(ctx, techQuery, projectObj.ID)
 		if err != nil {
 			return []entity.Project{}, err
 		}

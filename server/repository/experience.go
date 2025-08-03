@@ -24,9 +24,17 @@ func (er *ExperienceRepository) Insert(experience *entity.Experience) (int, erro
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		INSERT INTO experiences
+			(company_name, description, photo_url, role, start_date, end_date, category_id)
+		VALUES
+			($1, $2, $3, $4, $5, $6, $7)
+		RETURNING id
+	`
+
 	var id int
 	err := er.Conn.QueryRow(ctx,
-		"INSERT INTO experiences (company_name, description, photo_url, role, start_date, end_date, category_id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING id",
+		query,
 		&experience.CompanyName,
 		experience.Description,
 		experience.PhotoURL,
@@ -46,10 +54,19 @@ func (er *ExperienceRepository) FindByName(name string) (entity.Experience, erro
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		SELECT
+			id, company_name, description, photo_url, role, start_date, end_date, category_id
+		FROM
+			experiences
+		WHERE
+			company_name = $1
+	`
+
 	experience := entity.Experience{}
 	err := er.Conn.QueryRow(
 		ctx,
-		"SELECT id, company_name, description, photo_url, role, start_date, end_date, category_id FROM experiences WHERE company_name = $1",
+		query,
 		name,
 	).Scan(
 		&experience.ID,
@@ -76,13 +93,20 @@ func (er *ExperienceRepository) Delete(id int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	query, err := er.Conn.Exec(
+	query := `
+		DELETE FROM
+			experiences
+		WHERE
+			id = $1
+	`
+
+	cmd, err := er.Conn.Exec(
 		ctx,
-		"DELETE FROM experiences WHERE id = $1",
+		query,
 		id,
 	)
 
-	if query.RowsAffected() == 0 {
+	if cmd.RowsAffected() == 0 {
 		return errors.New("THIS EXPERIENCE NOT EXISTS")
 	}
 	if err != nil {
@@ -96,8 +120,23 @@ func (er *ExperienceRepository) Update(experience *entity.Experience) (int, erro
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		UPDATE
+			experiences
+		SET
+			company_name = $1,
+			description = $2,
+			photo_url = $3,
+			role = $4,
+			start_date = $5,
+			end_date = $6,
+			category_id = $7
+		WHERE
+			id = $8
+	`
+
 	_, err := er.Conn.Exec(ctx,
-		"UPDATE experiences SET company_name = $1, description = $2, photo_url = $3, role = $4, start_date = $5, end_date = $6, category_id = $7 WHERE id = $8",
+		query,
 		experience.CompanyName,
 		experience.Description,
 		experience.PhotoURL,
@@ -118,10 +157,19 @@ func (er *ExperienceRepository) FindByID(id int) (entity.Experience, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		SELECT
+			id, company_name, description, photo_url, role, start_date, end_date, category_id
+		FROM
+			experiences
+		WHERE
+			id = $1
+	`
+
 	experience := entity.Experience{}
 	err := er.Conn.QueryRow(
 		ctx,
-		"SELECT id, company_name, description, photo_url, role, start_date, end_date, category_id FROM experiences WHERE id = $1",
+		query,
 		id,
 	).Scan(
 		&experience.ID,
@@ -150,9 +198,16 @@ func (pr *ExperienceRepository) GetExperiences() ([]entity.Experience, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
+	query := `
+		SELECT
+			id, company_name, description, photo_url, role, category_id, start_date, end_date
+		FROM
+			experiences
+	`
+
 	rows, err := pr.Conn.Query(
 		ctx,
-		"SELECT id, company_name, description, photo_url, role, category_id, start_date, end_date FROM experiences",
+		query,
 	)
 	if err != nil {
 		return []entity.Experience{}, err
