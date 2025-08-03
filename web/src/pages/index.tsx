@@ -1,4 +1,5 @@
-import { HeroSection } from "@/components/hero-section";
+import { AboutSection } from "@/components/about";
+import { HeroSection } from "@/components/hero";
 import { Menu } from "@/components/menu";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -11,6 +12,7 @@ function RouteComponent() {
 		<div className="w-[1000px] h-full flex flex-col gap-12 m-auto justify-center items-center">
 			<Menu />
 			<HeroSection />
+			<AboutSection />
 		</div>
 	);
 }
