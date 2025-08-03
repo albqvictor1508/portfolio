@@ -1,19 +1,11 @@
-import { useState } from "react";
-import "./App.css";
+import { useRef } from "react";
 
 export function App() {
-	const [count, setCount] = useState(0);
+  const salve = useRef("salve");
 
-	return (
-		<div className="w-full h-full">
-			<p>
-				counter: <span>{count}</span>
-			</p>
-			<p>salve</p>
-
-			<button type="button" onClick={(): void => setCount(count + 1)}>
-				Add to counter
-			</button>
-		</div>
-	);
+  return (
+    <div className="w-full h-full">
+      <p>{salve.current}</p>
+    </div>
+  );
 }
