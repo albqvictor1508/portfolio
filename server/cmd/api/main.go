@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -73,7 +74,9 @@ func main() {
 	g.POST("/contact", routes.SendEmail)
 	g.POST("/upload", routes.UploadRoute)
 
-	if err := g.Run(":3333"); err != nil {
+	port := os.Getenv("PORT")
+	portStr := fmt.Sprintf(":%v", port)
+	if err := g.Run(portStr); err != nil {
 		log.Fatal("Fail to initialize server: ", err)
 	}
 }
