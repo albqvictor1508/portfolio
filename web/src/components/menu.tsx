@@ -102,7 +102,7 @@ export function Menu() {
 				</NavigationMenuItem>
 				<NavigationMenuItem>
 					<NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-						<Link href="/docs">Docs</Link>
+						<a href="/docs">Docs</a>
 					</NavigationMenuLink>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
@@ -111,28 +111,28 @@ export function Menu() {
 						<ul className="grid w-[300px] gap-4">
 							<li>
 								<NavigationMenuLink asChild>
-									<Link href="#">
+									<a href="#">
 										<div className="font-medium">Components</div>
 										<div className="text-muted-foreground">
 											Browse all components in the library.
 										</div>
-									</Link>
+									</a>
 								</NavigationMenuLink>
 								<NavigationMenuLink asChild>
-									<Link href="#">
+									<a href="#">
 										<div className="font-medium">Documentation</div>
 										<div className="text-muted-foreground">
 											Learn how to use the library.
 										</div>
-									</Link>
+									</a>
 								</NavigationMenuLink>
 								<NavigationMenuLink asChild>
-									<Link href="#">
+									<a href="#">
 										<div className="font-medium">Blog</div>
 										<div className="text-muted-foreground">
 											Read our latest blog posts.
 										</div>
-									</Link>
+									</a>
 								</NavigationMenuLink>
 							</li>
 						</ul>
@@ -144,13 +144,13 @@ export function Menu() {
 						<ul className="grid w-[200px] gap-4">
 							<li>
 								<NavigationMenuLink asChild>
-									<Link href="#">Components</Link>
+									<a href="#">Components</a>
 								</NavigationMenuLink>
 								<NavigationMenuLink asChild>
-									<Link href="#">Documentation</Link>
+									<a href="#">Documentation</a>
 								</NavigationMenuLink>
 								<NavigationMenuLink asChild>
-									<Link href="#">Blocks</Link>
+									<a href="#">Blocks</a>
 								</NavigationMenuLink>
 							</li>
 						</ul>
@@ -162,22 +162,22 @@ export function Menu() {
 						<ul className="grid w-[200px] gap-4">
 							<li>
 								<NavigationMenuLink asChild>
-									<Link href="#" className="flex-row items-center gap-2">
+									<a href="#" className="flex-row items-center gap-2">
 										<CircleHelpIcon />
 										Backlog
-									</Link>
+									</a>
 								</NavigationMenuLink>
 								<NavigationMenuLink asChild>
-									<Link href="#" className="flex-row items-center gap-2">
+									<a href="#" className="flex-row items-center gap-2">
 										<CircleIcon />
 										To Do
-									</Link>
+									</a>
 								</NavigationMenuLink>
 								<NavigationMenuLink asChild>
-									<Link href="#" className="flex-row items-center gap-2">
+									<a href="#" className="flex-row items-center gap-2">
 										<CircleCheckIcon />
 										Done
-									</Link>
+									</a>
 								</NavigationMenuLink>
 							</li>
 						</ul>
