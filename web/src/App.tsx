@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useRef } from "react";
-import { Menu } from "./components/menu.tsx";
+import { Home } from "./components/home";
 
 const client = new QueryClient();
 
@@ -10,11 +10,7 @@ export function App() {
 
 	return (
 		<QueryClientProvider client={client}>
-			<Menu />
-
-			<div className="w-full h-full">
-				<p>{salve.current}</p>
-			</div>
+			<Home />
 		</QueryClientProvider>
 	);
 }
