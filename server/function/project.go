@@ -76,7 +76,11 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (*entity.Project, er
 		return nil, err
 	}
 
-	return pf.projectRepo.FindByID(newID)
+	newProject, err := pf.projectRepo.FindByID(newID)
+	if err != nil {
+		return &entity.Project{}, fmt.Errorf("error to find by id: %v", err)
+	}
+	return &newProject, nil
 }
 
 func (pf *ProjectFunction) GetProjects() ([]entity.Project, error) {
@@ -148,7 +152,12 @@ func (pf *ProjectFunction) UpdateProject(p *entity.Project) (*entity.Project, er
 		return nil, err
 	}
 
-	return pf.projectRepo.FindByID(updatedID)
+	updatedProject, err := pf.projectRepo.FindByID(updatedID)
+	if err != nil {
+		return &entity.Project{}, fmt.Errorf("error to find by id: %v", err)
+	}
+
+	return &updatedProject, nil
 }
 
 func (pf *ProjectFunction) FindByID(id int) (entity.Project, error) {
