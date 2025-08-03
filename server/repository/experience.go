@@ -20,7 +20,7 @@ func NewExperience(conn *pgxpool.Pool) ExperienceRepository {
 	}
 }
 
-func (er *ExperienceRepository) Insert(experience *entity.Experience) (int, error) {
+func (er *ExperienceRepository) Insert(experience entity.Experience) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
@@ -35,7 +35,7 @@ func (er *ExperienceRepository) Insert(experience *entity.Experience) (int, erro
 	var id int
 	err := er.Conn.QueryRow(ctx,
 		query,
-		&experience.CompanyName,
+		experience.CompanyName,
 		experience.Description,
 		experience.PhotoURL,
 		experience.Role,

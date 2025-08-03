@@ -24,12 +24,7 @@ func NewExperienceRoutes(experienceFunc function.ExperienceFunction) ExperienceR
 }
 
 func (e *ExperienceRoutes) CreateExperience(ctx *gin.Context) {
-	var experience *entity.Experience
-	if err := ctx.ShouldBindJSON(&experience); err != nil {
-		fmt.Errorf("Error to format request.body: %v", err)
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
-		return
-	}
+	var experience entity.Experience
 
 	file, err := ctx.FormFile("photo")
 	if err != nil {
@@ -114,17 +109,63 @@ func (e *ExperienceRoutes) UpdateExperience(ctx *gin.Context) {
 		})
 		return
 	}
-
 	var experience entity.Experience
-	if err := ctx.ShouldBindJSON(&experience); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
-		return
+
+	file, err := ctx.FormFile("photo")
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   err.Error(),
+			"message": "'photo' is required, please send them on form-data",
+		})
 	}
 
+	categoryIDStr := ctx.PostForm("category_id")
+	categoryID, err := strconv.Atoi(categoryIDStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   err.Error(),
+			"message": "category_id is required",
+		})
+	}
+	experience.CompanyName = ctx.PostForm("company_name")
+	experience.CategoryID = &categoryID
+	experience.Role = ctx.PostForm("role")
+	experience.Description = ctx.PostForm("description")
+
+	startDateStr := ctx.PostForm("start_date")
+	endDateStr := ctx.PostForm("end_date")
+
+	experience.StartDate, err = time.Parse("YYYY-MM-DD", startDateStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   err.Error(),
+			"message": "invalid date",
+		})
+		experience.EndDate, err = time.Parse("YYYY-MM-DD", endDateStr)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error":   err.Error(),
+				"message": "invalid date",
+			})
+		}
+	}
+	filename := strings.ReplaceAll(file.Filename, " ", "-")
+	experienceName := strings.ReplaceAll(experience.CompanyName, " ", "-")
+	filePath := fmt.Sprintf("project/%v/%v", experienceName, filename)
+
+	photoURL, err := images.UploadFile(file, filePath)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   err.Error(),
+			"message": "error to upload file",
+		})
+	}
+
+	experience.PhotoURL = &photoURL
 	experience.ID = id
 
 	if _, err := e.experienceFunc.UpdateExperience(&experience); err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error(), "message": "Error to update experience"})
 		return
 	}
 

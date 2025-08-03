@@ -21,7 +21,7 @@ func NewExperienceFunc(experienceRepo repository.ExperienceRepository, categoryR
 	}
 }
 
-func (ef *ExperienceFunction) CreateExperience(e *entity.Experience) (int, error) {
+func (ef *ExperienceFunction) CreateExperience(e entity.Experience) (int, error) {
 	if len(e.CompanyName) < 3 {
 		return 0, errors.New("the name must be at least 3 characters long")
 	}
