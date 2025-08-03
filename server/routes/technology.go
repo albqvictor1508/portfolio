@@ -1,9 +1,12 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
+	"github.com/albqvictor1508/portfolio/common/images"
 	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/function"
 	"github.com/gin-gonic/gin"
@@ -20,7 +23,27 @@ func NewTechnologyRoute(technologyFunc function.TechnologyFunc) TechnologyRoutes
 }
 
 func (tr *TechnologyRoutes) CreateTechnology(ctx *gin.Context) {
+	file, err := ctx.FormFile("photo")
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"error":   err.Error(),
+			"message": "'photo' is required, send this on form-data",
+		})
+	}
 	var technology *entity.Technology
+	technology.Name = ctx.PostForm("name")
+	filename := strings.ReplaceAll(file.Filename, " ", "-")
+	technologyName := strings.ReplaceAll(technology.Name, " ", "-")
+	filepath := fmt.Sprintf("project/%v/%v", technologyName, filename)
+
+	photoURL, err := images.UploadFile(file, filepath)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"error":   err.Error(),
+			"message": "Error to upload photo",
+		})
+	}
+	technology.PhotoURL = photoURL
 	if err := ctx.ShouldBindJSON(&technology); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return

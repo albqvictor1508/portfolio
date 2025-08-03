@@ -39,7 +39,7 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 	project.DemoURL = ctx.PostForm("demo_url")
 	filename := strings.ReplaceAll(file.Filename, " ", "-")
 	projectName := strings.ReplaceAll(project.Name, " ", "-")
-	filePath := fmt.Sprintf("%v/%v", projectName, filename)
+	filePath := fmt.Sprintf("project/%v/%v", projectName, filename)
 
 	photoURL, uploadErr := images.UploadFile(file, filePath)
 	if uploadErr != nil {
@@ -77,13 +77,15 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 		}
 	}
 
-	createdProject, err := p.projectFunc.CreateProject(&project)
+	id, err := p.projectFunc.CreateProject(&project)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, createdProject)
+	ctx.JSON(http.StatusCreated, gin.H{
+		"id": id,
+	})
 }
 
 func (p *projectRoute) GetProjects(ctx *gin.Context) {
