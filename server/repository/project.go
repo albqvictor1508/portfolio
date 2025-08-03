@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"time"
 
@@ -40,10 +41,10 @@ func (r *ProjectRepository) Insert(project *entity.Project) (int, error) {
 
 	var id int
 	var categoryID *int
-
 	if project.Category != nil {
 		categoryID = &project.Category.ID
 	}
+
 	err = tx.QueryRow(ctx,
 		projectQuery,
 		project.Name,
@@ -81,14 +82,20 @@ func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
 
 	query := `
 		SELECT
-			id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at
+			p.id, p.name, p.description, p.github_url, p.demo_url, p.is_pinned, p.created_at, p.updated_at,
+			c.id as category_id, c.name as category_name
 		FROM
-			projects
+			projects p
+		LEFT JOIN
+			categories c ON p.category_id = c.id
 		WHERE
-			name = $1
+			p.name = $1
 	`
 
 	project := entity.Project{}
+	var catID sql.NullInt32
+	var catName sql.NullString
+
 	err := pr.Conn.QueryRow(
 		ctx,
 		query,
@@ -100,16 +107,23 @@ func (pr *ProjectRepository) FindByName(name string) (entity.Project, error) {
 		&project.GithubURL,
 		&project.DemoURL,
 		&project.IsPinned,
-		&project.Category.ID,
 		&project.CreatedAt,
 		&project.UpdatedAt,
+		&catID,
+		&catName,
 	)
 	if err == pgx.ErrNoRows {
 		return entity.Project{}, nil
 	}
-
 	if err != nil {
 		return entity.Project{}, err
+	}
+
+	if catID.Valid {
+		project.Category = &entity.Category{
+			ID:   int(catID.Int32),
+			Name: catName.String,
+		}
 	}
 
 	return project, nil
@@ -162,7 +176,6 @@ func (pr *ProjectRepository) Update(project *entity.Project) (int, error) {
 	`
 
 	var categoryID *int
-
 	if project.Category != nil {
 		categoryID = &project.Category.ID
 	}
@@ -210,15 +223,20 @@ func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
 
 	projectQuery := `
 		SELECT
-			id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at
+			p.id, p.name, p.description, p.github_url, p.demo_url, p.is_pinned, p.created_at, p.updated_at,
+			c.id as category_id, c.name as category_name
 		FROM
 			projects p
-	LEFT JOIN categories c ON c.id = p.category_id
+		LEFT JOIN
+			categories c ON p.category_id = c.id
 		WHERE
-			id = $1
+			p.id = $1
 	`
 
 	project := entity.Project{}
+	var catID sql.NullInt32
+	var catName sql.NullString
+
 	err := pr.Conn.QueryRow(
 		ctx,
 		projectQuery,
@@ -230,16 +248,23 @@ func (pr *ProjectRepository) FindByID(id int) (entity.Project, error) {
 		&project.GithubURL,
 		&project.DemoURL,
 		&project.IsPinned,
-		&project.Category.ID,
 		&project.CreatedAt,
 		&project.UpdatedAt,
+		&catID,
+		&catName,
 	)
 	if err == pgx.ErrNoRows {
 		return entity.Project{}, nil
 	}
-
 	if err != nil {
 		return entity.Project{}, err
+	}
+
+	if catID.Valid {
+		project.Category = &entity.Category{
+			ID:   int(catID.Int32),
+			Name: catName.String,
+		}
 	}
 
 	techQuery := `
@@ -278,9 +303,12 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 
 	projectQuery := `
 		SELECT
-			id, name, description, github_url, demo_url, is_pinned, category_id, created_at, updated_at
+			p.id, p.name, p.description, p.github_url, p.demo_url, p.is_pinned, p.created_at, p.updated_at,
+			c.id as category_id, c.name as category_name
 		FROM
-			projects
+			projects p
+		LEFT JOIN
+			categories c ON p.category_id = c.id
 	`
 
 	rows, err := pr.Conn.Query(
@@ -292,13 +320,10 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 	}
 	defer rows.Close()
 
-	var categoryID *int
 	for rows.Next() {
 		var projectObj entity.Project
-
-		if projectObj.Category != nil {
-			categoryID = &projectObj.Category.ID
-		}
+		var catID sql.NullInt32
+		var catName sql.NullString
 
 		err := rows.Scan(
 			&projectObj.ID,
@@ -307,12 +332,20 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 			&projectObj.GithubURL,
 			&projectObj.DemoURL,
 			&projectObj.IsPinned,
-			categoryID,
 			&projectObj.CreatedAt,
 			&projectObj.UpdatedAt,
+			&catID,
+			&catName,
 		)
 		if err != nil {
 			return []entity.Project{}, err
+		}
+
+		if catID.Valid {
+			projectObj.Category = &entity.Category{
+				ID:   int(catID.Int32),
+				Name: catName.String,
+			}
 		}
 
 		techQuery := `
@@ -334,6 +367,7 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 		for techRows.Next() {
 			var tech entity.Technology
 			if err := techRows.Scan(&tech.ID, &tech.Name, &tech.PhotoURL); err != nil {
+				techRows.Close()
 				return []entity.Project{}, err
 			}
 			projectObj.Technologies = append(projectObj.Technologies, tech)
