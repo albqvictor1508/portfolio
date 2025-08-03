@@ -28,6 +28,23 @@ func (e *ExperienceRoutes) CreateExperience(ctx *gin.Context) {
 		return
 	}
 
+	file, err := ctx.FormFile("photo")
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   err.Error(),
+			"message": "'photo' is required, please send them on form-data",
+		})
+	}
+
+	categoryIDStr := ctx.PostForm("category_id")
+	categoryID, err := strconv.Atoi(categoryIDStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   err.Error(),
+			"message": "category_id is required",
+		})
+	}
+
 	id, err := e.experienceFunc.CreateExperience(experience)
 	if err != nil {
 		fmt.Print(err.Error())
@@ -97,4 +114,3 @@ func (e *ExperienceRoutes) DeleteExperience(ctx *gin.Context) {
 		"success": true,
 	})
 }
-
