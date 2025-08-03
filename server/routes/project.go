@@ -49,14 +49,13 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 	project.PhotoURL = photoURL
 
 	categoryIDStr := ctx.PostForm("category_id")
-
 	if categoryIDStr != "" {
 		categoryID, err := strconv.Atoi(categoryIDStr)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'category_id' format, must be an integer"})
 			return
 		}
-		project.CategoryID = &categoryID
+		project.Category = &entity.Category{ID: categoryID} // Correctly assign the category object
 	}
 
 	isPinned, _ := strconv.ParseBool(ctx.PostForm("is_pinned"))
@@ -64,27 +63,25 @@ func (p *projectRoute) CreateProject(ctx *gin.Context) {
 
 	techIDsStr := ctx.PostForm("technologies")
 	if techIDsStr != "" {
-		techIDs := []int{}
-		for idStr := range strings.SplitSeq(techIDsStr, ",") {
+		for _, idStr := range strings.Split(techIDsStr, ",") { // Corrected to strings.Split
 			id, err := strconv.Atoi(strings.TrimSpace(idStr))
 			if err != nil {
 				ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'technologies' format, must be a comma-separated string of integers"})
 				return
 			}
-			techIDs = append(techIDs, id)
-		}
-		for _, id := range techIDs {
 			project.Technologies = append(project.Technologies, entity.Technology{ID: id})
 		}
 	}
 
-	newProject, err := p.projectFunc.CreateProject(&project)
+	// The function layer now returns the created project object
+	createdProject, err := p.projectFunc.CreateProject(&project)
 	if err != nil {
+		// Assuming the function layer provides specific error messages
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, newProject)
+	ctx.JSON(http.StatusCreated, createdProject)
 }
 
 func (p *projectRoute) GetProjects(ctx *gin.Context) {

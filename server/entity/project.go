@@ -12,7 +12,7 @@ type Project struct {
 	DemoURL      string       `json:"demo_url"`
 	PhotoURL     string       `json:"photo_url"`
 	IsPinned     bool         `json:"is_pinned"`
-	CategoryID   *int         `json:"category_id,omitempty"`
+	Category     *Category    `json:"category,omitempty"`
 	Technologies []Technology `json:"technologies"`
 	CreatedAt    time.Time    `json:"created_at"`
 	UpdatedAt    time.Time    `json:"updated_at"`
