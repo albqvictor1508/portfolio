@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/albqvictor1508/portfolio/common/images"
 	"github.com/albqvictor1508/portfolio/entity"
@@ -50,8 +51,24 @@ func (e *ExperienceRoutes) CreateExperience(ctx *gin.Context) {
 	experience.CategoryID = &categoryID
 	experience.Role = ctx.PostForm("role")
 	experience.Description = ctx.PostForm("description")
+
 	startDateStr := ctx.PostForm("start_date")
 	endDateStr := ctx.PostForm("end_date")
+
+	experience.StartDate, err = time.Parse("YYYY-MM-DD", startDateStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   err.Error(),
+			"message": "invalid date",
+		})
+		experience.EndDate, err = time.Parse("YYYY-MM-DD", endDateStr)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"error":   err.Error(),
+				"message": "invalid date",
+			})
+		}
+	}
 	filename := strings.ReplaceAll(file.Filename, " ", "-")
 	experienceName := strings.ReplaceAll(experience.CompanyName, " ", "-")
 	filePath := fmt.Sprintf("project/%v/%v", experienceName, filename)
