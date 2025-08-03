@@ -4,7 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
+	"github.com/albqvictor1508/portfolio/common/images"
 	"github.com/albqvictor1508/portfolio/entity"
 	"github.com/albqvictor1508/portfolio/function"
 	"github.com/gin-gonic/gin"
@@ -44,6 +46,25 @@ func (e *ExperienceRoutes) CreateExperience(ctx *gin.Context) {
 			"message": "category_id is required",
 		})
 	}
+	experience.CompanyName = ctx.PostForm("company_name")
+	experience.CategoryID = &categoryID
+	experience.Role = ctx.PostForm("role")
+	experience.Description = ctx.PostForm("description")
+	startDateStr := ctx.PostForm("start_date")
+	endDateStr := ctx.PostForm("end_date")
+	filename := strings.ReplaceAll(file.Filename, " ", "-")
+	experienceName := strings.ReplaceAll(experience.CompanyName, " ", "-")
+	filePath := fmt.Sprintf("project/%v/%v", experienceName, filename)
+
+	photoURL, err := images.UploadFile(file, filePath)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error":   err.Error(),
+			"message": "error to upload file",
+		})
+	}
+
+	experience.PhotoURL = &photoURL
 
 	id, err := e.experienceFunc.CreateExperience(experience)
 	if err != nil {
