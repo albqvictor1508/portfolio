@@ -33,18 +33,18 @@ func (r *ProjectRepository) Insert(project *entity.Project) (int, error) {
 
 	projectQuery := `
 		INSERT INTO projects
-			(name, description, github_url, demo_url, is_pinned, category_id)
+			(name, description, github_url, demo_url, is_pinned, category_id, photo_url)
 		VALUES
-			($1, $2, $3, $4 ,$5, $6)
+			($1, $2, $3, $4 ,$5, $6, $7)
 		RETURNING id
 	`
 
 	var id int
 	var categoryID *int
+
 	if project.Category != nil {
 		categoryID = &project.Category.ID
 	}
-
 	err = tx.QueryRow(ctx,
 		projectQuery,
 		project.Name,
@@ -53,6 +53,7 @@ func (r *ProjectRepository) Insert(project *entity.Project) (int, error) {
 		project.DemoURL,
 		project.IsPinned,
 		categoryID,
+		project.PhotoURL,
 	).Scan(&id)
 	if err != nil {
 		return 0, err
@@ -379,3 +380,4 @@ func (pr *ProjectRepository) GetProjects() ([]entity.Project, error) {
 
 	return projectList, nil
 }
+

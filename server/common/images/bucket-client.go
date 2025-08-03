@@ -61,9 +61,6 @@ func UploadFile(fileHeader *multipart.FileHeader, path string) (string, error) {
 		return "", fmt.Errorf("R2_PUBLIC_URL environment variable not set")
 	}
 
-	log.Printf("[UPLOADER] R2_PUBLIC_URL: %s", r2PublicURL)
-	log.Printf("[UPLOADER] Uploading to path: %s", path)
-
 	f, err := fileHeader.Open()
 	if err != nil {
 		return "", fmt.Errorf("failed to open file: %w", err)
@@ -76,13 +73,10 @@ func UploadFile(fileHeader *multipart.FileHeader, path string) (string, error) {
 		Body:   f,
 	})
 	if err != nil {
-		log.Printf("[UPLOADER] Error from PutObject: %v", err)
 		return "", fmt.Errorf("failed to upload file to R2: %w", err)
 	}
 
-	// Construct the final URL
 	url := fmt.Sprintf("https://%s/%s", r2PublicURL, path)
-	log.Printf("[UPLOADER] Final URL: %s", url)
 
 	return url, nil
 }

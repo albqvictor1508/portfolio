@@ -23,39 +23,39 @@ func NewProjectFunc(projectRepo repository.ProjectRepository, categoryRepo repos
 	}
 }
 
-func (pf *ProjectFunction) CreateProject(p *entity.Project) (*entity.Project, error) {
+func (pf *ProjectFunction) CreateProject(p *entity.Project) (int, error) {
 	if len(p.Name) < 4 {
-		return nil, errors.New("the name must be at least 4 characters long")
+		return 0, errors.New("the name must be at least 4 characters long")
 	}
 
 	if len(p.Description) < 100 {
-		return nil, errors.New("the description must be at least 100 characters long")
+		return 0, errors.New("the description must be at least 100 characters long")
 	}
 
 	if !utils.IsValidURL(p.GithubURL) {
-		return nil, errors.New("invalid github url")
+		return 0, errors.New("invalid github url")
 	}
 
 	if p.DemoURL != "" && !utils.IsValidURL(p.DemoURL) {
-		return nil, errors.New("invalid demo url")
+		return 0, errors.New("invalid demo url")
 	}
 
 	project, err := pf.projectRepo.FindByName(p.Name)
 	if err != nil {
-		return nil, fmt.Errorf("error finding project by name: %w", err)
+		return 0, fmt.Errorf("error finding project by name: %w", err)
 	}
 
 	if project.ID != 0 {
-		return nil, errors.New("a project with this name already exists")
+		return 0, errors.New("a project with this name already exists")
 	}
 
 	if p.Category != nil && p.Category.ID != 0 {
 		category, err := pf.categoryRepo.FindByID(p.Category.ID)
 		if err != nil {
-			return nil, fmt.Errorf("error finding category by id: %w", err)
+			return 0, fmt.Errorf("error finding category by id: %w", err)
 		}
 		if category.ID == 0 {
-			return nil, errors.New("category not found")
+			return 0, errors.New("category not found")
 		}
 	}
 
@@ -63,24 +63,20 @@ func (pf *ProjectFunction) CreateProject(p *entity.Project) (*entity.Project, er
 		for _, tech := range p.Technologies {
 			technology, err := pf.technologyRepo.FindByID(tech.ID)
 			if err != nil {
-				return nil, fmt.Errorf("error finding technology by id: %w", err)
+				return 0, fmt.Errorf("error finding technology by id: %w", err)
 			}
 			if technology.ID == 0 {
-				return nil, fmt.Errorf("technology with id %d not found", tech.ID)
+				return 0, fmt.Errorf("technology with id %d not found", tech.ID)
 			}
 		}
 	}
 
 	newID, err := pf.projectRepo.Insert(p)
 	if err != nil {
-		return nil, err
+		return 0, err
 	}
 
-	newProject, err := pf.projectRepo.FindByID(newID)
-	if err != nil {
-		return &entity.Project{}, fmt.Errorf("error to find by id: %v", err)
-	}
-	return &newProject, nil
+	return newID, nil
 }
 
 func (pf *ProjectFunction) GetProjects() ([]entity.Project, error) {
