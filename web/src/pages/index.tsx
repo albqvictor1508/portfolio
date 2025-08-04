@@ -16,7 +16,7 @@ function RouteComponent() {
 			<HeroSection />
 			<AboutSection />
 			<ProjectSection projects={[]} />
-			<Footer />
+			<Footer isLight={true} />
 		</div>
 	);
 }
