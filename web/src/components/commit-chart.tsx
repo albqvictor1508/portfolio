@@ -8,7 +8,6 @@ import {
 
 export const CommitChart = () => {
   const today = new Date();
-  const currentDayOfWeek = today.getDay();
   const days = Array.from({ length: 365 }, (_, i) => {
     const date = new Date(today);
     date.setDate(today.getDate() - 365 + i);
@@ -17,6 +16,8 @@ export const CommitChart = () => {
       commits: Math.floor(Math.random() * 10),
     };
   });
+
+  const firstDayOfWeek = days.length > 0 ? days[0].date.getDay() : 0;
 
   const getTooltipText = (day: { date: Date; commits: number }) => {
     const date = day.date.toLocaleDateString("en-US", {
@@ -29,16 +30,16 @@ export const CommitChart = () => {
 
   const getColor = (commits: number) => {
     if (commits === 0) return "bg-zinc-800";
-    if (commits < 2) return "bg-green-800";
+    if (commits < 2) return "bg-green-400";
     if (commits < 5) return "bg-green-600";
-    if (commits < 8) return "bg-green-400";
-    return "bg-green-200";
+    if (commits < 8) return "bg-green-800";
+    return "bg-green-950";
   };
 
   return (
     <div className="flex flex-col gap-2 w-full">
-      <div className="grid grid-cols-53 grid-rows-7 gap-1 w-full">
-        {Array.from({ length: currentDayOfWeek }).map((_, i) => (
+      <div className="grid grid-flow-col grid-rows-7 gap-1">
+        {Array.from({ length: firstDayOfWeek }).map((_, i) => (
           <div key={`empty-${i}`} className="w-3 h-3 rounded-sm" />
         ))}
         {days.map((day, i) => (
@@ -59,4 +60,3 @@ export const CommitChart = () => {
     </div>
   );
 };
-
