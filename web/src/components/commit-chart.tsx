@@ -36,8 +36,8 @@ export const CommitChart = () => {
     return 'fill-green-950';
   };
 
-  const squareSize = 20;
-  const gap = 5;
+  const squareSize = 10;
+  const gap = 3;
   const firstDayOfWeek = days[0]?.date.getDay() ?? 0;
   const weekCount = Math.ceil((daysInPast + firstDayOfWeek) / 7);
 
