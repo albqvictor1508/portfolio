@@ -1,4 +1,5 @@
 import { AboutSection } from "@/components/about";
+import { Footer } from "@/components/footer";
 import { HeroSection } from "@/components/hero";
 import { Menu } from "@/components/menu";
 import { ProjectSection } from "@/components/project/section";
@@ -15,6 +16,7 @@ function RouteComponent() {
 			<HeroSection />
 			<AboutSection />
 			<ProjectSection projects={[]} />
+			<Footer />
 		</div>
 	);
 }
