@@ -15,7 +15,7 @@ function RouteComponent() {
       <Menu />
       <HeroSection />
       <AboutSection />
-      <ProjectSection projects={[]} />
+      <ProjectSection />
       <Footer isLight={true} />
     </div>
   );

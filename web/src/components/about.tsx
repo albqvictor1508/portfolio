@@ -26,9 +26,7 @@ export const AboutSection = () => {
         </div>
       </div>
       <div className="w-full flex flex-col gap-4 flex-1 rounded-md border-2 border-r-zinc-800 p-4">
-        <div className="flex-1">
-          <h2>salve</h2>
-        </div>
+        <div className="flex-1">Chart</div>
         <div className="flex-1 w-full h-[150px] flex gap-10">
           <div className="flex-1  rounded-md border-2 border-zinc-800"></div>
           <div className="flex-1  rounded-md border-2 border-zinc-800"></div>
