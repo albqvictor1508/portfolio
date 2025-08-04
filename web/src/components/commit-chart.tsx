@@ -1,62 +1,88 @@
-"use client";
+'use client';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "./ui/tooltip";
+} from './ui/tooltip';
 
 export const CommitChart = () => {
   const today = new Date();
   const days = Array.from({ length: 365 }, (_, i) => {
-    const date = new Date(today);
-    date.setDate(today.getDate() - 365 + i);
+    const date = new Date();
+    date.setDate(today.getDate() - (364 - i));
     return {
       date,
       commits: Math.floor(Math.random() * 10),
     };
   });
 
-  const firstDayOfWeek = days.length > 0 ? days[0].date.getDay() : 0;
-
-  const getTooltipText = (day: { date: Date; commits: number }) => {
-    const date = day.date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+  const getTooltipText = (day: { date: Date; commits: number } | undefined) => {
+    if (!day) return '';
+    const date = day.date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
     return `${day.commits} commits on ${date}`;
   };
 
   const getColor = (commits: number) => {
-    if (commits === 0) return "bg-zinc-800";
-    if (commits < 2) return "bg-green-400";
-    if (commits < 5) return "bg-green-600";
-    if (commits < 8) return "bg-green-800";
-    return "bg-green-950";
+    if (commits === 0) return 'fill-zinc-800';
+    if (commits < 2) return 'fill-green-400';
+    if (commits < 5) return 'fill-green-600';
+    if (commits < 8) return 'fill-green-800';
+    return 'fill-green-950';
   };
 
+  const squareSize = 14;
+  const gap = 5;
+  const weekCount = 53;
+
+  const svgWidth = weekCount * (squareSize + gap) - gap;
+  const svgHeight = 7 * (squareSize + gap) - gap;
+
+  const firstDayOfWeek = days[0]?.date.getDay() ?? 0;
+
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <div className="grid grid-flow-col grid-rows-7 gap-1">
-        {Array.from({ length: firstDayOfWeek }).map((_, i) => (
-          <div key={`empty-${i}`} className="w-3 h-3 rounded-sm" />
-        ))}
-        {days.map((day, i) => (
-          <TooltipProvider key={i}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div
-                  className={`w-3 h-3 rounded-sm ${getColor(day.commits)}`}
-                />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{getTooltipText(day)}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        ))}
-      </div>
+    <div className="w-full">
+      <svg
+        width="100%"
+        viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <g>
+          {days.map((day, index) => {
+            const totalIndex = index + firstDayOfWeek;
+            const weekIndex = Math.floor(totalIndex / 7);
+            const dayIndex = totalIndex % 7;
+
+            const x = weekIndex * (squareSize + gap);
+            const y = dayIndex * (squareSize + gap);
+
+            return (
+              <TooltipProvider key={index}>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <rect
+                      x={x}
+                      y={y}
+                      width={squareSize}
+                      height={squareSize}
+                      className={getColor(day.commits)}
+                      rx="0"
+                      ry="0"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{getTooltipText(day)}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            );
+          })}
+        </g>
+      </svg>
     </div>
   );
 };
