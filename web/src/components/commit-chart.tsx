@@ -35,8 +35,8 @@ export const CommitChart = () => {
     return 'fill-green-950';
   };
 
-  const squareSize = 14;
-  const gap = 5;
+  const squareSize = 40;
+  const gap = 10;
   const weekCount = 53;
 
   const svgWidth = weekCount * (squareSize + gap) - gap;
