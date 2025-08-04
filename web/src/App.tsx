@@ -5,12 +5,12 @@ import { Home } from "./components/home";
 const client = new QueryClient();
 
 export function App() {
-	const salve = useRef("salve");
-	salve.current = "mudei o valor de salve";
+  const salve = useRef("salve");
+  salve.current = "mudei o valor de salve";
 
-	return (
-		<QueryClientProvider client={client}>
-			<Home />
-		</QueryClientProvider>
-	);
+  return (
+    <QueryClientProvider client={client}>
+      <Home />
+    </QueryClientProvider>
+  );
 }
