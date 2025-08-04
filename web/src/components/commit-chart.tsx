@@ -8,9 +8,10 @@ import {
 
 export const CommitChart = () => {
   const today = new Date();
-  const days = Array.from({ length: 365 }, (_, i) => {
+  const daysInPast = 90;
+  const days = Array.from({ length: daysInPast }, (_, i) => {
     const date = new Date();
-    date.setDate(today.getDate() - (364 - i));
+    date.setDate(today.getDate() - (daysInPast - 1 - i));
     return {
       date,
       commits: Math.floor(Math.random() * 10),
@@ -37,12 +38,11 @@ export const CommitChart = () => {
 
   const squareSize = 40;
   const gap = 10;
-  const weekCount = 53;
+  const firstDayOfWeek = days[0]?.date.getDay() ?? 0;
+  const weekCount = Math.ceil((daysInPast + firstDayOfWeek) / 7);
 
   const svgWidth = weekCount * (squareSize + gap) - gap;
   const svgHeight = 7 * (squareSize + gap) - gap;
-
-  const firstDayOfWeek = days[0]?.date.getDay() ?? 0;
 
   return (
     <div className="w-full">
