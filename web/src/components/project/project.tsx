@@ -1,11 +1,11 @@
-import { useState } from "react";
-
 export const Project = () => {
-	const [projects, setProjects] = useState([]);
-
 	return (
-		<div>
-			<p>salve</p>
+		<div className="w-full h-full flex flex-col gap-2">
+			<h2 className="font-semibold text-2xl">Zentto</h2>
+			<span>25 Jun, 2025 - Presente</span>
+			<p>lorem</p>
+
+			<div className="w-full h-60 rounded-md bg-zinc-800"></div>
 		</div>
 	);
 };

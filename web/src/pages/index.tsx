@@ -1,6 +1,7 @@
 import { AboutSection } from "@/components/about";
 import { HeroSection } from "@/components/hero";
 import { Menu } from "@/components/menu";
+import { ProjectSection } from "@/components/project/section";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
@@ -13,6 +14,7 @@ function RouteComponent() {
 			<Menu />
 			<HeroSection />
 			<AboutSection />
+			<ProjectSection projects={[]} />
 		</div>
 	);
 }
