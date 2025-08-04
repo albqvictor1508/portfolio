@@ -51,48 +51,57 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function Menu() {
   return (
-    <NavigationMenu viewport={false}>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <a href="/">Home</a>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
+    <div className="w-full mt-2 flex justify-between items-center">
+      <span className="font-bold">VA</span>
+      <NavigationMenu viewport={false}>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <a href="/">Home</a>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <a href="/about">About</a>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              asChild
+              className={navigationMenuTriggerStyle()}
+            >
+              <a href="/about">About</a>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>With Icon</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[200px] gap-4">
-              <li>
-                <NavigationMenuLink asChild>
-                  <a href="#" className="flex-row items-center gap-2">
-                    <CircleHelpIcon />
-                    Github
-                  </a>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <a href="#" className="flex-row items-center gap-2">
-                    <CircleIcon />
-                    LinkedIn
-                  </a>
-                </NavigationMenuLink>
-                <NavigationMenuLink asChild>
-                  <a href="#" className="flex-row items-center gap-2">
-                    <CircleCheckIcon />
-                    Done
-                  </a>
-                </NavigationMenuLink>
-              </li>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>With Icon</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[200px] gap-4">
+                <li>
+                  <NavigationMenuLink asChild>
+                    <a href="#" className="flex-row items-center gap-2">
+                      <CircleHelpIcon />
+                      Github
+                    </a>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <a href="#" className="flex-row items-center gap-2">
+                      <CircleIcon />
+                      LinkedIn
+                    </a>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink asChild>
+                    <a href="#" className="flex-row items-center gap-2">
+                      <CircleCheckIcon />
+                      Done
+                    </a>
+                  </NavigationMenuLink>
+                </li>
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
   );
 }
