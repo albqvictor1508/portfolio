@@ -5,13 +5,19 @@ export const AboutSection = () => {
   return (
     <div className="w-full h-full flex gap-10">
       <div className="w-full flex-1 flex flex-col gap-4">
-        <div className="w-full flex flex-col gap-2.5">
+        <div className="w-full flex flex-col justify-center gap-2.5">
           <h2 className="font-semibold text-2xl">About me.</h2>
           <p className="text-sm text-justify">
             Lorem Ipsum is simply dummy text of the printing and typesetting and
             scrambled it to make a type specimen book. It has survived not only
             five centuries.
           </p>
+          <p className="text-sm text-justify">
+            Lorem Ipsum is simply dummy text of the printing and typesetting and
+            scrambled it to make a type specimen book. It has survived not only
+            five centuries.
+          </p>
+
           <p className="text-sm text-justify">
             with desktop publishing software like Aldus PageMaker including
             versions of Lorem Ipsum.
@@ -30,9 +36,14 @@ export const AboutSection = () => {
         <div className="flex-1 w-full">
           <CommitChart />
         </div>
+        <Button variant={"outline"}>Download CV</Button>
         <div className="flex-1 w-full flex gap-6">
-          <div className="flex-1 h-[150px] rounded-md border-2 border-zinc-800"></div>
-          <div className="flex-1 h-[151px] rounded-md border-2 border-zinc-800"></div>
+          <div className="flex-1 flex justify-center items-center gap-2 h-[150px] rounded-md border-2 border-zinc-800">
+            <span>download CV</span> fds
+          </div>
+          <div className="flex-1 flex justify-center items-center gap-2 h-[150px] rounded-md border-2 border-zinc-800">
+            <span>qualquer</span> merda
+          </div>
         </div>
       </div>
     </div>

@@ -1,17 +1,13 @@
-'use client';
+"use client";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from './ui/card';
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from './ui/chart';
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
+} from "./ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
 export const CommitChart = () => {
   const today = new Date();
@@ -19,15 +15,18 @@ export const CommitChart = () => {
     const date = new Date();
     date.setDate(today.getDate() - (29 - i));
     return {
-      date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+      date: date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      }),
       commits: Math.floor(Math.random() * 15),
     };
   });
 
   const chartConfig = {
     commits: {
-      label: 'Commits',
-      color: "hsl(142.1 76.2% 36.3%)",
+      label: "Commits",
+      color: "hsl(142, 71%, 45%)",
     },
   };
 
@@ -38,7 +37,7 @@ export const CommitChart = () => {
         <CardDescription>Last 30 days</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="h-[200px] w-full">
+        <ChartContainer config={chartConfig} className="h-[150px] w-full">
           <BarChart accessibilityLayer data={data}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -46,10 +45,11 @@ export const CommitChart = () => {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value.split(" ")[1]}
+              interval={4}
             />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Bar dataKey="commits" fill="var(--color-commits)" radius={4} />
+            <Bar dataKey="commits" fill="var(--color-commits)" radius={4} barSize={10} />
           </BarChart>
         </ChartContainer>
       </CardContent>
