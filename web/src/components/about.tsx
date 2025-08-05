@@ -32,7 +32,7 @@ export const AboutSection = () => {
         </div>
         <div className="flex-1 w-full flex gap-6">
           <div className="flex-1 h-[150px] rounded-md border-2 border-zinc-800"></div>
-          <div className="flex-1 h-[150px] rounded-md border-2 border-zinc-800"></div>
+          <div className="flex-1 h-[151px] rounded-md border-2 border-zinc-800"></div>
         </div>
       </div>
     </div>

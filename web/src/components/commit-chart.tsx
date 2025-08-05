@@ -27,7 +27,7 @@ export const CommitChart = () => {
   const chartConfig = {
     commits: {
       label: 'Commits',
-      color: 'hsl(var(--chart-1))',
+      color: "hsl(142.1 76.2% 36.3%)",
     },
   };
 
