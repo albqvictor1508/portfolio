@@ -1,91 +1,58 @@
-"use client";
+'use client';
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "./ui/tooltip";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from './ui/card';
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from './ui/chart';
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts';
 
 export const CommitChart = () => {
   const today = new Date();
-  const daysInPast = 90;
-  const days = Array.from({ length: daysInPast }, (_, i) => {
+  const data = Array.from({ length: 30 }, (_, i) => {
     const date = new Date();
-    date.setDate(today.getDate() - (daysInPast - 1 - i));
+    date.setDate(today.getDate() - (29 - i));
     return {
-      date,
-      commits: Math.floor(Math.random() * 10),
+      date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+      commits: Math.floor(Math.random() * 15),
     };
   });
 
-  const getTooltipText = (day: { date: Date; commits: number } | undefined) => {
-    if (!day) return "";
-    const date = day.date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-    return `${day.commits} commits on ${date}`;
+  const chartConfig = {
+    commits: {
+      label: 'Commits',
+      color: 'hsl(var(--chart-1))',
+    },
   };
-
-  const getColor = (commits: number) => {
-    if (commits === 0) return "fill-zinc-800";
-    if (commits < 2) return "fill-green-400";
-    if (commits < 5) return "fill-green-600";
-    if (commits < 8) return "fill-green-800";
-    return "fill-green-950";
-  };
-
-  const squareSize = 12;
-  const gap = 4;
-  const firstDayOfWeek = days[0]?.date.getDay() ?? 0;
-  const weekCount = Math.ceil((daysInPast + firstDayOfWeek) / 7);
-
-  const svgWidth = weekCount * (squareSize + gap) - gap;
-  const svgHeight = 7 * (squareSize + gap) - gap;
 
   return (
-    <div className="w-full h-full">
-      <svg
-        width="100%"
-        height="100%"
-        viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-        preserveAspectRatio="none"
-      >
-        <title>salve</title>
-        <g>
-          {days.map((day, index) => {
-            const totalIndex = index + firstDayOfWeek;
-            const weekIndex = Math.floor(totalIndex / 7);
-            const dayIndex = totalIndex % 7;
-
-            const x = weekIndex * (squareSize + gap);
-            const y = dayIndex * (squareSize + gap);
-
-            return (
-              <TooltipProvider key={index}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <rect
-                      x={x}
-                      y={y}
-                      width={squareSize}
-                      height={squareSize}
-                      className={getColor(day.commits)}
-                      rx="0"
-                      ry="0"
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{getTooltipText(day)}</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            );
-          })}
-        </g>
-      </svg>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Commit History</CardTitle>
+        <CardDescription>Last 30 days</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig} className="h-[200px] w-full">
+          <BarChart accessibilityLayer data={data}>
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="date"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+              tickFormatter={(value) => value.slice(0, 3)}
+            />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Bar dataKey="commits" fill="var(--color-commits)" radius={4} />
+          </BarChart>
+        </ChartContainer>
+      </CardContent>
+    </Card>
   );
 };
-

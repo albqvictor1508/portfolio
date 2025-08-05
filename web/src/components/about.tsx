@@ -27,12 +27,12 @@ export const AboutSection = () => {
         </div>
       </div>
       <div className="w-full flex flex-col gap-4 flex-1 rounded-md border-2 border-r-zinc-800 p-4">
-        <div className="flex-1 w-full h-40">
+        <div className="flex-1 w-full">
           <CommitChart />
         </div>
         <div className="flex-1 w-full flex gap-6">
-          <div className="flex-1  rounded-md border-2 border-zinc-800"></div>
-          <div className="flex-1  rounded-md border-2 border-zinc-800"></div>
+          <div className="flex-1 h-[150px] rounded-md border-2 border-zinc-800"></div>
+          <div className="flex-1 h-[150px] rounded-md border-2 border-zinc-800"></div>
         </div>
       </div>
     </div>
