@@ -1,18 +1,18 @@
-import { LucideMail, Map } from "lucide-react";
+import { LucideMail, MapIcon } from "lucide-react";
 
 export const HeroSection = () => {
   return (
-    <div className="border-2 border-orange-500 w-full h-full flex flex-col gap-4">
+    <div className="w-full h-full flex flex-col gap-4">
       <div className="w-full h-full flex gap-8">
         <div className="flex flex-1 flex-col gap-4">
           <h1 className="text-3xl font-bold">
-            Hey, I'm <span className="text-blue-400">Victor Arruda</span>
+            Hey, I'm <span className="text-green-400">Victor Arruda</span>
           </h1>
           <ul className="flex flex-col gap-2">
-            <li> - Back-end Engineer</li>
+            <li>Back-end Engineer</li>
             <li className="text-sm text-justify">
               Founder{" "}
-              <span className="font-bold text-orange-500">Zentto Chatbot</span>,
+              <span className="font-bold text-green-400">Zentto Chatbot</span>,
               a software development chatbot dedicated to talk with customer .
             </li>
           </ul>
@@ -21,18 +21,22 @@ export const HeroSection = () => {
           salveeeeee hero
         </div>
       </div>
-      <div className="w-full flex justify-between">
+      <div className="w-full flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <span>
-            <Map size={24} />
+          <span className="text-green-200">
+            <MapIcon size={18} />
           </span>
-          <span className="text-sm">João Pessoa, Brazil</span>
+          <span className="text-sm text-green-200 font-semibold">
+            João Pessoa, Brazil
+          </span>
         </div>
         <div className="flex items-center gap-2">
-          <span>
+          <span className="text-green-200">
             <LucideMail size={18} />
           </span>
-          <span className="text-sm font-bold">albq.victor@gmail.com</span>
+          <span className="text-sm text-green-200 font-semibold">
+            albq.victor@gmail.com
+          </span>
         </div>
       </div>
       <div className="w-full flex justify-between">
