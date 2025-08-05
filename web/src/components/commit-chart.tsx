@@ -1,10 +1,10 @@
-'use client';
+"use client";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from './ui/tooltip';
+} from "./ui/tooltip";
 
 export const CommitChart = () => {
   const today = new Date();
@@ -19,25 +19,25 @@ export const CommitChart = () => {
   });
 
   const getTooltipText = (day: { date: Date; commits: number } | undefined) => {
-    if (!day) return '';
-    const date = day.date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
+    if (!day) return "";
+    const date = day.date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
     return `${day.commits} commits on ${date}`;
   };
 
   const getColor = (commits: number) => {
-    if (commits === 0) return 'fill-zinc-800';
-    if (commits < 2) return 'fill-green-400';
-    if (commits < 5) return 'fill-green-600';
-    if (commits < 8) return 'fill-green-800';
-    return 'fill-green-950';
+    if (commits === 0) return "fill-zinc-800";
+    if (commits < 2) return "fill-green-400";
+    if (commits < 5) return "fill-green-600";
+    if (commits < 8) return "fill-green-800";
+    return "fill-green-950";
   };
 
-  const squareSize = 10;
-  const gap = 3;
+  const squareSize = 12;
+  const gap = 4;
   const firstDayOfWeek = days[0]?.date.getDay() ?? 0;
   const weekCount = Math.ceil((daysInPast + firstDayOfWeek) / 7);
 
@@ -45,12 +45,14 @@ export const CommitChart = () => {
   const svgHeight = 7 * (squareSize + gap) - gap;
 
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       <svg
         width="100%"
+        height="100%"
         viewBox={`0 0 ${svgWidth} ${svgHeight}`}
-        preserveAspectRatio="xMidYMid meet"
+        preserveAspectRatio="none"
       >
+        <title>salve</title>
         <g>
           {days.map((day, index) => {
             const totalIndex = index + firstDayOfWeek;
@@ -86,3 +88,4 @@ export const CommitChart = () => {
     </div>
   );
 };
+
