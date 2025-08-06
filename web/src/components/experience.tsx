@@ -1,5 +1,5 @@
 function formatDate(date: Date): string {
-	const day = date.getDay();
+	const day = date.getDay().toFixed(2);
 	const month = date.getMonth();
 
 	return `${day}/${month}`;
@@ -22,10 +22,24 @@ export const ExperienceSection = () => {
 			role: "backend",
 			description: "salve",
 		},
+		{
+			companyName: "salve",
+			startDate: new Date(),
+			endDate: new Date(),
+			role: "backend",
+			description: "salve",
+		},
+		{
+			companyName: "salve",
+			startDate: new Date(),
+			endDate: new Date(),
+			role: "backend",
+			description: "salve",
+		},
 	];
 	return (
 		<div className="w-full h-full flex flex-col gap-4 ">
-			<h2>My Experiences. </h2>
+			<h2>My Experience </h2>
 			<p className="text-sm text-zinc-400">lorem</p>
 
 			{experiences.map((xp, index) => (
