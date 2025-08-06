@@ -1,6 +1,6 @@
 function formatDate(date: Date): string {
-	const day = date.getDay().toFixed(2);
-	const month = date.getMonth();
+	const day = String(date.getDate()).padStart(2, "0");
+	const month = String(date.getMonth() + 1).padStart(2, "0");
 
 	return `${day}/${month}`;
 }
@@ -40,8 +40,7 @@ export const ExperienceSection = () => {
 	return (
 		<div className="w-full h-full flex flex-col gap-4 ">
 			<h2>My Experience </h2>
-			<p className="text-sm text-zinc-400">lorem</p>
-
+			<p className=" text-zinc-400">lorem</p>
 			{experiences.map((xp, index) => (
 				<div key={new Date().toString() + index.toString()}>
 					<h2 className="text-sm text-zinc-400">{xp.companyName}</h2>
