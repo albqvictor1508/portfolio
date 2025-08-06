@@ -44,10 +44,10 @@ export const StackSection = () => {
         {technologies.map((tech: { icon: React.ReactNode; name: string }) => (
           <Badge
             variant={"outline"}
-            className="py-1 px-2 flex justify-center items-center gap-2"
+            className="p-2 flex justify-center items-center gap-2"
             key={tech.name}
           >
-            {tech.icon}
+            <span>{tech.icon}</span>
             {tech.name}
           </Badge>
         ))}
