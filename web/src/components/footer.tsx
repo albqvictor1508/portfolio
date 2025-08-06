@@ -3,15 +3,15 @@ export const Footer = ({ isLight }: { isLight: boolean }) => {
   return (
     <div
       id="footer"
-      className="border-t-2 border-zinc-800 w-full flex justify-center items-center"
+      className="w-2/3 border-2 border-rose-500 flex justify-center items-center"
     >
-      <div className="w-3/4 flex p-4 border-2 border-blue-500 justify-center">
+      <div className="w-full flex p-4 border-2 border-blue-500 justify-center">
         <div className="flex flex-1 flex-col justify-center gap-2">
-          <h3 className="w-fit font-semibold text-base border border-r-green-400">
+          <h3 className="w-fit font-semibold text-base border border-green-400">
             Important Links
           </h3>
           <span
-            className={`${textStyle} text-sm w-max hover:underline cursor-pointer`}
+            className={`${textStyle} text-sm w-fit hover:underline cursor-pointer`}
           >
             Home
           </span>
