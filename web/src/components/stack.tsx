@@ -13,24 +13,25 @@ import {
   SiExpress,
   SiFastify,
 } from "react-icons/si";
+import { FaJava, FaDocker, FaAws } from "react-icons/fa";
 
 export const StackSection = () => {
   const technologies = [
-    { icon: <SiGo className="w-full h-full" />, name: "Go" },
-    { icon: <SiTypescript className="w-full h-full" />, name: "Typescript" },
-    { icon: <SiNodedotjs className="w-full h-full" />, name: "Node.js" },
-    { icon: <SiBun className="w-full h-full" />, name: "Bun" },
-    { icon: <SiGit className="w-full h-full" />, name: "Git" },
-    { icon: "", name: "Java" },
-    { icon: <SiSpringboot className="w-full h-full" />, name: "Springboot" },
-    { icon: "", name: "Docker" },
-    { icon: "", name: "AWS" },
-    { icon: <SiReact className="w-full h-full" />, name: "React Native" },
-    { icon: <SiPostgresql className="w-full h-full" />, name: "Postgres" },
-    { icon: <SiMongodb className="w-full h-full" />, name: "MongoDB" },
-    { icon: <SiExpress className="w-full h-full" size={ } />, name: "Express.js" },
-    { icon: <SiFastify className="w-full h-full" />, name: "Fastify" },
-    { icon: <SiSocketdotio className="w-full h-full" />, name: "Websocket" },
+    { icon: <SiGo size={16} />, name: "Go" },
+    { icon: <SiTypescript size={14} />, name: "Typescript" },
+    { icon: <SiNodedotjs size={14} />, name: "Node.js" },
+    { icon: <SiBun size={14} />, name: "Bun" },
+    { icon: <SiGit size={14} />, name: "Git" },
+    { icon: <FaJava size={14} />, name: "Java" },
+    { icon: <SiSpringboot size={14} />, name: "Springboot" },
+    { icon: <FaDocker size={14} />, name: "Docker" },
+    { icon: <FaAws size={14} />, name: "AWS" },
+    { icon: <SiReact size={14} />, name: "React Native" },
+    { icon: <SiPostgresql size={14} />, name: "Postgres" },
+    { icon: <SiMongodb size={14} />, name: "MongoDB" },
+    { icon: <SiExpress size={14} />, name: "Express.js" },
+    { icon: <SiFastify size={14} />, name: "Fastify" },
+    { icon: <SiSocketdotio size={14} />, name: "Websocket" },
   ];
   return (
     <div className="w-full h-full flex flex-col gap-4">
@@ -43,10 +44,10 @@ export const StackSection = () => {
         {technologies.map((tech: { icon: React.ReactNode; name: string }) => (
           <Badge
             variant={"outline"}
-            className="p-2 flex justify-center items-center gap-2"
+            className=" flex justify-center items-center gap-2"
             key={tech.name}
           >
-            <span className="w-6 h-6">{tech.icon}</span>
+            {tech.icon}
             {tech.name}
           </Badge>
         ))}
