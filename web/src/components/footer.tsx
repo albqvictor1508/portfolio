@@ -1,8 +1,8 @@
 export const Footer = ({ isLight }: { isLight: boolean }) => {
   const textStyle = isLight ? "text-zinc-400" : "text-zinc-800";
   return (
-    <div id="footer" className="w-2/3 flex justify-center items-center">
-      <div className="w-full flex p-4 justify-around">
+    <div id="footer" className="w-full flex justify-center items-center">
+      <div className="w-2/3 flex p-4 justify-between">
         <div className="flex flex-col justify-center gap-2">
           <h3 className="w-fit font-semibold text-base">Important Links</h3>
           <span
@@ -21,7 +21,7 @@ export const Footer = ({ isLight }: { isLight: boolean }) => {
             Home
           </span>
         </div>
-        <div className="flex  flex-col gap-2 justify-center">
+        <div className="flex flex-col gap-2 justify-center">
           <h3 className="w-max font-semibold text-base">Other</h3>
           <span
             className={`${textStyle} text-sm w-max hover:underline cursor-pointer`}
@@ -39,7 +39,7 @@ export const Footer = ({ isLight }: { isLight: boolean }) => {
             Home
           </span>
         </div>
-        <div className="w-max flex  flex-col gap-2 justify-center">
+        <div className="flex flex-col gap-2 justify-center">
           <h3 className="w-max font-semibold text-base">Other</h3>
           <span
             className={`${textStyle} text-sm w-max hover:underline cursor-pointer`}
