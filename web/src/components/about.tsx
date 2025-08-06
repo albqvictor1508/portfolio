@@ -64,22 +64,20 @@ export const AboutSection = () => {
 				<div className="flex-1 w-full flex gap-6">
 					<div className="flex-1 flex flex-col p-4 gap-2 h-[150px] rounded-md border-2 border-zinc-800">
 						<div className="flex flex-col gap-2">
-							<Laptop size={24} className="text-green-400" />
-							<p className="text-xs font-semibold">Web Development</p>
+							<Layers size={24} className="text-green-400" />
+							<p className="text-xs font-semibold">Solution Architecture</p>
 						</div>
 						<p className=" text-zinc-400 text-[10px] leading-4 w-full">
-							Building high-performance websites with clean code and strong SEO
-							fundamentals.
+							Designing robust, scalable, and maintainable software systems to meet complex business requirements.
 						</p>
 					</div>
 					<div className="flex-1 flex flex-col p-4 gap-2 h-[150px] rounded-md border-2 border-zinc-800">
 						<div className="flex flex-col gap-2">
-							<Laptop size={24} className="text-green-400" />
-							<p className="text-xs font-semibold">Web Development</p>
+							<Code size={24} className="text-green-400" />
+							<p className="text-xs font-semibold">Full-Stack Engineering</p>
 						</div>
 						<p className=" text-zinc-400 text-[10px] leading-4 w-full">
-							Building high-performance websites with clean code and strong SEO
-							fundamentals.
+							Building complete, end-to-end applications with a focus on clean code, performance, and user experience.
 						</p>
 					</div>
 				</div>
