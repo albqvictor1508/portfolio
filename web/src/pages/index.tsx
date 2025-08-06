@@ -7,18 +7,18 @@ import { StackSection } from "@/components/stack";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
-	component: RouteComponent,
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	return (
-		<div className="w-[1000px] h-full flex flex-col gap-12 m-auto justify-center items-center">
-			<Menu />
-			<HeroSection />
-			<AboutSection />
-			<ProjectSection />
-			<StackSection />
-			<Footer isLight={true} />
-		</div>
-	);
+  return (
+    <div className="w-[1200px] h-full flex flex-col gap-12 m-auto justify-center items-center">
+      <Menu />
+      <HeroSection />
+      <AboutSection />
+      <ProjectSection />
+      <StackSection />
+      <Footer isLight={true} />
+    </div>
+  );
 }
