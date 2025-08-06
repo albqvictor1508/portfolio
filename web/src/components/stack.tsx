@@ -1,37 +1,37 @@
-import { Badge } from "./ui/badge";
+import { FaAws, FaDocker, FaJava } from "react-icons/fa";
 import {
-  SiGo,
-  SiTypescript,
-  SiReact,
-  SiPostgresql,
-  SiMongodb,
-  SiSocketdotio,
-  SiNodedotjs,
   SiBun,
-  SiGit,
-  SiSpringboot,
   SiExpress,
   SiFastify,
+  SiGit,
+  SiGo,
+  SiMongodb,
+  SiNodedotjs,
+  SiPostgresql,
+  SiReact,
+  SiSocketdotio,
+  SiSpringboot,
+  SiTypescript,
 } from "react-icons/si";
-import { FaJava, FaDocker, FaAws } from "react-icons/fa";
+import { Badge } from "./ui/badge";
 
 export const StackSection = () => {
   const technologies = [
-    { icon: <SiGo size={16} />, name: "Go" },
-    { icon: <SiTypescript size={14} />, name: "Typescript" },
-    { icon: <SiNodedotjs size={14} />, name: "Node.js" },
-    { icon: <SiBun size={14} />, name: "Bun" },
-    { icon: <SiGit size={14} />, name: "Git" },
-    { icon: <FaJava size={14} />, name: "Java" },
-    { icon: <SiSpringboot size={14} />, name: "Springboot" },
-    { icon: <FaDocker size={14} />, name: "Docker" },
-    { icon: <FaAws size={14} />, name: "AWS" },
-    { icon: <SiReact size={14} />, name: "React Native" },
-    { icon: <SiPostgresql size={14} />, name: "Postgres" },
-    { icon: <SiMongodb size={14} />, name: "MongoDB" },
-    { icon: <SiExpress size={14} />, name: "Express.js" },
-    { icon: <SiFastify size={14} />, name: "Fastify" },
-    { icon: <SiSocketdotio size={14} />, name: "Websocket" },
+    { icon: <SiGo size={24} />, name: "Go" },
+    { icon: <SiTypescript size={24} />, name: "Typescript" },
+    { icon: <SiNodedotjs size={24} />, name: "Node.js" },
+    { icon: <SiBun size={24} />, name: "Bun" },
+    { icon: <SiGit size={24} />, name: "Git" },
+    { icon: <FaJava size={24} />, name: "Java" },
+    { icon: <SiSpringboot size={24} />, name: "Springboot" },
+    { icon: <FaDocker size={24} />, name: "Docker" },
+    { icon: <FaAws size={24} />, name: "AWS" },
+    { icon: <SiReact size={24} />, name: "React Native" },
+    { icon: <SiPostgresql size={24} />, name: "Postgres" },
+    { icon: <SiMongodb size={24} />, name: "MongoDB" },
+    { icon: <SiExpress size={24} />, name: "Express.js" },
+    { icon: <SiFastify size={24} />, name: "Fastify" },
+    { icon: <SiSocketdotio size={24} />, name: "Websocket" },
   ];
   return (
     <div className="w-full h-full flex flex-col gap-4">
@@ -44,7 +44,7 @@ export const StackSection = () => {
         {technologies.map((tech: { icon: React.ReactNode; name: string }) => (
           <Badge
             variant={"outline"}
-            className=" flex justify-center items-center gap-2"
+            className="py-1 px-2 flex justify-center items-center gap-2"
             key={tech.name}
           >
             {tech.icon}
