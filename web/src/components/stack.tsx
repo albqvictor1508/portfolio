@@ -1,23 +1,36 @@
 import { Badge } from "./ui/badge";
+import {
+  SiGo,
+  SiTypescript,
+  SiReact,
+  SiPostgresql,
+  SiMongodb,
+  SiSocketdotio,
+  SiNodedotjs,
+  SiBun,
+  SiGit,
+  SiSpringboot,
+  SiExpress,
+  SiFastify,
+} from "react-icons/si";
 
 export const StackSection = () => {
   const technologies = [
-    { icon: "/icons/go.svg", name: "Go" },
-    { icon: "/icons/java.svg", name: "Gin" },
-    { icon: "/icons/typescript.svg", name: "Node.js" },
-    { icon: "/icons/mongodb.svg", name: "Bun" },
-    { icon: "/icons/mongodb.svg", name: "Git" },
-    { icon: "/icons/java.svg", name: "Java" },
-    { icon: "/icons/java.svg", name: "Springboot" },
-    { icon: "/icons/docker.svg", name: "Docker" },
-    { icon: "/icons/aws.svg", name: "AWS" },
-    { icon: "/icons/react.svg", name: "React Native" },
-    { icon: "/icons/postgres.svg", name: "Postgres" },
-    { icon: "/icons/mongodb.svg", name: "MongoDB" },
-    { icon: "/icons/mongodb.svg", name: "Express.js" },
-    { icon: "/icons/mongodb.svg", name: "Fastify" },
-    { icon: "/icons/mongodb.svg", name: "Elysia" },
-    { icon: "/icons/websocket.svg", name: "Websocket" },
+    { icon: <SiGo className="w-full h-full" />, name: "Go" },
+    { icon: <SiTypescript className="w-full h-full" />, name: "Typescript" },
+    { icon: <SiNodedotjs className="w-full h-full" />, name: "Node.js" },
+    { icon: <SiBun className="w-full h-full" />, name: "Bun" },
+    { icon: <SiGit className="w-full h-full" />, name: "Git" },
+    { icon: "", name: "Java" },
+    { icon: <SiSpringboot className="w-full h-full" />, name: "Springboot" },
+    { icon: "", name: "Docker" },
+    { icon: "", name: "AWS" },
+    { icon: <SiReact className="w-full h-full" />, name: "React Native" },
+    { icon: <SiPostgresql className="w-full h-full" />, name: "Postgres" },
+    { icon: <SiMongodb className="w-full h-full" />, name: "MongoDB" },
+    { icon: <SiExpress className="w-full h-full" size={ } />, name: "Express.js" },
+    { icon: <SiFastify className="w-full h-full" />, name: "Fastify" },
+    { icon: <SiSocketdotio className="w-full h-full" />, name: "Websocket" },
   ];
   return (
     <div className="w-full h-full flex flex-col gap-4">
@@ -27,19 +40,13 @@ export const StackSection = () => {
         robust solutions.
       </p>
       <div className="flex m-auto gap-3 items-center flex-wrap ">
-        {technologies.map((tech: { icon: string; name: string }) => (
+        {technologies.map((tech: { icon: React.ReactNode; name: string }) => (
           <Badge
             variant={"outline"}
             className="p-2 flex justify-center items-center gap-2"
             key={tech.name}
           >
-            <span className="w-6 h-6">
-              <img
-                src={tech.icon}
-                className="w-full h-full"
-                alt={`${tech.name} icon`}
-              />
-            </span>
+            <span className="w-6 h-6">{tech.icon}</span>
             {tech.name}
           </Badge>
         ))}
@@ -47,4 +54,3 @@ export const StackSection = () => {
     </div>
   );
 };
-
