@@ -10,7 +10,9 @@ export const HeroSection = () => {
             <span className="text-green-400 text-5xl">Victor Arruda</span>
           </h1>
           <ul className="flex flex-col gap-4">
-            <li className="font-semibold text-2xl">Software Engineer</li>
+            <li className="font-semibold text-xl italic text-green-400">
+              {"{Software Engineer}"}
+            </li>
             <li className="text-sm leading-6 text-zinc-400">
               It is a long established fact that a reader will be distracted by
               the readable content of a page when looking at its layout. The
