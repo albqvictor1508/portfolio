@@ -25,12 +25,12 @@ export const ExperienceSection = () => {
 	];
 	return (
 		<div className="w-full h-full flex flex-col gap-4 ">
-			<h2>My Experiences</h2>
-			<p>lorem</p>
+			<h2>My Experiences. </h2>
+			<p className="text-sm text-zinc-400">lorem</p>
 
 			{experiences.map((xp, index) => (
 				<div key={new Date().toString() + index.toString()}>
-					<h2>{xp.companyName}</h2>
+					<h2 className="text-sm text-zinc-400">{xp.companyName}</h2>
 					<p>
 						{formatDate(xp.startDate)} -{" "}
 						{xp.endDate ? formatDate(xp.endDate) : "Presente"}
