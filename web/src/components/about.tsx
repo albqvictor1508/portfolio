@@ -6,7 +6,7 @@ export const AboutSection = () => {
   return (
     <div className="w-full h-full flex gap-10">
       <div className="w-full flex-1 flex flex-col">
-        <div className="w-full h-full flex flex-col pt-8 gap-4">
+        <div className="w-full h-full flex flex-col pt-6 gap-4">
           <h2 className="font-semibold text-2xl">About me.</h2>
           <p className="text-sm font-light w-full leading-6 text-zinc-400">
             Lorem Ipsum is simply dummy text of the printing and typesetting and
