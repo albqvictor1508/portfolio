@@ -1,0 +1,24 @@
+{
+  "menu": {
+    "home": "Início",
+    "about": "Sobre",
+    "with_icon": "Com Ícone",
+    "github": "Github",
+    "linkedin": "LinkedIn",
+    "done": "Feito"
+  },
+  "contact_section": {
+    "title": "Entre em contato.",
+    "description": "lorem ipsum.",
+    "your_name": "Seu nome.",
+    "your_email": "Seu e-mail.",
+    "your_message": "Sua mensagem",
+    "characters": "caracteres",
+    "send_message": "Enviar Mensagem",
+    "success_message": "Obrigado pela sua mensagem!"
+  },
+  "project_section": {
+    "title": "Projetos",
+    "description": "Lorem Ipsum é simplesmente um texto fictício da indústria de impressão e tipografia há quinhentos anos."
+  }
+}

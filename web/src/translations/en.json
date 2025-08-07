@@ -1,0 +1,24 @@
+{
+  "menu": {
+    "home": "Home",
+    "about": "About",
+    "with_icon": "With Icon",
+    "github": "Github",
+    "linkedin": "LinkedIn",
+    "done": "Done"
+  },
+  "contact_section": {
+    "title": "Contact me.",
+    "description": "lorem ipsum.",
+    "your_name": "Your name.",
+    "your_email": "Your email.",
+    "your_message": "Your message",
+    "characters": "characters",
+    "send_message": "Send Message",
+    "success_message": "Thank you for your message!"
+  },
+  "project_section": {
+    "title": "Projects",
+    "description": "Lorem Ipsum is simply dummy text of the printing and typesetting five centuries."
+  }
+}
