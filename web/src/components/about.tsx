@@ -3,9 +3,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { CommitChart } from "./commit-chart";
 import { Button } from "./ui/button";
 
-export type Commits = { commits: { [k: string]: number }[] };
-
-export const AboutSection = ({ commits }: Commits) => {
+export const AboutSection = () => {
   const { t } = useLanguage();
 
   return (
@@ -47,7 +45,7 @@ export const AboutSection = ({ commits }: Commits) => {
       </div>
       <div className="w-full flex flex-col gap-4 flex-1 rounded-md border-2 border-r-zinc-800 p-4">
         <div className="flex-1 w-full">
-          <CommitChart commits={commits} />
+          <CommitChart />
         </div>
         <Button variant={"outline"}>{t("about_section.download_cv")}</Button>
         <div className="flex-1 w-full flex gap-6">
