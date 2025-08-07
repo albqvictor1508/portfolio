@@ -42,21 +42,23 @@ export const ExperienceSection = () => {
 				A brief overview of my professional journey and roles.
 			</p>
 
-			{experiences.map((xp, index) => (
-				<div
-					className="flex flex-col gap-4"
-					key={new Date().toString() + index.toString()}
-				>
-					<div className="flex flex-col gap-1">
-						<h3 className="text-xl font-semibold">{xp.companyName}</h3>
-						<p className="text-sm text-zinc-400">
-							{formatDate(xp.startDate)} -{" "}
-							{xp.endDate ? formatDate(xp.endDate) : "Present"}
-						</p>
+			<div className="flex flex-col gap-12">
+				{experiences.map((xp, index) => (
+					<div
+						className="flex flex-col gap-4"
+						key={new Date().toString() + index.toString()}
+					>
+						<div className="flex flex-col gap-1">
+							<h3 className="text-xl font-semibold">{xp.companyName}</h3>
+							<p className="text-sm text-zinc-400">
+								{formatDate(xp.startDate)} -{" "}
+								{xp.endDate ? formatDate(xp.endDate) : "Present"}
+							</p>
+						</div>
+						<p className="text-sm">{xp.description}</p>
 					</div>
-					<p className="text-sm">{xp.description}</p>
-				</div>
-			))}
+				))}
+			</div>
 		</div>
 	);
 };
