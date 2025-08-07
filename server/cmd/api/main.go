@@ -9,6 +9,7 @@ import (
 	"github.com/albqvictor1508/portfolio/function"
 	"github.com/albqvictor1508/portfolio/repository"
 	"github.com/albqvictor1508/portfolio/routes"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -24,9 +25,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-
 	defer conn.Close()
 	g := gin.Default()
+	g.Use(cors.Default())
 
 	CategoryRepository := repository.NewCategory(conn)
 	CategoryFunction := function.NewCategoryFunc(CategoryRepository)

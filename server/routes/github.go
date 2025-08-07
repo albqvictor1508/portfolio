@@ -40,9 +40,8 @@ func GetGithubData(ctx *gin.Context) {
 		return
 	}
 
-	if untilStr == "" {
-		untilTime = sinceTime.AddDate(0, 3, 0)
-	} else {
+	untilTime = sinceTime.AddDate(0, 3, 0)
+	if untilStr != "" {
 		untilTime, err = time.Parse("2006-01-02", untilStr)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'until' date format. Use YYYY-MM-DD."})
@@ -50,7 +49,7 @@ func GetGithubData(ctx *gin.Context) {
 		}
 	}
 
-	user, _, err := client.Users.Get(context.Background(), "")
+	user, _, err := client.Users.Get(context.Background(), "albqvictor1508")
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get GitHub user", "details": err.Error()})
 		return
@@ -94,4 +93,3 @@ func GetGithubData(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, commitsByDay)
 }
-

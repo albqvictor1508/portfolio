@@ -1,4 +1,6 @@
 "use client";
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import type { Commits } from "./about";
 import {
   Card,
   CardContent,
@@ -7,9 +9,8 @@ import {
   CardTitle,
 } from "./ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "./ui/chart";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
-export const CommitChart = () => {
+export const CommitChart = ({ commits }: Commits) => {
   const today = new Date();
   const data = Array.from({ length: 30 }, (_, i) => {
     const date = new Date();
@@ -38,7 +39,7 @@ export const CommitChart = () => {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="h-[150px] w-full">
-          <BarChart accessibilityLayer data={data}>
+          <BarChart accessibilityLayer data={commits}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="date"
@@ -49,7 +50,12 @@ export const CommitChart = () => {
               interval={4}
             />
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Bar dataKey="commits" fill="var(--color-commits)" radius={4} barSize={10} />
+            <Bar
+              dataKey="commits"
+              fill="var(--color-commits)"
+              radius={4}
+              barSize={10}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>
