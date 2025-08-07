@@ -1,7 +1,6 @@
 import { formatDate } from "../utils/format-date";
 
 export const ExperienceSection = () => {
-	export const ExperienceSection = () => {
 	const experiences = [
 		{
 			companyName: "Lorem Ipsum Company",
