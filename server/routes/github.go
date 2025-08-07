@@ -24,9 +24,7 @@ func GetGithubData(ctx *gin.Context) {
 	client := github.NewClient(oauthClient)
 
 	sinceStr := ctx.Query("since")
-	untilStr := ctx.Query("until")
-
-	var sinceTime, untilTime time.Time
+	var sinceTime time.Time
 	var err error
 
 	if sinceStr == "" {
@@ -38,15 +36,6 @@ func GetGithubData(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'since' date format. Use YYYY-MM-DD."})
 		return
-	}
-
-	untilTime = sinceTime.AddDate(0, 3, 0)
-	if untilStr != "" {
-		untilTime, err = time.Parse("2006-01-02", untilStr)
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'until' date format. Use YYYY-MM-DD."})
-			return
-		}
 	}
 
 	user, _, err := client.Users.Get(context.Background(), "albqvictor1508")
@@ -68,7 +57,6 @@ func GetGithubData(ctx *gin.Context) {
 		commitOpts := &github.CommitsListOptions{
 			Author:      username,
 			Since:       sinceTime,
-			Until:       untilTime,
 			ListOptions: github.ListOptions{PerPage: 100},
 		}
 		for {
