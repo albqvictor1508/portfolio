@@ -24,7 +24,7 @@ export const ContactSection = () => {
           <Input {...register("name")} placeholder="Your name." />
           <Input {...register("email")} placeholder="Your email." />
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-2">
           <Textarea
             {...register("message")}
             className="w-full h-[150px]"
