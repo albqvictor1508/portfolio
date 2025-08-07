@@ -20,5 +20,37 @@
   "project_section": {
     "title": "Projects",
     "description": "Lorem Ipsum is simply dummy text of the printing and typesetting five centuries."
+  },
+  "hero_section": {
+    "hey_im": "Hey, i'm",
+    "description": "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The purpose (injected humour and the like).",
+    "location": "João Pessoa, Brazil"
+  },
+  "footer": {
+    "important_links": "Important Links",
+    "home": "Home",
+    "other": "Other"
+  },
+  "stack_section": {
+    "title": "My Technologies.",
+    "description": "I work with a modern stack, focusing on performance, scalability, and robust solutions."
+  },
+  "about_section": {
+    "title": "About me.",
+    "description_p1": "Lorem Ipsum is simply dummy text of the printing and typesetting and scrambled it to make a type specimen book. It has survived not only five centuries.",
+    "description_p2": "Lorem Ipsum is simply dummy text of the printing and typesetting and scrambled it to make a type specimen book. It has survived not only five centuries.",
+    "description_p3": "with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    "view_on_github": "View on Github",
+    "contact_me": "Contact me",
+    "download_cv": "Download CV",
+    "solution_architecture_title": "Solution Architecture",
+    "solution_architecture_description": "Designing robust, scalable, and maintainable software systems to meet complex business requirements.",
+    "full_stack_engineering_title": "Full-Stack Engineering",
+    "full_stack_engineering_description": "Building complete, end-to-end applications with a focus on clean code, performance, and user experience."
+  },
+  "experience_section": {
+    "title": "My Experience.",
+    "description": "A brief overview of my professional journey and roles.",
+    "present": "Present"
   }
 }

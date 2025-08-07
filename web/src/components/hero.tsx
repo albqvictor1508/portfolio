@@ -1,12 +1,14 @@
 import { LucideMail, MapIcon } from "lucide-react";
+import { useLanguage } from "../context/LanguageContext";
 
 export const HeroSection = () => {
+  const { t } = useLanguage();
   return (
     <div id="hero" className="w-full h-full flex flex-col gap-4">
       <div className="w-full h-[600px] flex gap-6">
         <div className="flex flex-1 flex-col justify-center gap-4">
           <h1 className="flex flex-col gap-6 text-5xl font-bold">
-            <span className="text-5xl">Hey, i'm</span>
+            <span className="text-5xl">{t("hero_section.hey_im")}</span>
             <span className="text-green-400 text-5xl">Victor Arruda</span>
           </h1>
           <ul className="flex flex-col gap-4">
@@ -14,9 +16,7 @@ export const HeroSection = () => {
               {"{Software Engineer}"}
             </li>
             <li className="text-sm leading-6 text-zinc-400">
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout. The
-              purpose (injected humour and the like).
+              {t("hero_section.description")}
             </li>
           </ul>
         </div>
@@ -30,7 +30,7 @@ export const HeroSection = () => {
             <MapIcon size={18} />
           </span>
           <span className="text-sm text-green-200 font-semibold">
-            João Pessoa, Brazil
+            {t("hero_section.location")}
           </span>
         </div>
         <div className="flex items-center gap-2">

@@ -190,34 +190,31 @@ function ChartTooltipContent({
                 indicator === "dot" && "items-center",
               )}
             >
-              {formatter && item?.value !== undefined && item.name ? (
-                formatter(item.value, item.name, item, index, item.payload)
-              ) : (
+              if (formatter && item?.value !== undefined && item.name) {
+                return formatter(item.value, item.name, item, index, item.payload);
+              }
+
+              return (
                 <>
-                  {itemConfig?.icon ? (
-                    <itemConfig.icon />
-                  ) : (
-                    !hideIndicator && (
-                      <div
-                        className={cn(
-                          "shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)",
-                          {
-                            "h-2.5 w-2.5": indicator === "dot",
-                            "w-1": indicator === "line",
-                            "w-0 border-[1.5px] border-dashed bg-transparent":
-                              indicator === "dashed",
-                            "my-0.5": nestLabel && indicator === "dashed",
-                          },
-                        )}
-                        style={
-                          {
-                            "--color-bg": indicatorColor,
-                            "--color-border": indicatorColor,
-                          } as React.CSSProperties
-                        }
-                      />
-                    )
-                  )}
+                  {itemConfig?.icon && <itemConfig.icon />}
+                  if (!itemConfig?.icon && !hideIndicator) {
+                    <div
+                      className={cn(
+                        "shrink-0 rounded-[2px] border-(--color-border) bg-(--color-bg)",
+                        {
+                          "h-2.5 w-2.5": indicator === "dot",
+                          "w-1": indicator === "line",
+                          "w-0 border-[1.5px] border-dashed bg-transparent":
+                            indicator === "dashed",
+                          "my-0.5": nestLabel && indicator === "dashed",
+                        },
+                      )}
+                      style={{
+                        "--color-bg": indicatorColor,
+                        "--color-border": indicatorColor,
+                      } as React.CSSProperties}
+                    />
+                  }
                   <div
                     className={cn(
                       "flex flex-1 justify-between leading-none",
@@ -237,8 +234,7 @@ function ChartTooltipContent({
                     )}
                   </div>
                 </>
-              )}
-            </div>
+              );
           );
         })}
       </div>
@@ -308,37 +304,28 @@ function getPayloadConfigFromPayload(
   payload: unknown,
   key: string,
 ) {
-  if (typeof payload !== "object" || payload === null) {
-    return undefined;
-  }
+  if (typeof payload !== "object" || payload === null) return undefined;
 
   const payloadPayload =
     "payload" in payload &&
-      typeof payload.payload === "object" &&
-      payload.payload !== null
+    typeof payload.payload === "object" &&
+    payload.payload !== null
       ? payload.payload
       : undefined;
 
   let configLabelKey: string = key;
 
-  if (
-    key in payload &&
-    typeof payload[key as keyof typeof payload] === "string"
-  ) {
+  if (key in payload && typeof payload[key as keyof typeof payload] === "string") {
     configLabelKey = payload[key as keyof typeof payload] as string;
   } else if (
     payloadPayload &&
     key in payloadPayload &&
     typeof payloadPayload[key as keyof typeof payloadPayload] === "string"
   ) {
-    configLabelKey = payloadPayload[
-      key as keyof typeof payloadPayload
-    ] as string;
+    configLabelKey = payloadPayload[key as keyof typeof payloadPayload] as string;
   }
 
-  return configLabelKey in config
-    ? config[configLabelKey]
-    : config[key as keyof typeof config];
+  return configLabelKey in config ? config[configLabelKey] : config[key as keyof typeof config];
 }
 
 export {

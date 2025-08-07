@@ -3,6 +3,7 @@ import { z } from "zod";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea.tsx";
+import { useLanguage } from "../context/LanguageContext";
 
 const contactFormSchema = z.object({
   name: z.string().min(1, "Name is required."),
@@ -13,6 +14,7 @@ const contactFormSchema = z.object({
 type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export const ContactSection = () => {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<Partial<ContactFormData>>({
     name: "",
     email: "",
@@ -43,7 +45,7 @@ export const ContactSection = () => {
     }
 
     setErrors({});
-    alert("Thank you for your message!");
+    alert(t("contact_section.success_message"));
     setFormData({ name: "", email: "", message: "" });
   };
 
@@ -51,8 +53,8 @@ export const ContactSection = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-4">
-      <h2 className="text-lg font-semibold">Contact me.</h2>
-      <p className="text-sm text-zinc-400">lorem ipsum.</p>
+      <h2 className="text-lg font-semibold">{t("contact_section.title")}</h2>
+      <p className="text-sm text-zinc-400">{t("contact_section.description")}</p>
 
       <form
         onSubmit={handleSubmit}
@@ -67,7 +69,7 @@ export const ContactSection = () => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Your name."
+              placeholder={t("contact_section.your_name")}
               aria-invalid={!!errors.name}
             />
             {errors.name && (
@@ -80,7 +82,7 @@ export const ContactSection = () => {
               type="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="Your email."
+              placeholder={t("contact_section.your_email")}
               aria-invalid={!!errors.email}
             />
             {errors.email && (
@@ -96,18 +98,18 @@ export const ContactSection = () => {
             className="w-full h-[150px]"
             maxLength={500}
             minLength={3}
-            placeholder="Your message"
+            placeholder={t("contact_section.your_message")}
             aria-invalid={!!errors.message}
           />
           {errors.message && (
             <p className="text-xs text-red-500">{errors.message}</p>
           )}
           <div className="text-xs text-zinc-400 w-full flex justify-end">
-            <span>{messageLength}/500 characters</span>
+            <span>{messageLength}/500 {t("contact_section.characters")}</span>
           </div>
         </div>
         <div className="w-full flex justify-end">
-          <Button type="submit">Send Message</Button>
+          <Button type="submit">{t("contact_section.send_message")}</Button>
         </div>
       </form>
     </div>

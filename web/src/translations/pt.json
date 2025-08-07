@@ -20,5 +20,37 @@
   "project_section": {
     "title": "Projetos",
     "description": "Lorem Ipsum é simplesmente um texto fictício da indústria de impressão e tipografia há quinhentos anos."
+  },
+  "hero_section": {
+    "hey_im": "Olá, eu sou",
+    "description": "É um fato há muito estabelecido que um leitor se distrairá com o conteúdo legível de uma página ao examinar seu layout. O objetivo (humor injetado e similares).",
+    "location": "João Pessoa, Brasil"
+  },
+  "footer": {
+    "important_links": "Links Importantes",
+    "home": "Início",
+    "other": "Outros"
+  },
+  "stack_section": {
+    "title": "Minhas Tecnologias.",
+    "description": "Trabalho com uma stack moderna, focando em performance, escalabilidade e soluções robustas."
+  },
+  "about_section": {
+    "title": "Sobre mim.",
+    "description_p1": "Lorem Ipsum é simplesmente um texto fictício da indústria de impressão e tipografia e foi embaralhado para fazer um livro de amostra de tipos. Ele sobreviveu não apenas cinco séculos.",
+    "description_p2": "Lorem Ipsum é simplesmente um texto fictício da indústria de impressão e tipografia e foi embaralhado para fazer um livro de amostra de tipos. Ele sobreviveu não apenas cinco séculos.",
+    "description_p3": "com software de editoração eletrônica como Aldus PageMaker, incluindo versões de Lorem Ipsum.",
+    "view_on_github": "Ver no Github",
+    "contact_me": "Entre em contato",
+    "download_cv": "Baixar CV",
+    "solution_architecture_title": "Arquitetura de Soluções",
+    "solution_architecture_description": "Projetar sistemas de software robustos, escaláveis e de fácil manutenção para atender a requisitos de negócios complexos.",
+    "full_stack_engineering_title": "Engenharia Full-Stack",
+    "full_stack_engineering_description": "Construir aplicações completas, de ponta a ponta, com foco em código limpo, desempenho e experiência do usuário."
+  },
+  "experience_section": {
+    "title": "Minha Experiência.",
+    "description": "Uma breve visão geral da minha jornada profissional e funções.",
+    "present": "Atualmente"
   }
 }

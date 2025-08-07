@@ -1,4 +1,5 @@
 import { Project } from "./project";
+import { useLanguage } from "../../context/LanguageContext";
 
 const projects = [
 	{
@@ -24,13 +25,13 @@ const projects = [
 ];
 
 export const ProjectSection = () => {
+  const { t } = useLanguage();
 	return (
 		<div className="w-full h-full flex flex-col gap-8">
 			<div className="w-full h-full flex flex-col gap-2">
-				<h2 className="text-2xl font-semibold"> Projects</h2>
+				<h2 className="text-2xl font-semibold">{t("project_section.title")}</h2>
 				<p className="w-2/3 text-justify text-sm">
-					Lorem Ipsum is simply dummy text of the printing and typesetting five
-					centuries.
+					{t("project_section.description")}
 				</p>
 			</div>
 

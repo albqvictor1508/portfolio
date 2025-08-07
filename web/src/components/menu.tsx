@@ -1,5 +1,4 @@
 import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-react";
-import * as React from "react";
 
 import {
   NavigationMenu,
@@ -13,46 +12,8 @@ import {
 import { Button } from "./ui/button";
 import { useLanguage } from "../context/LanguageContext";
 
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-];
-
 export function Menu() {
-  const { language, toggleLanguage } = useLanguage();
+  const { language, toggleLanguage, t } = useLanguage();
 
   return (
     <div className="w-full mt-2 flex justify-between items-center">
@@ -64,7 +25,7 @@ export function Menu() {
               asChild
               className={navigationMenuTriggerStyle()}
             >
-              <a href="/">Home</a>
+              <a href="/">{t("menu.home")}</a>
             </NavigationMenuLink>
           </NavigationMenuItem>
 
@@ -73,31 +34,31 @@ export function Menu() {
               asChild
               className={navigationMenuTriggerStyle()}
             >
-              <a href="/about">About</a>
+              <a href="/about">{t("menu.about")}</a>
             </NavigationMenuLink>
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <NavigationMenuTrigger>With Icon</NavigationMenuTrigger>
+            <NavigationMenuTrigger>{t("menu.with_icon")}</NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[200px] gap-4">
                 <li>
                   <NavigationMenuLink asChild>
                     <a href="#" className="flex-row items-center gap-2">
                       <CircleHelpIcon />
-                      Github
+                      {t("menu.github")}
                     </a>
                   </NavigationMenuLink>
                   <NavigationMenuLink asChild>
                     <a href="#" className="flex-row items-center gap-2">
                       <CircleIcon />
-                      LinkedIn
+                      {t("menu.linkedin")}
                     </a>
                   </NavigationMenuLink>
                   <NavigationMenuLink asChild>
                     <a href="#" className="flex-row items-center gap-2">
                       <CircleCheckIcon />
-                      Done
+                      {t("menu.done")}
                     </a>
                   </NavigationMenuLink>
                 </li>

@@ -1,6 +1,8 @@
 import { formatDate } from "../utils/format-date";
+import { useLanguage } from "../context/LanguageContext";
 
 export const ExperienceSection = () => {
+  const { t } = useLanguage();
 	const experiences = [
 		{
 			companyName: "Lorem Ipsum Company",
@@ -37,9 +39,9 @@ export const ExperienceSection = () => {
 	];
 	return (
 		<div className="w-full h-full flex flex-col gap-4">
-			<h2 className="text-2xl font-semibold">My Experience. </h2>
+			<h2 className="text-2xl font-semibold">{t("experience_section.title")}</h2>
 			<p className="text-sm font-light w-3/4 leading-6 text-zinc-400">
-				A brief overview of my professional journey and roles.
+				{t("experience_section.description")}
 			</p>
 
 			<div className="flex flex-col gap-12">
@@ -52,7 +54,7 @@ export const ExperienceSection = () => {
 							<h3 className="text-xl font-semibold">{xp.companyName}</h3>
 							<p className="text-sm text-zinc-400">
 								{formatDate(xp.startDate)} -{" "}
-								{xp.endDate ? formatDate(xp.endDate) : "Present"}
+								{xp.endDate ? formatDate(xp.endDate) : t("experience_section.present")}
 							</p>
 						</div>
 						<p className="text-sm">{xp.description}</p>

@@ -14,8 +14,10 @@ import {
   SiTypescript,
 } from "react-icons/si";
 import { Badge } from "./ui/badge";
+import { useLanguage } from "../context/LanguageContext";
 
 export const StackSection = () => {
+  const { t } = useLanguage();
   const technologies = [
     { icon: <SiGo size={24} />, name: "Go" },
     { icon: <SiTypescript size={24} />, name: "Typescript" },
@@ -35,10 +37,9 @@ export const StackSection = () => {
   ];
   return (
     <div className="w-full h-full flex flex-col gap-4">
-      <h2 className="text-2xl font-semibold">My Technologies.</h2>
+      <h2 className="text-2xl font-semibold">{t("stack_section.title")}</h2>
       <p className="text-sm text-zinc-400">
-        I work with a modern stack, focusing on performance, scalability, and
-        robust solutions.
+        {t("stack_section.description")}
       </p>
       <div className="flex m-auto gap-3 items-center flex-wrap ">
         {technologies.map((tech: { icon: React.ReactNode; name: string }) => (
