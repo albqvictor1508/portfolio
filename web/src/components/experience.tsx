@@ -1,6 +1,7 @@
 import { formatDate } from "../utils/format-date";
 
 export const ExperienceSection = () => {
+	export const ExperienceSection = () => {
 	const experiences = [
 		{
 			companyName: "Lorem Ipsum Company",
@@ -8,7 +9,7 @@ export const ExperienceSection = () => {
 			endDate: null,
 			role: "Software Engineer",
 			description:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		},
 		{
 			companyName: "Dolor Sit Amet Inc.",
@@ -16,7 +17,7 @@ export const ExperienceSection = () => {
 			endDate: new Date("2022-12-31"),
 			role: "Frontend Developer",
 			description:
-				"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		},
 		{
 			companyName: "Consectetur Adipiscing Corp.",
@@ -24,7 +25,7 @@ export const ExperienceSection = () => {
 			endDate: new Date("2021-05-25"),
 			role: "Backend Developer",
 			description:
-				"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		},
 		{
 			companyName: "Tempor Incididunt LLC",
@@ -32,7 +33,7 @@ export const ExperienceSection = () => {
 			endDate: new Date("2019-07-15"),
 			role: "Junior Developer",
 			description:
-				"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 		},
 	];
 	return (
@@ -48,7 +49,7 @@ export const ExperienceSection = () => {
 					key={new Date().toString() + index.toString()}
 				>
 					<div className="flex flex-col gap-1">
-						<h3 className="text-lg font-semibold">{xp.companyName}</h3>
+						<h3 className="text-xl font-semibold">{xp.companyName}</h3>
 						<p className="text-sm text-zinc-400">
 							{formatDate(xp.startDate)} -{" "}
 							{xp.endDate ? formatDate(xp.endDate) : "Present"}

@@ -10,14 +10,30 @@ interface ProjectProps {
 	demoUrl: string;
 }
 
-export const Project = ({ name, startDate, endDate, description, imageUrl, repoUrl, demoUrl }: ProjectProps) => {
+export const Project = ({
+	name,
+	startDate,
+	endDate,
+	description,
+	imageUrl,
+	repoUrl,
+	demoUrl,
+}: ProjectProps) => {
 	return (
-		<div className="w-full h-full flex flex-col gap-2">
-			<h2 className="font-semibold text-2xl">{name}</h2>
-			<span className="text-sm text-zinc-500">{startDate} - {endDate}</span>
+		<div className="w-full h-full flex flex-col gap-4">
+			<div className="flex flex-col gap-2">
+				<h3 className="font-semibold text-xl">{name}</h3>
+				<span className="text-sm text-zinc-500">
+					{startDate} - {endDate}
+				</span>
+			</div>
 			<p>{description}</p>
 
-			<img src={imageUrl} alt={name} className="w-full h-68 rounded-md bg-zinc-800 object-cover" />
+			<img
+				src={imageUrl}
+				alt={name}
+				className="w-full h-68 rounded-md bg-zinc-800 object-cover"
+			/>
 			<div className="flex justify-end items-center gap-4">
 				<a href={repoUrl} target="_blank" rel="noopener noreferrer">
 					<Button variant={"secondary"}>View Repo</Button>
