@@ -67,9 +67,9 @@ func GetGithubData(ctx *gin.Context) {
 
 	for _, repo := range repos {
 		commitOpts := &github.CommitsListOptions{
-			Author: username,
-			Since:  sinceTime,
-			Until:  untilTime,
+			Author:      username,
+			Since:       sinceTime,
+			Until:       untilTime,
 			ListOptions: github.ListOptions{PerPage: 100},
 		}
 		for {
@@ -94,3 +94,4 @@ func GetGithubData(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, commitsByDay)
 }
+

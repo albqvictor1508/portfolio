@@ -43,7 +43,6 @@ func main() {
 	ProjectRepository := repository.NewProjectRepo(conn)
 	ProjectFunction := function.NewProjectFunc(ProjectRepository, CategoryRepository, TechnologyRepository)
 	ProjectController := routes.NewProjectRoute(ProjectFunction)
-
 	g.GET("/health", func(context *gin.Context) {
 		context.JSON(200, gin.H{
 			"health": "OK",
@@ -74,8 +73,9 @@ func main() {
 	g.POST("/contact", routes.SendEmail)
 	g.POST("/upload", routes.UploadRoute)
 
-	port := os.Getenv("PORT")
-	portStr := fmt.Sprintf(":%v", port)
+	g.GET("/commits", routes.GetGithubData)
+
+	portStr := fmt.Sprintf(":%v", os.Getenv("PORT"))
 	if err := g.Run(portStr); err != nil {
 		log.Fatal("Fail to initialize server: ", err)
 	}
