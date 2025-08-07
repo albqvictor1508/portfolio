@@ -234,9 +234,7 @@ function ChartTooltipContent({
                     )}
                   </div>
                 </>
-              );
-          );
-        })}
+              );)}
       </div>
     </div>
   );
