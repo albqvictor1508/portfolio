@@ -80,7 +80,7 @@ func GetGithubData(ctx *gin.Context) {
 
 			for _, commit := range commits {
 				commitDate := commit.GetCommit().GetAuthor().GetDate()
-				dateStr := commitDate.Format("2006-01-02")
+				dateStr := commitDate.UTC().Format("2006-01-02")
 				commitsByDay[dateStr]++
 			}
 
