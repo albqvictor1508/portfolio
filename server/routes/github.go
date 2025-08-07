@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"os"
@@ -11,28 +12,85 @@ import (
 	"golang.org/x/oauth2"
 )
 
-const githubBaseURL string = "https://api.github.com/user"
-
-func GetGithubData(ctx *gin.Context, r *http.Request) {
+func GetGithubData(ctx *gin.Context) {
 	accessToken := os.Getenv("GITHUB_ACCESS_TOKEN")
+	if accessToken == "" {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "GITHUB_ACCESS_TOKEN not set"})
+		return
+	}
+
 	tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: accessToken})
-	tc := oauth2.NewClient(ctx, tokenSource)
-	client := github.NewClient(tc)
+	oauthClient := oauth2.NewClient(context.Background(), tokenSource)
+	client := github.NewClient(oauthClient)
 
-	sinceStr := r.URL.Query().Get("since")
-	untilStr := r.URL.Query().Get("until")
+	sinceStr := ctx.Query("since")
+	untilStr := ctx.Query("until")
 
-	if untilStr == "" && sinceStr != "" {
-		since, err := time.Parse("2006-01-02", sinceStr)
-		if err == nil {
-			until := since.AddDate(0, 3, 0)
-			untilStr = until.Format("2006-01-02")
+	var sinceTime, untilTime time.Time
+	var err error
+
+	if sinceStr == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "'since' parameter is required"})
+		return
+	}
+
+	sinceTime, err = time.Parse("2006-01-02", sinceStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'since' date format. Use YYYY-MM-DD."})
+		return
+	}
+
+	if untilStr == "" {
+		untilTime = sinceTime.AddDate(0, 3, 0)
+	} else {
+		untilTime, err = time.Parse("2006-01-02", untilStr)
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid 'until' date format. Use YYYY-MM-DD."})
+			return
 		}
 	}
 
-	response := http.Post(
-		fmt.Sprintf(githubBaseURL, "/user"),
-		"salve",
-		"salve",
-	)
+	user, _, err := client.Users.Get(context.Background(), "")
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to get GitHub user", "details": err.Error()})
+		return
+	}
+	username := *user.Login
+
+	repos, _, err := client.Repositories.List(context.Background(), "", nil)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to list repositories", "details": err.Error()})
+		return
+	}
+
+	commitsByDay := make(map[string]int)
+
+	for _, repo := range repos {
+		commitOpts := &github.CommitsListOptions{
+			Author: username,
+			Since:  sinceTime,
+			Until:  untilTime,
+			ListOptions: github.ListOptions{PerPage: 100},
+		}
+		for {
+			commits, resp, err := client.Repositories.ListCommits(context.Background(), username, *repo.Name, commitOpts)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "Could not fetch commits for repo %s: %v\n", *repo.Name, err)
+				break
+			}
+
+			for _, commit := range commits {
+				commitDate := commit.GetCommit().GetAuthor().GetDate()
+				dateStr := commitDate.Format("2006-01-02")
+				commitsByDay[dateStr]++
+			}
+
+			if resp.NextPage == 0 {
+				break
+			}
+			commitOpts.Page = resp.NextPage
+		}
+	}
+
+	ctx.JSON(http.StatusOK, commitsByDay)
 }
