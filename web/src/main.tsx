@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { routeTree } from "./route-tree-gen.ts";
+import { LanguageProvider } from "./context/LanguageContext";
 
 const router = createRouter({ routeTree });
 
@@ -17,7 +18,9 @@ if (rootElement && !rootElement.innerHTML) {
 	const root = createRoot(rootElement);
 	root.render(
 		<StrictMode>
-			<RouterProvider router={router} />
+			<LanguageProvider>
+				<RouterProvider router={router} />
+			</LanguageProvider>
 		</StrictMode>,
 	);
 }

@@ -10,6 +10,8 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { Button } from "./ui/button";
+import { useLanguage } from "../context/LanguageContext";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -50,6 +52,8 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export function Menu() {
+  const { language, toggleLanguage } = useLanguage();
+
   return (
     <div className="w-full mt-2 flex justify-between items-center">
       <span className="font-bold">VA</span>
@@ -99,6 +103,11 @@ export function Menu() {
                 </li>
               </ul>
             </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Button onClick={toggleLanguage} variant="ghost">
+              {language === "en" ? "PT" : "EN"}
+            </Button>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
