@@ -36,7 +36,7 @@ export const ExperienceSection = () => {
 		},
 	];
 	return (
-		<div className="py-4 w-full h-full flex flex-col gap-4">
+		<div className="w-full h-full flex flex-col gap-4">
 			<h2 className="text-2xl font-semibold">My Experience. </h2>
 			<p className="text-sm font-light w-3/4 leading-6 text-zinc-400">
 				A brief overview of my professional journey and roles.
