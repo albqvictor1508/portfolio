@@ -1,11 +1,12 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { AboutSection } from "@/components/about";
+import { ContactSection } from "@/components/contact";
 import { ExperienceSection } from "@/components/experience";
 import { Footer } from "@/components/footer";
 import { HeroSection } from "@/components/hero";
 import { Menu } from "@/components/menu";
 import { ProjectSection } from "@/components/project/section";
 import { StackSection } from "@/components/stack";
-import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
 	component: RouteComponent,
@@ -20,6 +21,7 @@ function RouteComponent() {
 			<ProjectSection />
 			<ExperienceSection />
 			<StackSection />
+			<ContactSection />
 			<Footer isLight={true} />
 		</div>
 	);
