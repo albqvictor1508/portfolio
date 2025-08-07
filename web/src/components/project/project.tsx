@@ -1,17 +1,31 @@
 import { Button } from "../ui/button";
 
-export const Project = () => {
-  return (
-    <div className="w-full h-full flex flex-col gap-2">
-      <h2 className="font-semibold text-2xl">Zentto</h2>
-      <span className="text-sm text-zinc-500">25 Jun, 2025 - Presente</span>
-      <p>lorem</p>
+interface ProjectProps {
+	name: string;
+	startDate: string;
+	endDate: string;
+	description: string;
+	imageUrl: string;
+	repoUrl: string;
+	demoUrl: string;
+}
 
-      <div className="w-full h-68 rounded-md bg-zinc-800"></div>
-      <div className="flex justify-end items-center gap-4">
-        <Button variant={"secondary"}>View Repo</Button>
-        <Button variant={"default"}>View Demo</Button>
-      </div>
-    </div>
-  );
+export const Project = ({ name, startDate, endDate, description, imageUrl, repoUrl, demoUrl }: ProjectProps) => {
+	return (
+		<div className="w-full h-full flex flex-col gap-2">
+			<h2 className="font-semibold text-2xl">{name}</h2>
+			<span className="text-sm text-zinc-500">{startDate} - {endDate}</span>
+			<p>{description}</p>
+
+			<img src={imageUrl} alt={name} className="w-full h-68 rounded-md bg-zinc-800 object-cover" />
+			<div className="flex justify-end items-center gap-4">
+				<a href={repoUrl} target="_blank" rel="noopener noreferrer">
+					<Button variant={"secondary"}>View Repo</Button>
+				</a>
+				<a href={demoUrl} target="_blank" rel="noopener noreferrer">
+					<Button variant={"default"}>View Demo</Button>
+				</a>
+			</div>
+		</div>
+	);
 };
