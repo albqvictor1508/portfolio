@@ -118,6 +118,9 @@
 		@apply bg-background text-foreground;
 		font-family: "Martian Mono", monospace;
 	}
+	.font-montserrat {
+		font-family: "Montserrat", sans-serif;
+	}
 
 	.green-gradient {
 		background: linear-gradient(to right, #99f2c8, #1f4037);

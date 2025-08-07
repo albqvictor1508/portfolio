@@ -6,10 +6,10 @@ export const HeroSection = () => {
 	return (
 		<div id="hero" className="w-full h-full flex flex-col gap-4">
 			<div className="w-full h-[600px] flex">
-				<div className="flex flex-1 flex-col gap-12 ">
-					<h1 className="flex flex-col gap-8 text-5xl font-bold">
-						<span className="text-7xl ">{t("hero_section.hey_im")}</span>
-						<span className="text-green-400 text-7xl">Victor Arruda</span>
+				<div className="flex flex-1 flex-col gap-12">
+					<h1 className="flex flex-col gap-8 text-5xl font-bold font-montserrat">
+						<span className="text-6xl ">{t("hero_section.hey_im")}</span>
+						<span className="text-green-400 text-6xl">Victor Arruda</span>
 					</h1>
 					<ul className="flex flex-col gap-4">
 						<li className="font-semibold text-2xl italic text-green-400">
