@@ -2,34 +2,24 @@ import { Project } from "./project";
 
 const projects = [
 	{
-		name: "Lorem Ipsum Project 1",
-		startDate: "15 Jan, 2023",
+		name: "Flameshot",
+		startDate: "01 Jan, 2017",
 		endDate: "Present",
 		description:
-			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-		imageUrl: "https://source.unsplash.com/random/800x600?tech,project",
-		repoUrl: "#",
-		demoUrl: "#",
+			"Powerful yet simple to use screenshot software. Flameshot has a huge range of tools to use, it is also highly customizable and it is available for Linux, Mac and Windows.",
+		imageUrl: "https://flameshot.org/media/images/preview.png",
+		repoUrl: "https://github.com/flameshot-org/flameshot",
+		demoUrl: "https://flameshot.org/",
 	},
 	{
-		name: "Dolor Sit Amet Project 2",
-		startDate: "01 Jun, 2021",
-		endDate: "31 Dec, 2022",
+		name: "ShareX",
+		startDate: "01 Jan, 2007",
+		endDate: "Present",
 		description:
-			"Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-		imageUrl: "https://source.unsplash.com/random/800x600?web,development",
-		repoUrl: "#",
-		demoUrl: "#",
-	},
-	{
-		name: "Consectetur Adipiscing Project 3",
-		startDate: "20 Aug, 2019",
-		endDate: "25 May, 2021",
-		description:
-			"Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-		imageUrl: "https://source.unsplash.com/random/800x600?code,software",
-		repoUrl: "#",
-		demoUrl: "#",
+			"ShareX is a free and open source program that lets you capture or record any area of your screen and share it with a single press of a key. It also allows uploading images, text or other types of files to over 80 supported destinations you can choose from.",
+		imageUrl: "https://getsharex.com/img/hero_image.png",
+		repoUrl: "https://github.com/ShareX/ShareX",
+		demoUrl: "https://getsharex.com/",
 	},
 ];
 
