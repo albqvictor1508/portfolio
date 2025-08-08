@@ -13,8 +13,7 @@ export const ExperienceSection = () => {
       endDate: null,
       role: "Software Engineer",
       description:
-        description:
-      "Iniciei minha carreira na Agility Telecom no setor de tributos, onde identifiquei uma oportunidade de otimizar o atendimento ao cliente. Desenvolvi o Zentto Chatbot, uma solução inovadora que integrei ao sistema interno da empresa, resultando em melhorias significativas na eficiência e qualidade do atendimento. Este projeto me permitiu aprofundar meus conhecimentos em desenvolvimento de software e demonstrar o valor da tecnologia para a área de negócios.",
+        "Iniciei minha carreira na Agility Telecom no setor de tributos, onde identifiquei uma oportunidade de otimizar o atendimento ao cliente. Desenvolvi o Zentto Chatbot, uma solução inovadora que integrei ao sistema interno da empresa, resultando em melhorias significativas na eficiência e qualidade do atendimento. Este projeto me permitiu aprofundar meus conhecimentos em desenvolvimento de software e demonstrar o valor da tecnologia para a área de negócios.",
       technologies: [
         { icon: <SiTypescript size={24} />, name: "Typescript" },
         { icon: <SiMongodb size={24} />, name: "MongoDB" },
@@ -42,7 +41,8 @@ export const ExperienceSection = () => {
       startDate: new Date("2019-06-20"),
       endDate: null,
       role: "Freelance",
-      description: "Como desenvolvedor freelancer, estou criando o Utility, um aplicativo de fretes que conecta motoristas a clientes de forma rápida e segura. A plataforma oferece recursos como cálculo de rotas, estimativa de custos, e acompanhamento em tempo real, otimizando a logística e a comunicação entre as partes. O projeto foi desenvolvido com foco em usabilidade e desempenho, proporcionando uma solução completa e confiável para o mercado de fretes.",
+      description:
+        "Como desenvolvedor freelancer, estou criando o Utility, um aplicativo de fretes que conecta motoristas a clientes de forma rápida e segura. A plataforma oferece recursos como cálculo de rotas, estimativa de custos, e acompanhamento em tempo real, otimizando a logística e a comunicação entre as partes. O projeto está sendo desenvolvido com foco em usabilidade e desempenho, proporcionando uma solução completa e confiável para o mercado de fretes.",
       technologies: [
         { icon: <SiTypescript size={24} />, name: "Typescript" },
         { icon: <SiMongodb size={24} />, name: "MongoDB" },
