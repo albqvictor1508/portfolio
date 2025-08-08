@@ -6,12 +6,12 @@ interface ProjectProps {
   name: string;
   startDate: string;
   endDate: string;
-  role: string;
+  //role: string;
   description: string;
   imageUrl: string;
   repoUrl: string;
   demoUrl: string;
-  technologies: { icon: string; name: string }[];
+  //technologies: { icon: string; name: string }[];
 }
 
 export const Project = ({
@@ -19,8 +19,8 @@ export const Project = ({
   startDate,
   endDate,
   description,
-  technologies,
-  role,
+  //technologies,
+  //role,
   repoUrl,
   demoUrl,
 }: ProjectProps) => {
@@ -33,7 +33,9 @@ export const Project = ({
             ({startDate} - {endDate})
           </span>
         </h3>
+        {/*
         {role && <span>{role}</span>}
+        */}
       </div>
       <p className="text-sm">{description}</p>
       {/*
@@ -56,6 +58,7 @@ export const Project = ({
         )}
       </div>
       <div className="flex ">
+        {/*
         {technologies &&
           technologies.map((tech) => (
             <Badge
@@ -67,6 +70,7 @@ export const Project = ({
               {tech.name}
             </Badge>
           ))}
+          */}
       </div>
     </div>
   );
