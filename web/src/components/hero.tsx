@@ -7,21 +7,21 @@ export const HeroSection = () => {
   const { t } = useLanguage();
   return (
     <div id="hero" className="w-full h-full flex flex-col">
-      <div className="w-full h-full flex">
+      <div className="w-full h-full flex pt-14">
         <div className="flex flex-col gap-12">
-          <h1 className="flex flex-col gap-6 text-5xl font-extrabold">
-            <span className="text-6xl font-montserrat text-zinc-200">
+          <h1 className="flex flex-col gap-7 text-5xl font-extrabold">
+            <span className="text-7xl font-montserrat text-zinc-200">
               {t("hero_section.hey_im")}
             </span>
-            <span className="text-green-gradient text-6xl font-montserrat">
+            <span className="text-green-gradient text-7xl font-montserrat">
               Victor Albuquerque
             </span>
           </h1>
-          <ul className="flex flex-col gap-4">
-            <li className="font-medium text-2xl italic  text-green-200">
+          <ul className="flex flex-col gap-6">
+            <li className="font-medium text-3xl italic  text-green-200">
               {"{Software Engineer}"}
             </li>
-            <li className="text-sm leading-6 text-zinc-400">
+            <li className="leading-6 text-zinc-400">
               {t("hero_section.description")}
             </li>
           </ul>
@@ -32,7 +32,7 @@ export const HeroSection = () => {
                 <span className="text-green-200">
                   <MapIcon size={18} />
                 </span>
-                <span className="text-sm text-green-200 font-semibold">
+                <span className="text-base text-green-200 font-semibold">
                   {t("hero_section.location")}
                 </span>
               </div>
@@ -40,7 +40,7 @@ export const HeroSection = () => {
                 <span className="text-green-200">
                   <LucideMail size={18} />
                 </span>
-                <span className="text-sm text-green-200 font-semibold">
+                <span className="text-base text-green-200 font-semibold">
                   albq.victor@gmail.com
                 </span>
               </div>

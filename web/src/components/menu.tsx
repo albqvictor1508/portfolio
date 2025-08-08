@@ -16,7 +16,7 @@ export function Menu() {
   const { language, toggleLanguage, t } = useLanguage();
 
   return (
-    <div className="w-full mt-2 flex justify-between items-center">
+    <div className="w-full mt-8 flex justify-between items-center">
       <span className="font-bold">VA</span>
       <NavigationMenu viewport={false}>
         <NavigationMenuList>
