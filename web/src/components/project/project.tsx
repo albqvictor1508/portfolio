@@ -27,14 +27,14 @@ export const Project = ({
 					{startDate} - {endDate}
 				</span>
 			</div>
-
 			<p className="text-sm">{description}</p>
-
+			{/*
 			<img
 				src={imageUrl}
 				alt={name}
 				className="w-full h-68 rounded-md bg-zinc-800 object-cover"
 			/>
+			*/}
 			<div className="flex justify-end items-center gap-4">
 				<a href={repoUrl} target="_blank" rel="noopener noreferrer">
 					<Button variant={"secondary"}>View Repo</Button>

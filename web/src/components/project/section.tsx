@@ -1,19 +1,19 @@
-import { Project } from "./project";
 import { useLanguage } from "../../context/LanguageContext";
+import { Project } from "./project";
 
 const projects = [
 	{
-		name: "Flameshot",
+		name: "Zentto Chatbot",
 		startDate: "01 Jan, 2017",
 		endDate: "Present",
 		description:
-			"Powerful yet simple to use screenshot software. Flameshot has a huge range of tools to use, it is also highly customizable and it is available for Linux, Mac and Windows.",
+			"Zentto Chatbot é um chatbot integrado ao IXCsoft que criei com o objetivo de atender todos os provedores de internet da minha região que trabalham com essa ferramenta",
 		imageUrl: "https://flameshot.org/media/images/preview.png",
 		repoUrl: "https://github.com/flameshot-org/flameshot",
 		demoUrl: "https://flameshot.org/",
 	},
 	{
-		name: "ShareX",
+		name: "",
 		startDate: "01 Jan, 2007",
 		endDate: "Present",
 		description:
@@ -25,7 +25,7 @@ const projects = [
 ];
 
 export const ProjectSection = () => {
-  const { t } = useLanguage();
+	const { t } = useLanguage();
 	return (
 		<div className="w-full h-full flex flex-col gap-8">
 			<div className="w-full h-full flex flex-col gap-2">
@@ -36,7 +36,7 @@ export const ProjectSection = () => {
 			</div>
 
 			{projects.map((project, index) => (
-				<Project key={index} {...project} />
+				<Project key={index.toString()} {...project} />
 			))}
 		</div>
 	);

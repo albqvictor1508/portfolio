@@ -1,6 +1,28 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/*
+  IMPORTANT: Replace these placeholder URLs with the actual paths to your font files.
+  You will need to provide the font files (e.g., .woff2, .woff) in your project.
+*/
+@font-face {
+  font-family: 'clashDisplay';
+  src: url('/fonts/ClashDisplay-Regular.woff2') format('woff2'),
+       url('/fonts/ClashDisplay-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'clashDisplay Fallback';
+  src: url('/fonts/ClashDisplayFallback-Regular.woff2') format('woff2'),
+       url('/fonts/ClashDisplayFallback-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -120,6 +142,10 @@
 	}
 	.font-montserrat {
 		font-family: "Montserrat", sans-serif;
+	}
+
+	.font-clashDisplay {
+		font-family: "clashDisplay", "clashDisplay Fallback", sans-serif;
 	}
 
 	.green-gradient {

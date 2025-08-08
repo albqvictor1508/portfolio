@@ -9,22 +9,20 @@ import { ProjectSection } from "@/components/project/section";
 import { StackSection } from "@/components/stack";
 
 export const Route = createFileRoute("/")({
-  component: RouteComponent,
+	component: RouteComponent,
 });
 
 function RouteComponent() {
-  //const [commits, setCommits] = useState([]);
-
-  return (
-    <div className="w-[1100px] h-full flex flex-col gap-14 m-auto justify-center items-center">
-      <Menu />
-      <HeroSection />
-      <AboutSection />
-      <ProjectSection />
-      <ExperienceSection />
-      <StackSection />
-      <ContactSection />
-      <Footer isLight={true} />
-    </div>
-  );
+	return (
+		<div className="w-[900px] h-full flex flex-col gap-14 m-auto justify-center items-center">
+			<Menu />
+			<HeroSection />
+			<AboutSection />
+			<ProjectSection />
+			<ExperienceSection />
+			<StackSection />
+			<ContactSection />
+			<Footer isLight={true} />
+		</div>
+	);
 }
