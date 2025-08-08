@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { z } from "zod";
+import { useLanguage } from "../context/LanguageContext";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea.tsx";
-import { useLanguage } from "../context/LanguageContext";
 
 const contactFormSchema = z.object({
 	name: z.string().min(1, "Name is required."),
-	email: z.string().email("Invalid email address."),
+	email: z.email("Invalid email address."),
 	message: z.string().min(1, "Message is required.").max(500),
 });
 
@@ -31,7 +31,7 @@ export const ContactSection = () => {
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const result = contactFormSchema.safeParse(formData);
 
@@ -45,8 +45,29 @@ export const ContactSection = () => {
 		}
 
 		setErrors({});
-		alert(t("contact_section.success_message"));
-		setFormData({ name: "", email: "", message: "" });
+		try {
+			const response = await fetch("http://localhost:3333/contact", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					user_email: formData.email,
+					subject: `${formData.name} - By Portfolio`,
+					content: formData.message,
+				}),
+			});
+
+			if (response.ok) {
+				alert(t("contact_section.success_message"));
+				setFormData({ name: "", email: "", message: "" });
+			} else {
+				alert("Failed to send message.");
+			}
+		} catch (error) {
+			console.error("Error sending message:", error);
+			alert("An error occurred while sending the message.");
+		}
 	};
 
 	const messageLength = formData.message?.length || 0;

@@ -1,5 +1,5 @@
 import { LucideMail, MapIcon } from "lucide-react";
-import { FaLinkedinIn } from "react-icons/fa";
+import { FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { SiGithub, SiThreads } from "react-icons/si";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -26,7 +26,7 @@ export const HeroSection = () => {
             </li>
           </ul>
 
-          <div className="w-full flex flex-col gap-4 border-2 border-green-500">
+          <div className="w-full flex flex-col gap-6">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <span className="text-green-200">
@@ -46,7 +46,7 @@ export const HeroSection = () => {
               </div>
             </div>
 
-            <div className="w-full flex justify-around">
+            <div className="w-full flex justify-between">
               <p className="flex items-center gap-2">
                 <span className="flex justify-center items-center p-2 bg-green-gradient rounded-md">
                   <SiGithub className="font-bold text-zinc-100" size={20} />
@@ -67,8 +67,12 @@ export const HeroSection = () => {
                 </span>
                 <span className="">Threads</span>
               </p>
-              <p>
-                <span className="text-sm text-muted">salve</span>
+
+              <p className="flex items-center gap-2">
+                <span className="p-2 bg-green-gradient rounded-md">
+                  <FaWhatsapp className="font-bold text-zinc-100" size={20} />
+                </span>
+                <span className="">Whatsapp</span>
               </p>
             </div>
           </div>

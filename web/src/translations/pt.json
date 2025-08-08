@@ -37,17 +37,16 @@
   },
   "about_section": {
     "title": "Sobre mim.",
-    "description_p1": "Comecei na desenvolvimento de software na faculdade, quando eu tive meu primeiro contato com a tecnologia e pude ver como as coisas funcionam. ",
-    "description_p2": "Me despertou um imenso interesse e eu utilizei disso para me aflorar pelas ferramentas e aprender mais e mais externo ao que a faculdade me passava.",
-    "description_p3": "Participei de diversos projetos, onde conheci ótimos desenvolvedores com ",
-    "description_p4": "Hoje em dia, 1 ano e meio depois, venho me especializando em tecnologias web mais voltadas ao desenvolvimento Backend.",
+    "description_p1": "Minha jornada no desenvolvimento de software começou na faculdade, onde tive meu primeiro contato com a tecnologia e me encantei pela forma como as coisas funcionam.",
+    "description_p2": "Esse interesse me impulsionou a explorar novas ferramentas e aprofundar meus conhecimentos além da sala de aula, buscando sempre aprender mais.",
+    "description_p3": "Atualmente, com 1 ano e meio de experiência, tenho focado minha especialização em tecnologias web, com ênfase no desenvolvimento Backend.",
     "view_on_github": "Ver no Github",
     "contact_me": "Entre em contato",
     "download_cv": "Baixar CV",
     "solution_architecture_title": "Arquitetura de Soluções",
-    "solution_architecture_description": "Projetar sistemas de software robustos, escaláveis e de fácil manutenção para atender a requisitos de negócios complexos.",
+    "solution_architecture_description": "Desenho sistemas de software robustos, escaláveis e de fácil manutenção, alinhados aos mais complexos requisitos de negócio.",
     "full_stack_engineering_title": "Engenharia Full-Stack",
-    "full_stack_engineering_description": "Construir aplicações completas, de ponta a ponta, com foco em código limpo, desempenho e experiência do usuário."
+    "full_stack_engineering_description": "Construo aplicações completas, de ponta a ponta, com foco em código limpo, performance e uma excelente experiência para o usuário."
   },
   "experience_section": {
     "title": "Minha jornada.",
