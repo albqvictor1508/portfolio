@@ -1,3 +1,4 @@
+import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { z } from "zod";
 import { useLanguage } from "../context/LanguageContext";
@@ -24,6 +25,8 @@ export const ContactSection = () => {
 		Partial<Record<keyof ContactFormData, string>>
 	>({});
 
+	const [isLoading, setIsLoading] = useState(false);
+
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
@@ -45,6 +48,7 @@ export const ContactSection = () => {
 		}
 
 		setErrors({});
+		setIsLoading(true);
 		try {
 			const response = await fetch("http://localhost:3333/contact", {
 				method: "POST",
@@ -67,6 +71,8 @@ export const ContactSection = () => {
 		} catch (error) {
 			console.error("Error sending message:", error);
 			alert("An error occurred while sending the message.");
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -134,7 +140,13 @@ export const ContactSection = () => {
 					</div>
 				</div>
 				<div className="w-full flex justify-end">
-					<Button type="submit">{t("contact_section.send_message")}</Button>
+					<Button type="submit" disabled={isLoading}>
+						{isLoading ? (
+							<Loader2 className="animate-spin" />
+						) : (
+							t("contact_section.send_message")
+						)}
+					</Button>
 				</div>
 			</form>
 		</div>
