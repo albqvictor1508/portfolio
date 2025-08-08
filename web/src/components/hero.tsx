@@ -7,7 +7,7 @@ export const HeroSection = () => {
   const { t } = useLanguage();
   return (
     <div id="hero" className="w-full h-full flex flex-col">
-      <div className="w-full h-full flex pt-14">
+      <div className="w-full h-full flex">
         <div className="flex flex-col gap-12">
           <h1 className="flex flex-col gap-7 text-5xl font-extrabold">
             <span className="text-7xl font-montserrat text-zinc-200">

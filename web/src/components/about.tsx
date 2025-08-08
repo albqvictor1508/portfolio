@@ -7,7 +7,24 @@ export const AboutSection = () => {
   const { t } = useLanguage();
 
   const handleDownload = async () => {
-    await fetch("http://localhost:3333/cv");
+    try {
+      const response = await fetch("http://localhost:3333/cv");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'cv.pdf'); // You can set a dynamic filename here if needed
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode?.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Download failed:", error);
+      // Optionally, provide user feedback about the failed download
+    }
   };
 
   return (
