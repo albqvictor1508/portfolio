@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
 	return (
-		<div className="w-[900px] h-full flex flex-col gap-16 m-auto justify-center items-center">
+		<div className="w-[1000px] h-full flex flex-col gap-14 m-auto justify-center items-center">
 			<Menu />
 			<HeroSection />
 			<AboutSection />

@@ -75,6 +75,7 @@ func main() {
 	g.POST("/upload", routes.UploadRoute)
 
 	g.GET("/commits", routes.GetGithubData)
+	g.GET("/cv", routes.SendCV)
 
 	portStr := fmt.Sprintf(":%v", os.Getenv("PORT"))
 	if err := g.Run(portStr); err != nil {
