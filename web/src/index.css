@@ -144,11 +144,19 @@
 		font-family: "Montserrat", sans-serif;
 	}
 
+	.font-system-ui {
+		font-family: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+	}
+
 	.font-clashDisplay {
 		font-family: "clashDisplay", "clashDisplay Fallback", sans-serif;
 	}
 
 	.green-gradient {
 		background: linear-gradient(to right, #99f2c8, #1f4037);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+		color: transparent;
 	}
 }
