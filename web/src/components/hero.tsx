@@ -8,7 +8,7 @@ export const HeroSection = () => {
       <div className="w-full h-[600px] flex">
         <div className="flex flex-1 flex-col gap-12">
           <h1 className="flex flex-col gap-6 text-5xl font-extrabold">
-            <span className="text-6xl font-montserrat">
+            <span className="text-6xl font-poppins">
               {t("hero_section.hey_im")}
             </span>
             <span className="green-gradient text-6xl font-montserrat">
