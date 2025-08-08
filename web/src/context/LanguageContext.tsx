@@ -22,7 +22,7 @@ const translations: Record<Language, Translations> = {
 };
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>("en");
+  const [language, setLanguage] = useState<Language>("pt");
 
   const t = (key: string): string => {
     const currentTranslations = translations[language];

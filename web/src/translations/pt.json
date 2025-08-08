@@ -37,9 +37,10 @@
   },
   "about_section": {
     "title": "Sobre mim.",
-    "description_p1": "Lorem Ipsum é simplesmente um texto fictício da indústria de impressão e tipografia e foi embaralhado para fazer um livro de amostra de tipos. Ele sobreviveu não apenas cinco séculos.",
-    "description_p2": "Lorem Ipsum é simplesmente um texto fictício da indústria de impressão e tipografia e foi embaralhado para fazer um livro de amostra de tipos. Ele sobreviveu não apenas cinco séculos.",
-    "description_p3": "com software de editoração eletrônica como Aldus PageMaker, incluindo versões de Lorem Ipsum.",
+    "description_p1": "Comecei na desenvolvimento de software na faculdade, quando eu tive meu primeiro contato com a tecnologia e pude ver como as coisas funcionam. ",
+    "description_p2": "Me despertou um imenso interesse e eu utilizei disso para me aflorar pelas ferramentas e aprender mais e mais externo ao que a faculdade me passava.",
+    "description_p3": "Participei de diversos projetos, onde conheci ótimos desenvolvedores com ",
+    "description_p4": "Hoje em dia, 1 ano e meio depois, venho me especializando em tecnologias web mais voltadas ao desenvolvimento Backend.",
     "view_on_github": "Ver no Github",
     "contact_me": "Entre em contato",
     "download_cv": "Baixar CV",

@@ -21,6 +21,10 @@ export const AboutSection = () => {
           <p className="text-sm w-full leading-6 text-zinc-400">
             {t("about_section.description_p3")}
           </p>
+          <p className="text-sm w-full leading-6 text-zinc-400">
+            {t("about_section.description_p3")}
+          </p>
+
           <div className="flex gap-2">
             <Button
               className="flex gap-2 items-center cursor-pointer"
@@ -44,30 +48,30 @@ export const AboutSection = () => {
         </div>
       </div>
       <div className="w-full flex flex-col gap-4 flex-1 rounded-md border-2 border-r-zinc-800 p-4">
-        <div className="flex-1 w-full">
+        <div className="w-full">
           <CommitChart />
         </div>
         <Button variant={"outline"}>{t("about_section.download_cv")}</Button>
-        <div className="flex-1 w-full flex gap-6">
-          <div className="flex-1 flex flex-col p-4 gap-2 h-[150px] rounded-md border-2 border-zinc-800">
+        <div className="w-full flex gap-6">
+          <div className="flex-1 flex flex-col p-4 gap-2 rounded-md border-2 border-zinc-800">
             <div className="flex flex-col gap-2">
               <Layers size={24} className="text-green-400" />
               <p className="text-xs font-semibold">
                 {t("about_section.solution_architecture_title")}
               </p>
             </div>
-            <p className=" text-zinc-400 text-[10px] leading-4 w-full">
+            <p className="text-zinc-400 text-[10px] leading-4">
               {t("about_section.solution_architecture_description")}
             </p>
           </div>
-          <div className="flex-1 flex flex-col p-4 gap-2 h-[150px] rounded-md border-2 border-zinc-800">
+          <div className="flex-1 flex flex-col p-4 gap-2 rounded-md border-2 border-zinc-800">
             <div className="flex flex-col gap-2">
               <Code size={24} className="text-green-400" />
               <p className="text-xs font-semibold">
                 {t("about_section.full_stack_engineering_title")}
               </p>
             </div>
-            <p className=" text-zinc-400 text-[10px] leading-4 w-full">
+            <p className="text-zinc-400 text-[10px] leading-4">
               {t("about_section.full_stack_engineering_description")}
             </p>
           </div>
