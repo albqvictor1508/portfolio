@@ -6,21 +6,23 @@
   You will need to provide the font files (e.g., .woff2, .woff) in your project.
 */
 @font-face {
-  font-family: 'clashDisplay';
-  src: url('/fonts/ClashDisplay-Regular.woff2') format('woff2'),
-       url('/fonts/ClashDisplay-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+	font-family: "clashDisplay";
+	src:
+		url("/fonts/ClashDisplay-Regular.woff2") format("woff2"),
+		url("/fonts/ClashDisplay-Regular.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
-  font-family: 'clashDisplay Fallback';
-  src: url('/fonts/ClashDisplayFallback-Regular.woff2') format('woff2'),
-       url('/fonts/ClashDisplayFallback-Regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+	font-family: "clashDisplay Fallback";
+	src:
+		url("/fonts/ClashDisplayFallback-Regular.woff2") format("woff2"),
+		url("/fonts/ClashDisplayFallback-Regular.woff") format("woff");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -140,12 +142,12 @@
 		@apply bg-background text-foreground;
 		font-family: "Martian Mono", monospace;
 	}
-	.font-montserrat {
-		font-family: "Montserrat", sans-serif;
+	.font-inter {
+		font-family: "Inter", sans-serif;
 	}
 
-	.font-system-ui {
-		font-family: ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+	.font-montserrat {
+		font-family: "Montserrat", sans-serif;
 	}
 
 	.font-clashDisplay {

@@ -7,9 +7,13 @@ export const HeroSection = () => {
     <div id="hero" className="w-full h-full flex flex-col gap-4">
       <div className="w-full h-[600px] flex">
         <div className="flex flex-1 flex-col gap-12">
-          <h1 className="flex flex-col gap-6 text-5xl font-bold font-system-ui">
-            <span className="text-7xl ">{t("hero_section.hey_im")}</span>
-            <span className="green-gradient text-7xl">Victor Arruda</span>
+          <h1 className="flex flex-col gap-6 text-5xl font-extrabold">
+            <span className="text-6xl font-montserrat">
+              {t("hero_section.hey_im")}
+            </span>
+            <span className="green-gradient text-6xl font-montserrat">
+              Victor Albuquerque
+            </span>
           </h1>
           <ul className="flex flex-col gap-4">
             <li className="font-semibold text-2xl italic text-green-400">
