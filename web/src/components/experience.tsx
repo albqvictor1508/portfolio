@@ -13,7 +13,8 @@ export const ExperienceSection = () => {
       endDate: null,
       role: "Software Engineer",
       description:
-        "Entrei na empresa no setor de tributos, não como dev, e após meses trabalhando na parte fiscal, criei o Zentto Chatbot e o integrei ao serviço interno da empresa, trazendo grandes melhorias para o atendimento, e por isso, migrei para trabalhar como dev, trazendo inovações para a empresa.",
+        description:
+      "Iniciei minha carreira na Agility Telecom no setor de tributos, onde identifiquei uma oportunidade de otimizar o atendimento ao cliente. Desenvolvi o Zentto Chatbot, uma solução inovadora que integrei ao sistema interno da empresa, resultando em melhorias significativas na eficiência e qualidade do atendimento. Este projeto me permitiu aprofundar meus conhecimentos em desenvolvimento de software e demonstrar o valor da tecnologia para a área de negócios.",
       technologies: [
         { icon: <SiTypescript size={24} />, name: "Typescript" },
         { icon: <SiMongodb size={24} />, name: "MongoDB" },
@@ -28,7 +29,7 @@ export const ExperienceSection = () => {
       endDate: new Date("2022-12-31"),
       role: "Backend Developer",
       description:
-        "Fui responsável pela criação de um ecossistema para gerenciamento de medicamentos, com suas medidas, fórmulas, avisos, erros, entre outros. E também fui responsável por integrar o sistema com pagamentos, utilizando Stripe para integração de Cartão de Crédito e AbacatePay para pagamentos via Pix",
+        "Como Desenvolvedor Backend na Dosemed, fui responsável pela criação de um ecossistema completo para o gerenciamento de medicamentos, incluindo o controle de fórmulas, dosagens, e alertas de uso. Além disso, liderei a integração de sistemas de pagamento, implementando com sucesso o Stripe para transações com cartão de crédito e o AbacatePay para pagamentos via Pix, garantindo uma experiência de compra segura e eficiente para os usuários.",
       technologies: [
         { icon: <SiTypescript size={24} />, name: "Typescript" },
         { icon: <SiMongodb size={24} />, name: "MongoDB" },
@@ -38,25 +39,10 @@ export const ExperienceSection = () => {
     },
     {
       companyName: "Utility",
-      startDate: new Date("2019-08-20"),
-      endDate: new Date("2021-05-25"),
+      startDate: new Date("2019-06-20"),
+      endDate: null,
       role: "Freelance",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-      technologies: [
-        { icon: <SiTypescript size={24} />, name: "Typescript" },
-        { icon: <SiMongodb size={24} />, name: "MongoDB" },
-        { icon: <FaDocker size={24} />, name: "Docker" },
-        { icon: <SiFastify size={24} />, name: "Fastify" },
-      ],
-    },
-    {
-      companyName: "Tempor Incididunt LLC",
-      startDate: new Date("2018-03-10"),
-      endDate: new Date("2019-07-15"),
-      role: "Junior Developer",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      description: "Como desenvolvedor freelancer, estou criando o Utility, um aplicativo de fretes que conecta motoristas a clientes de forma rápida e segura. A plataforma oferece recursos como cálculo de rotas, estimativa de custos, e acompanhamento em tempo real, otimizando a logística e a comunicação entre as partes. O projeto foi desenvolvido com foco em usabilidade e desempenho, proporcionando uma solução completa e confiável para o mercado de fretes.",
       technologies: [
         { icon: <SiTypescript size={24} />, name: "Typescript" },
         { icon: <SiMongodb size={24} />, name: "MongoDB" },
