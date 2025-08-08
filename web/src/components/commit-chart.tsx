@@ -1,4 +1,3 @@
-"use client";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import {
 	Card,
@@ -28,16 +27,34 @@ export const CommitChart = () => {
 	};
 
 	useEffect(() => {
-		console.log("useEffect in CommitChart is running.");
 		const fetchCommits = async () => {
 			try {
 				setLoading(true);
+				const today = new Date();
+				const sinceDate = new Date(today);
+				sinceDate.setDate(today.getDate() - 89);
+				const formattedSinceDate = sinceDate.toISOString().split("T")[0]; // YYYY-MM-DD
+
 				const response = await fetch(
-					`http://localhost:3333/commits?since=2025-06-01`,
+					`http://localhost:3333/commits?since=${formattedSinceDate}`,
 				);
-				const data = await response.json();
-				console.log(data);
-				setData(data);
+				const commitsByDay: { [key: string]: number } = await response.json();
+
+				const last90DaysData: ChartData[] = [];
+				for (let i = 0; i < 90; i++) {
+					const date = new Date(today);
+					date.setDate(today.getDate() - (89 - i)); // Iterate from 89 days ago to today
+					const isoDate = date.toISOString().split("T")[0]; // YYYY-MM-DD for lookup
+					last90DaysData.push({
+						date: date.toLocaleDateString("en-US", {
+							month: "short",
+							day: "numeric",
+						}),
+						commits: commitsByDay[isoDate] || 0,
+					});
+				}
+
+				setData(last90DaysData);
 			} catch (error) {
 				console.error("Failed to fetch commits:", error);
 			} finally {
@@ -57,6 +74,10 @@ export const CommitChart = () => {
 			<CardContent>
 				{loading ? (
 					<Skeleton className="h-[150px] w-full" />
+				) : data.length === 0 ? (
+					<div className="h-[150px] w-full flex items-center justify-center text-zinc-500">
+						No commit data available.
+					</div>
 				) : (
 					<ChartContainer config={chartConfig} className="h-[150px] w-full">
 						<BarChart accessibilityLayer data={data}>
@@ -64,7 +85,7 @@ export const CommitChart = () => {
 							<XAxis
 								dataKey="date"
 								tickLine={false}
-								tickMargin={10}
+								tickMargin={2}
 								axisLine={false}
 								tickFormatter={(value) => value.split(" ")[1]}
 								interval={10}
@@ -77,7 +98,7 @@ export const CommitChart = () => {
 								dataKey="commits"
 								fill="var(--color-commits)"
 								radius={4}
-								barSize={10}
+								barSize={20}
 							/>
 						</BarChart>
 					</ChartContainer>
