@@ -27,6 +27,10 @@ export const ContactSection = () => {
 
 	const [isLoading, setIsLoading] = useState(false);
 
+	const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(
+		null,
+	);
+
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
 	) => {
@@ -49,6 +53,7 @@ export const ContactSection = () => {
 
 		setErrors({});
 		setIsLoading(true);
+		setSubmitStatus(null);
 		try {
 			const response = await fetch("http://localhost:3333/contact", {
 				method: "POST",
@@ -63,14 +68,14 @@ export const ContactSection = () => {
 			});
 
 			if (response.ok) {
-				alert(t("contact_section.success_message"));
+				setSubmitStatus("success");
 				setFormData({ name: "", email: "", message: "" });
 			} else {
-				alert("Failed to send message.");
+				setSubmitStatus("error");
 			}
 		} catch (error) {
 			console.error("Error sending message:", error);
-			alert("An error occurred while sending the message.");
+			setSubmitStatus("error");
 		} finally {
 			setIsLoading(false);
 		}
@@ -139,8 +144,20 @@ export const ContactSection = () => {
 						</span>
 					</div>
 				</div>
-				<div className="w-full flex justify-end">
-					<Button type="submit" disabled={isLoading}>
+				<div className="w-full flex justify-end items-center gap-4">
+					{submitStatus === "success" && (
+						<p className="text-xs text-green-500">
+							{t("contact_section.success_message")}
+						</p>
+					)}
+					{submitStatus === "error" && (
+						<p className="text-xs text-red-500">Failed to send message.</p>
+					)}
+					<Button
+						type="submit"
+						disabled={isLoading}
+						className="w-40 h-10 flex items-center justify-center"
+					>
 						{isLoading ? (
 							<Loader2 className="animate-spin" />
 						) : (
