@@ -57,8 +57,8 @@ export const Project = ({
           </a>
         )}
       </div>
+      {/*
       <div className="flex ">
-        {/*
         {technologies &&
           technologies.map((tech) => (
             <Badge
@@ -71,7 +71,6 @@ export const Project = ({
             </Badge>
           ))}
           */}
-      </div>
     </div>
   );
 };

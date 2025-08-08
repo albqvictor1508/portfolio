@@ -13,7 +13,7 @@ export const ExperienceSection = () => {
       endDate: null,
       role: "Software Engineer",
       description:
-        "Entrei nessa empresa no setor de tributos, não como dev, e após meses trabalhando na parte fiscal, criei o Zentto Chatbot e o integrei ao serviço interno da empresa, trazendo grandes melhorias para o atendimento",
+        "Entrei na empresa no setor de tributos, não como dev, e após meses trabalhando na parte fiscal, criei o Zentto Chatbot e o integrei ao serviço interno da empresa, trazendo grandes melhorias para o atendimento, e por isso, migrei para trabalhar como dev, trazendo inovações para a empresa.",
       technologies: [
         { icon: <SiTypescript size={24} />, name: "Typescript" },
         { icon: <SiMongodb size={24} />, name: "MongoDB" },
@@ -23,12 +23,12 @@ export const ExperienceSection = () => {
     },
 
     {
-      companyName: "Dolor Sit Amet Inc.",
+      companyName: "Dosemed",
       startDate: new Date("2021-06-01"),
       endDate: new Date("2022-12-31"),
-      role: "Frontend Developer",
+      role: "Backend Developer",
       description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        "Fui responsável pela criação de um ecossistema para gerenciamento de medicamentos, com suas medidas, fórmulas, avisos, erros, entre outros. E também fui responsável por integrar o sistema com pagamentos, utilizando Stripe para integração de Cartão de Crédito e AbacatePay para pagamentos via Pix",
       technologies: [
         { icon: <SiTypescript size={24} />, name: "Typescript" },
         { icon: <SiMongodb size={24} />, name: "MongoDB" },
@@ -37,10 +37,10 @@ export const ExperienceSection = () => {
       ],
     },
     {
-      companyName: "Consectetur Adipiscing Corp.",
+      companyName: "Utility",
       startDate: new Date("2019-08-20"),
       endDate: new Date("2021-05-25"),
-      role: "Backend Developer",
+      role: "Freelance",
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       technologies: [
@@ -66,13 +66,15 @@ export const ExperienceSection = () => {
     },
   ];
   return (
-    <div className="w-full h-full flex flex-col gap-4">
-      <h2 className="text-2xl font-semibold">
-        {t("experience_section.title")}
-      </h2>
-      <p className="text-sm font-light w-3/4 leading-6 text-zinc-400">
-        {t("experience_section.description")}
-      </p>
+    <div className="w-full h-full flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-2xl font-semibold">
+          {t("experience_section.title")}
+        </h2>
+        <p className="text-sm font-light w-3/4 leading-6 text-zinc-400">
+          {t("experience_section.description")}
+        </p>
+      </div>
 
       <div className="flex flex-col gap-12">
         {experiences.map((xp, index) => (
@@ -96,6 +98,7 @@ export const ExperienceSection = () => {
               </p>
             </div>
             <p className="text-sm">{xp.description}</p>
+            {/*
             <div>
               {xp.technologies &&
                 xp.technologies?.map((tech) => {
@@ -109,6 +112,7 @@ export const ExperienceSection = () => {
                   </Badge>;
                 })}
             </div>
+            */}
           </div>
         ))}
       </div>
