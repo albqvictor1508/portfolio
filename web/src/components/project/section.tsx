@@ -14,7 +14,7 @@ const projects = [
   },
   {
     name: "Plush",
-    startDate: "01 Jan, 2007",
+    startDate: "01 Mar, 2025",
     endDate: "Present",
     description:
       "Uma plataforma de chat em tempo real inspirada no whatsapp, com funcionalidades completas como: listagem de chats, envio, atualização e deleção de imagens, criação de grupos, entre outras funcionalidades",
