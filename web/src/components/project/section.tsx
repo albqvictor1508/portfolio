@@ -20,7 +20,7 @@ const projects = [
       "Plataforma de comunicação em tempo real, 'Plush', inspirada no WhatsApp, oferecendo uma experiência de chat completa. Inclui funcionalidades robustas como listagem e gerenciamento de conversas, envio e manipulação de mídias (imagens), e criação de grupos, proporcionando uma interação fluida e rica.",
     imageUrl: "",
     repoUrl: "",
-    demoUrl: "https://getsharex.com/",
+    demoUrl: "",
   },
 ];
 

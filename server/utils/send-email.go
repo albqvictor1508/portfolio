@@ -7,7 +7,7 @@ import (
 )
 
 type SendEmailParams struct {
-	To      string  `json:"user_email"`
+	From    string  `json:"user_email"`
 	Subject *string `json:"subject"`
 	Content string  `json:"content"`
 }
@@ -18,8 +18,8 @@ func SendEmail(params SendEmailParams) error {
 
 	message := gomail.NewMessage()
 
-	message.SetHeader("From", myEmail)
-	message.SetHeader("To", params.To)
+	message.SetHeader("From", params.From)
+	message.SetHeader("To", myEmail)
 	message.SetHeader("Subject", *params.Subject)
 	message.SetBody("text/plain", params.Content)
 
