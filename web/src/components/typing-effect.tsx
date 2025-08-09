@@ -9,7 +9,7 @@ export const TypingEffect = ({ text }: TypingEffectProps) => {
     <div>
       <TypeWriter
         options={{
-          strings: [text, text, text, text, text, text],
+          strings: [text],
           autoStart: true,
           loop: true,
         }}
