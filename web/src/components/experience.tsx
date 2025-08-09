@@ -2,7 +2,6 @@ import { FaDocker } from "react-icons/fa";
 import { SiFastify, SiMongodb, SiTypescript } from "react-icons/si";
 import { useLanguage } from "../context/LanguageContext";
 import { formatDate } from "../utils/format-date";
-import { Badge } from "./ui/badge.tsx";
 
 export const ExperienceSection = () => {
   const { t } = useLanguage();
@@ -28,7 +27,7 @@ export const ExperienceSection = () => {
       endDate: new Date("2025-06-25"),
       role: "Backend Developer",
       description:
-        "Como Desenvolvedor Backend na Dosemed, fui responsável pela criação de um ecossistema completo para o gerenciamento de medicamentos, incluindo o controle de fórmulas, dosagens, e alertas de uso. Além disso, liderei a integração de sistemas de pagamento, implementando com sucesso o Stripe para transações com cartão de crédito e o AbacatePay para pagamentos via Pix, garantindo uma experiência de compra segura e eficiente para os usuários.",
+        "Como Desenvolvedor Backend na Dosefy, fui responsável pela criação de um ecossistema completo para o gerenciamento de medicamentos, incluindo o controle de fórmulas, dosagens, e alertas de uso. Além disso, liderei a integração de sistemas de pagamento, implementando com sucesso o Stripe para transações com cartão de crédito e o AbacatePay para pagamentos via Pix, garantindo uma experiência de compra segura e eficiente para os usuários.",
       technologies: [
         { icon: <SiTypescript size={24} />, name: "Typescript" },
         { icon: <SiMongodb size={24} />, name: "MongoDB" },
