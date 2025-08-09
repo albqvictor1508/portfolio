@@ -17,11 +17,21 @@ function RouteComponent() {
     <div className="w-[900px] h-full flex flex-col gap-20 m-auto justify-center items-center">
       <Menu />
       <HeroSection />
-      <AboutSection />
-      <ProjectSection />
-      <ExperienceSection />
-      <StackSection />
-      <ContactSection />
+      <div id="about">
+        <AboutSection />
+      </div>
+      <div id="projects">
+        <ProjectSection />
+      </div>
+      <div id="experience">
+        <ExperienceSection />
+      </div>
+      <div id="stack">
+        <StackSection />
+      </div>
+      <div id="contact">
+        <ContactSection />
+      </div>
       <Footer />
     </div>
   );

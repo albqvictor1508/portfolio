@@ -5,7 +5,11 @@
     "with_icon": "Com Ícone",
     "github": "Github",
     "linkedin": "LinkedIn",
-    "done": "Feito"
+    "done": "Feito",
+    "projects": "Projetos",
+    "experience": "Experiência",
+    "stack": "Tecnologias",
+    "contact": "Contato"
   },
   "contact_section": {
     "title": "Entre em contato.",

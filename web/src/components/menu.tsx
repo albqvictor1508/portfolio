@@ -37,38 +37,44 @@ export function Menu() {
                 asChild
                 className={navigationMenuTriggerStyle()}
               >
-                <a href="/about">{t("menu.about")}</a>
+                <a href="/#about">{t("menu.about")}</a>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger>
-                {t("menu.with_icon")}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[200px] gap-4">
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <a href="#" className="flex-row items-center gap-2">
-                        <CircleHelpIcon />
-                        {t("menu.github")}
-                      </a>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
-                      <a href="#" className="flex-row items-center gap-2">
-                        <CircleIcon />
-                        {t("menu.linkedin")}
-                      </a>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink asChild>
-                      <a href="#" className="flex-row items-center gap-2">
-                        <CircleCheckIcon />
-                        {t("menu.done")}
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                </ul>
-              </NavigationMenuContent>
+              <NavigationMenuLink
+                asChild
+                className={navigationMenuTriggerStyle()}
+              >
+                <a href="/#projects">{t("menu.projects")}</a>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={navigationMenuTriggerStyle()}
+              >
+                <a href="/#experience">{t("menu.experience")}</a>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={navigationMenuTriggerStyle()}
+              >
+                <a href="/#stack">{t("menu.stack")}</a>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                asChild
+                className={navigationMenuTriggerStyle()}
+              >
+                <a href="/#contact">{t("menu.contact")}</a>
+              </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>

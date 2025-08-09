@@ -8,12 +8,11 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0
 RUN CGO_ENABLED=0 GOOS=linux go build -o server ./cmd/api/main.go
 
-FROM alpine:latest
+FROM alpine:3.20
 
-COPY --from=builder /server /server
+COPY --from=builder /app/server /server
 
 EXPOSE 3333
 
