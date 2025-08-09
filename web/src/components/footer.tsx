@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
+import { SiThreads } from "react-icons/si";
 import { SlSocialLinkedin } from "react-icons/sl";
 
 export const Footer = () => {
@@ -29,18 +30,38 @@ export const Footer = () => {
             </Link>
           </div>
           <div className="w-2/3 mx-auto flex items-center justify-around">
-            <Link to="." className="text-sm font-light ">
+            <a
+              href="https://github.com/albqvictor1508"
+              target="_blank"
+              rel="noopener"
+              className="text-sm font-light "
+            >
               <FiGithub size={18} />
-            </Link>
-            <Link to="." className="text-sm font-light ">
-              <FaInstagram size={18} />
-            </Link>
-            <Link to="." className="text-sm font-light ">
+            </a>
+            <a
+              href="https://www.threads.com/@albqvxc"
+              target="_blank"
+              rel="noopener"
+              className="text-sm font-light "
+            >
+              <SiThreads size={18} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/albqvictor1508"
+              target="_blank"
+              rel="noopener"
+              className="text-sm font-light "
+            >
               <SlSocialLinkedin size={18} />
-            </Link>
-            <Link to="." className="text-sm font-light ">
+            </a>
+            <a
+              href="https://wa.me/+5583991303948"
+              className="text-sm font-light "
+              target="_blank"
+              rel="noopener"
+            >
               <FaWhatsapp size={18} />
-            </Link>
+            </a>
           </div>
           <p className="flex justify-center text-xs font-light text-zinc-600">
             © 2025 Victor Albuquerque. All rights reserved.
