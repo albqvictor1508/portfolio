@@ -9,7 +9,7 @@
   },
   "contact_section": {
     "title": "Contact me.",
-    "description": "lorem ipsum.",
+    "description": "I'm always open to new opportunities and collaborations. If you have a project in mind, or just want to say hello, feel free to send me a message.",
     "your_name": "Your name.",
     "your_email": "Your email.",
     "your_message": "Your message",
@@ -33,7 +33,8 @@
   },
   "stack_section": {
     "title": "My Technologies.",
-    "description": "I work with a modern stack, focusing on performance, scalability, and robust solutions."
+    "description": "I work with a modern stack, focusing on performance, scalability, and robust solutions.",
+    "and_much_more": "... and much more"
   },
   "about_section": {
     "title": "About me.",

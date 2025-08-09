@@ -9,7 +9,7 @@
   },
   "contact_section": {
     "title": "Entre em contato.",
-    "description": "Estou sempre aberto a novas oportunidades e colaborações. Se você tem um projeto em mente, ou apenas quer dizer olá, sinta-se à vontade para me enviar uma mensagem.",
+    "description": "Estou sempre aberto a novas oportunidades e colaborações. Se você tem um projeto em mente ou apenas quer dizer um olá, sinta-se à vontade para me enviar uma mensagem.",
     "your_name": "Seu nome.",
     "your_email": "Seu e-mail.",
     "your_message": "Sua mensagem",
@@ -33,7 +33,8 @@
   },
   "stack_section": {
     "title": "Minhas Tecnologias.",
-    "description": "Trabalho com uma stack moderna, focando em performance, escalabilidade e soluções robustas."
+    "description": "Trabalho com uma stack moderna, focando em performance, escalabilidade e soluções robustas.",
+    "and_much_more": "... e muito mais"
   },
   "about_section": {
     "title": "Sobre mim.",

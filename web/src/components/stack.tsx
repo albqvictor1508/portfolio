@@ -74,7 +74,7 @@ export const StackSection = () => {
         ))}
       </div>
       <span className="flex justify-center items-center text-sm text-zinc-400">
-        ... e muito mais!
+        {t("stack_section.and_much_more")}
       </span>
     </div>
   );
