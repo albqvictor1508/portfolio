@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-react";
 
 import {
@@ -9,7 +10,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { Button } from "./ui/button.tsx";
 import { useLanguage } from "../context/LanguageContext";
 
 export function Menu() {
@@ -18,7 +18,9 @@ export function Menu() {
   return (
     <div className="w-full mt-10 flex justify-between items-center">
       <div className="flex items-center gap-4">
-        <span className="font-bold">VA</span>
+        <Link to=".." className="font-bold">
+          VA
+        </Link>
         <NavigationMenu viewport={false}>
           <NavigationMenuList>
             <NavigationMenuItem>
@@ -40,7 +42,9 @@ export function Menu() {
             </NavigationMenuItem>
 
             <NavigationMenuItem>
-              <NavigationMenuTrigger>{t("menu.with_icon")}</NavigationMenuTrigger>
+              <NavigationMenuTrigger>
+                {t("menu.with_icon")}
+              </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid w-[200px] gap-4">
                   <li>
@@ -72,7 +76,9 @@ export function Menu() {
       <NavigationMenu viewport={false}>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="text-white">🌐</NavigationMenuTrigger>
+            <NavigationMenuTrigger className="text-white">
+              🌐
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <ul className="grid w-[100px] gap-1 p-2">
                 <li>
