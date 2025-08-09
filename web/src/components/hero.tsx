@@ -52,36 +52,50 @@ export const HeroSection = () => {
             </div>
 
             <div className="w-full flex justify-between">
-              <p className="flex items-center gap-2 cursor-pointer">
-                <Link
-                  to=".."
-                  className="flex justify-center items-center p-2 bg-green-gradient rounded-md"
-                >
+              <a
+                href="https://github.com/albqvictor1508"
+                target="_blank"
+                rel="noopener"
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <span className="flex justify-center items-center p-2 bg-green-gradient rounded-md">
                   <SiGithub className="font-bold text-zinc-100" size={20} />
-                </Link>
+                </span>
                 <span className="">Github</span>
-              </p>
-
-              <p className="flex items-center gap-2 cursor-pointer">
-                <Link to=".." className="p-2 bg-green-gradient rounded-md">
+              </a>
+              <a
+                href="https://www.linkedin.com/in/albqvictor1508"
+                target="_blank"
+                rel="noopener"
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <span className="p-2 bg-green-gradient rounded-md">
                   <FaLinkedinIn className="font-bold text-zinc-100" size={20} />
-                </Link>
+                </span>
                 <span className="">LinkedIn</span>
-              </p>
+              </a>
 
-              <p className="flex items-center gap-2 cursor-pointer">
-                <Link to=".." className="p-2 bg-green-gradient rounded-md">
+              <a
+                href="https://www.threads.com/@albqvxc"
+                target="_blank"
+                rel="noopener"
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <span className="p-2 bg-green-gradient rounded-md">
                   <SiThreads className="font-bold text-zinc-100" size={20} />
-                </Link>
-                <span className="">Threads</span>
-              </p>
+                </span>
 
-              <p className="flex items-center gap-2 cursor-pointer">
-                <Link to=".." className="p-2 bg-green-gradient rounded-md">
+                <span className="">Threads</span>
+              </a>
+              <a
+                href="https://wa.me/+5583991303948"
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                <span className="p-2 bg-green-gradient rounded-md">
                   <FaWhatsapp className="font-bold text-zinc-100" size={20} />
-                </Link>
+                </span>
                 <span className="">Whatsapp</span>
-              </p>
+              </a>
             </div>
           </div>
         </div>

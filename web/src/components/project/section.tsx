@@ -30,7 +30,7 @@ export const ProjectSection = () => {
     <div className="w-full h-full flex flex-col gap-8">
       <div className="w-full h-full flex flex-col gap-2">
         <h2 className="text-2xl font-semibold">{t("project_section.title")}</h2>
-        <p className="w-full text-sm leading-6">
+        <p className="w-full text-sm text-zinc-400 leading-6">
           {t("project_section.description")}
         </p>
       </div>

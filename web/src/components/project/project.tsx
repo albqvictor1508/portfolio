@@ -26,8 +26,8 @@ export const Project = ({
 }: ProjectProps) => {
   const { t } = useLanguage();
   return (
-    <div className="w-full h-full flex flex-col gap-4">
-      <div className="flex flex-col gap-1">
+    <div className="w-full h-full flex flex-col gap-2">
+      <div className="flex flex-col">
         <h3>
           <span className="text-xl font-semibold">{name}</span>{" "}
           <span className="text-sm text-zinc-400">
