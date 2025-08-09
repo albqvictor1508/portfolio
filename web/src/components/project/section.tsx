@@ -4,8 +4,8 @@ import { Project } from "./project";
 const projects = [
   {
     name: "Zentto Chatbot",
-    startDate: "04 Jun, 2025",
-    endDate: "Present",
+    startDate: new Date("2025-06-04"),
+    endDate: null,
     description:
       "Desenvolvimento de um chatbot inteligente e integrado ao sistema IXCsoft, projetado para otimizar o atendimento ao cliente de provedores de internet na região. A ferramenta automatiza interações, agilizando o suporte e melhorando a experiência do usuário final.",
     imageUrl: "https://flameshot.org/media/images/preview.png",
@@ -14,8 +14,8 @@ const projects = [
   },
   {
     name: "Plush",
-    startDate: "01 Mar, 2025",
-    endDate: "Present",
+    startDate: new Date("2025-03-01"),
+    endDate: null,
     description:
       "Plataforma de comunicação em tempo real, 'Plush', inspirada no WhatsApp, oferecendo uma experiência de chat completa. Inclui funcionalidades robustas como listagem e gerenciamento de conversas, envio e manipulação de mídias (imagens), e criação de grupos, proporcionando uma interação fluida e rica.",
     imageUrl: "",

@@ -1,11 +1,11 @@
+import { useLanguage } from "../../context/LanguageContext.tsx";
 import { formatDate } from "../../utils/format-date.ts";
 import { Button } from "../ui/button";
-import { Badge } from "../ui/badge.tsx";
 
 interface ProjectProps {
   name: string;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date | null;
   //role: string;
   description: string;
   imageUrl: string;
@@ -24,13 +24,15 @@ export const Project = ({
   repoUrl,
   demoUrl,
 }: ProjectProps) => {
+  const { t } = useLanguage();
   return (
     <div className="w-full h-full flex flex-col gap-4">
       <div className="flex flex-col gap-1">
         <h3>
           <span className="text-xl font-semibold">{name}</span>{" "}
           <span className="text-sm text-zinc-400">
-            ({startDate} - {endDate})
+            ({formatDate(startDate)} -{" "}
+            {endDate ? formatDate(endDate) : t("experience_section.present")})
           </span>
         </h3>
         {/*
