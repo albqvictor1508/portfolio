@@ -14,16 +14,15 @@ export const AboutSection = () => {
       }
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', 'cv.pdf'); // You can set a dynamic filename here if needed
+      link.setAttribute("download", "cv.pdf");
       document.body.appendChild(link);
       link.click();
       link.parentNode?.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error("Download failed:", error);
-      // Optionally, provide user feedback about the failed download
     }
   };
 
@@ -42,29 +41,30 @@ export const AboutSection = () => {
           <p className="text-sm w-full leading-6 text-zinc-400">
             {t("about_section.description_p3")}
           </p>
-          <p className="text-sm w-full leading-6 text-zinc-400">
-            {t("about_section.description_p3")}
-          </p>
 
           <div className="flex gap-2">
-            <Button
-              className="flex gap-2 items-center cursor-pointer"
-              variant={"default"}
-            >
-              <span>
-                <GithubIcon />
-              </span>
-              {t("about_section.view_on_github")}
-            </Button>
-            <Button
-              className="flex gap-2 items-center cursor-pointer"
-              variant={"secondary"}
-            >
-              <span>
-                <Contact />
-              </span>
-              {t("about_section.contact_me")}
-            </Button>
+            <a href="https://github.com/albqvictor1508" target="_blank" rel="noopener noreferrer">
+              <Button
+                className="flex gap-2 items-center cursor-pointer"
+                variant={"default"}
+              >
+                <span>
+                  <GithubIcon />
+                </span>
+                {t("about_section.view_on_github")}
+              </Button>
+            </a>
+            <a href="mailto:albq.victor@gmail.com">
+              <Button
+                className="flex gap-2 items-center cursor-pointer"
+                variant={"secondary"}
+              >
+                <span>
+                  <Contact />
+                </span>
+                {t("about_section.contact_me")}
+              </Button>
+            </a>
           </div>
         </div>
       </div>
