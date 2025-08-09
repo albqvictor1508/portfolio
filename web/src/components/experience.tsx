@@ -83,7 +83,7 @@ export const ExperienceSection = () => {
                 <span className="italic text-sm text-zinc-400">{xp.role}</span>
               </p>
             </div>
-            <p className="text-sm">{xp.description}</p>
+            <p className="text-sm leading-6">{xp.description}</p>
             {/*
             <div>
               {xp.technologies &&

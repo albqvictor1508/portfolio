@@ -86,7 +86,7 @@ export const ContactSection = () => {
   return (
     <div className="w-full h-full flex flex-col gap-4">
       <h2 className="text-2xl font-semibold">{t("contact_section.title")}</h2>
-      <p className="text-sm text-zinc-400">
+      <p className="text-sm text-zinc-400 leading-6">
         {t("contact_section.description")}
       </p>
 

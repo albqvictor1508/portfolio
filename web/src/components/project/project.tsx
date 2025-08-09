@@ -39,7 +39,7 @@ export const Project = ({
         {role && <span>{role}</span>}
         */}
       </div>
-      <p className="text-sm">{description}</p>
+      <p className="text-sm leading-6">{description}</p>
       {/*
 			<img
 				src={imageUrl}
