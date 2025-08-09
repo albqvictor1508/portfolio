@@ -23,9 +23,9 @@ export const ExperienceSection = () => {
     },
 
     {
-      companyName: "Dosemed",
-      startDate: new Date("2021-06-01"),
-      endDate: new Date("2022-12-31"),
+      companyName: "Dosefy",
+      startDate: new Date("2025-06-01"),
+      endDate: new Date("2025-06-25"),
       role: "Backend Developer",
       description:
         "Como Desenvolvedor Backend na Dosemed, fui responsável pela criação de um ecossistema completo para o gerenciamento de medicamentos, incluindo o controle de fórmulas, dosagens, e alertas de uso. Além disso, liderei a integração de sistemas de pagamento, implementando com sucesso o Stripe para transações com cartão de crédito e o AbacatePay para pagamentos via Pix, garantindo uma experiência de compra segura e eficiente para os usuários.",
@@ -38,7 +38,7 @@ export const ExperienceSection = () => {
     },
     {
       companyName: "Utility",
-      startDate: new Date("2019-06-20"),
+      startDate: new Date("2025-07-15"),
       endDate: null,
       role: "Freelance",
       description:
