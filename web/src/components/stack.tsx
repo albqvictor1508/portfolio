@@ -20,6 +20,9 @@ import {
   SiVite,
   SiVitest,
   SiNeovim,
+  SiCypress,
+  SiDatadog,
+  SiGrafana,
 } from "react-icons/si";
 import { useLanguage } from "../context/LanguageContext";
 import { Badge } from "./ui/badge";
@@ -46,8 +49,11 @@ export const StackSection = () => {
     { icon: <SiVite size={24} />, name: "Vite" },
     { icon: <SiTailwindcss size={24} />, name: "TailwindCSS" },
     { icon: <SiJest size={24} />, name: "Jest" },
-    { icon: <SiVitest size={24} />, name: "Vitest" },
     { icon: <SiJunit5 size={24} />, name: "JUnit" },
+    { icon: <SiCypress size={24} />, name: "Cypress" },
+    { icon: <SiDatadog size={24} />, name: "Datadog" },
+    { icon: <SiGrafana size={24} />, name: "Grafana" },
+    { icon: <SiVitest size={24} />, name: "Vitest" },
     { icon: <SiArchlinux size={24} />, name: "Arch Linux" },
     { icon: <SiNeovim size={24} />, name: "Neovim" },
   ];
@@ -55,7 +61,7 @@ export const StackSection = () => {
     <div className="w-full h-full flex flex-col gap-4">
       <h2 className="text-2xl font-semibold">{t("stack_section.title")}</h2>
       <p className="text-sm text-zinc-400">{t("stack_section.description")}</p>
-      <div className="flex m-auto gap-3 items-center flex-wrap ">
+      <div className="flex m-auto gap-3 items-center flex-wrap justify-center">
         {technologies.map((tech: { icon: React.ReactNode; name: string }) => (
           <Badge
             variant={"outline"}
@@ -67,6 +73,9 @@ export const StackSection = () => {
           </Badge>
         ))}
       </div>
+      <span className="flex justify-center items-center text-sm text-zinc-400">
+        salve
+      </span>
     </div>
   );
 };
