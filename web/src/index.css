@@ -134,6 +134,16 @@
 	--sidebar-ring: oklch(0.556 0 0);
 }
 
+@keyframes blink {
+  from, to { border-right-color: transparent }
+  50% { border-right-color: currentColor }
+}
+
+.typing-cursor {
+  border-right: 2px solid;
+  animation: blink 0.7s infinite step-end;
+}
+
 @layer base {
 	* {
 		@apply border-border outline-ring/50;

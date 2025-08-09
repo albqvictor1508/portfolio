@@ -2,6 +2,7 @@ import { LucideMail, MapIcon } from "lucide-react";
 import { FaLinkedinIn, FaWhatsapp } from "react-icons/fa";
 import { SiGithub, SiThreads } from "react-icons/si";
 import { useLanguage } from "../context/LanguageContext";
+import TypingEffect from "./typing-effect";
 
 export const HeroSection = () => {
   const { t } = useLanguage();
@@ -14,7 +15,7 @@ export const HeroSection = () => {
               {t("hero_section.hey_im")}
             </span>
             <span className="text-green-gradient text-7xl font-montserrat">
-              Victor Albuquerque
+              <TypingEffect text="Victor Albuquerque" />
             </span>
           </h1>
           <ul className="flex flex-col gap-6">
