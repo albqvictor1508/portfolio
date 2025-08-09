@@ -1,10 +1,9 @@
+import { Link } from "lucide-react";
 import { FaInstagram, FaWhatsapp } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
 import { SlSocialLinkedin } from "react-icons/sl";
-import { useLanguage } from "../context/LanguageContext";
 
 export const Footer = () => {
-  const { t } = useLanguage();
   return (
     <div
       id="footer"
@@ -13,11 +12,21 @@ export const Footer = () => {
       <div className="w-2/3 h-[200px] flex p-8 justify-between">
         <div className="w-full flex flex-col  gap-6">
           <div className="flex items-center justify-around">
-            <span className="text-sm font-light text-zinc-200">Home</span>
-            <span className="text-sm font-light text-zinc-200">About</span>
-            <span className="text-sm font-light text-zinc-200">Contact</span>
-            <span className="text-sm font-light text-zinc-200">Projects</span>
-            <span className="text-sm font-light text-zinc-200">My journey</span>
+            <Link to="." className="text-sm font-light text-zinc-200">
+              Home
+            </Link>
+            <Link to="." className="text-sm font-light text-zinc-200">
+              About
+            </Link>
+            <Link to="." className="text-sm font-light text-zinc-200">
+              Contact
+            </Link>
+            <Link to="." className="text-sm font-light text-zinc-200">
+              Projects
+            </Link>
+            <Link to="." className="text-sm font-light text-zinc-200">
+              My journey
+            </Link>
           </div>
           <div className="w-2/3 mx-auto flex items-center justify-around">
             <span className="text-sm font-light ">

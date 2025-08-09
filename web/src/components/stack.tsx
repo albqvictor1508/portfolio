@@ -2,13 +2,17 @@ import { FaAws, FaDocker, FaJava } from "react-icons/fa";
 import {
   SiArchlinux,
   SiBun,
+  SiCypress,
+  SiDatadog,
   SiExpress,
   SiFastify,
   SiGit,
   SiGo,
+  SiGrafana,
   SiJest,
   SiJunit5,
   SiMongodb,
+  SiNeovim,
   SiNodedotjs,
   SiPostgresql,
   SiReact,
@@ -19,10 +23,6 @@ import {
   SiTypescript,
   SiVite,
   SiVitest,
-  SiNeovim,
-  SiCypress,
-  SiDatadog,
-  SiGrafana,
 } from "react-icons/si";
 import { useLanguage } from "../context/LanguageContext";
 import { Badge } from "./ui/badge";
@@ -74,7 +74,7 @@ export const StackSection = () => {
         ))}
       </div>
       <span className="flex justify-center items-center text-sm text-zinc-400">
-        salve
+        ... e muito mais!
       </span>
     </div>
   );
