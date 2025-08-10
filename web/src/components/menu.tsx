@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router";
-import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-react";
 
 import {
   NavigationMenu,
@@ -11,6 +10,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { useLanguage } from "../context/LanguageContext";
+import { Button } from "./ui/button";
 
 export function Menu() {
   const { setLanguage, t } = useLanguage();
@@ -89,24 +89,22 @@ export function Menu() {
               <ul className="grid w-[100px] gap-1 p-2">
                 <li>
                   <NavigationMenuLink asChild>
-                    <a
-                      href="#"
+                    <Button
                       className="flex items-center gap-2"
                       onClick={() => setLanguage("pt")}
                     >
                       🇧🇷 PT
-                    </a>
+                    </Button>
                   </NavigationMenuLink>
                 </li>
                 <li>
                   <NavigationMenuLink asChild>
-                    <a
-                      href="#"
+                    <Button
                       className="flex items-center gap-2"
                       onClick={() => setLanguage("en")}
                     >
                       🇺🇸 EN
-                    </a>
+                    </Button>
                   </NavigationMenuLink>
                 </li>
               </ul>

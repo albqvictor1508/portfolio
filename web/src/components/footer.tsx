@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { FaInstagram, FaWhatsapp } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 import { FiGithub } from "react-icons/fi";
 import { SiThreads } from "react-icons/si";
 import { SlSocialLinkedin } from "react-icons/sl";
