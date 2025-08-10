@@ -55,7 +55,7 @@ export const ContactSection = () => {
     setIsLoading(true);
     setSubmitStatus(null);
     try {
-      const response = await fetch("http://localhost:3333/contact", {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/contact`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

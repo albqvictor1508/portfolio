@@ -36,7 +36,7 @@ export const CommitChart = () => {
 				const formattedSinceDate = sinceDate.toISOString().split("T")[0]; // YYYY-MM-DD
 
 				const response = await fetch(
-					`http://localhost:3333/commits?since=${formattedSinceDate}`,
+					`${import.meta.env.VITE_API_BASE_URL}/commits?since=${formattedSinceDate}`,
 				);
 				const commitsByDay: { [key: string]: number } = await response.json();
 
