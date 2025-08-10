@@ -1,4 +1,5 @@
 #!/bin/sh
+set -ex
 
 # Wait for PostgreSQL to be ready
 echo "Waiting for PostgreSQL to be ready..."
