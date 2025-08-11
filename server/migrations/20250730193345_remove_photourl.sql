@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-ALTER TABLE technologies DROP COLUMN photourl
+ALTER TABLE technologies DROP COLUMN IF EXISTS photourl
 -- +goose StatementEnd
 
 -- +goose Down
