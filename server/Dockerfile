@@ -14,14 +14,11 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o server ./cmd/api/main.go
 
 FROM alpine:3.20
 
-WORKDIR /app
-
 RUN apk add --no-cache netcat-openbsd
 
 COPY --from=builder /app/server /app/server
 COPY --from=builder /app/migrations /app/migrations
 COPY --from=builder /go/bin/goose /app/goose
-COPY .env /app/.env
 COPY start.sh /app/start.sh
 
 RUN chmod +x /start.sh
