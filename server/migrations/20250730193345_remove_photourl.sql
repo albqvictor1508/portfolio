@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-ALTER TABLE technologies DROP COLUMN IF EXISTS photourl
+SELECT 'up SQL query';
 -- +goose StatementEnd
 
 -- +goose Down
