@@ -21,7 +21,7 @@ COPY --from=builder /app/migrations /app/migrations
 COPY --from=builder /go/bin/goose /app/goose
 COPY start.sh /app/start.sh
 
-RUN chmod +x /start.sh
+RUN chmod +x /app/start.sh
 
 EXPOSE 3333
 
