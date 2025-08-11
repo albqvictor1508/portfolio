@@ -1,7 +1,0 @@
-### category#3
-POST http://localhost:3333/categories
-HTTP/1.1 400 Bad Request
-
-# @_RES (formatted)
-{"error":"ERROR ON CREATE CATEGORY: ERROR: invalid input syntax for type integer: \"Back-end\" (SQLSTATE 22P02)"}
-# @_END
