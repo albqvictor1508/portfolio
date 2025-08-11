@@ -14,4 +14,4 @@ echo "PostgreSQL is up - executing migrations"
 
 # Start the API server
 echo "Starting API server"
-/server
+./server

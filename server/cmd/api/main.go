@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -44,6 +43,7 @@ func main() {
 	ProjectRepository := repository.NewProjectRepo(conn)
 	ProjectFunction := function.NewProjectFunc(ProjectRepository, CategoryRepository, TechnologyRepository)
 	ProjectController := routes.NewProjectRoute(ProjectFunction)
+
 	g.GET("/health", func(context *gin.Context) {
 		context.JSON(200, gin.H{
 			"health": "OK",
@@ -77,8 +77,7 @@ func main() {
 	g.GET("/commits", routes.GetGithubData)
 	g.GET("/cv", routes.SendCV)
 
-	portStr := fmt.Sprintf(":%v", os.Getenv("PORT"))
-	if err := g.Run(portStr); err != nil {
+	if err := g.Run(":3333"); err != nil {
 		log.Fatal("Fail to initialize server: ", err)
 	}
 }
