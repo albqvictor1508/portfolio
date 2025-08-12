@@ -1,8 +1,11 @@
 #!/bin/sh
 set -ex
 
-# Run migrations using the compiled goose binary
-/app/goose -dir /app/migrations postgres "$DATABASE_URL" up
+# Retry connecting to the database and running migrations
+until /app/goose -dir /app/migrations postgres "$DATABASE_URL" up; do
+  echo "goose command failed, retrying in 5 seconds..."
+  sleep 5
+done
 
 # Start the API server
 echo "Starting API server"

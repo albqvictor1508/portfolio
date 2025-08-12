@@ -14,7 +14,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o server ./cmd/api/main.go
 
 FROM alpine:3.20
 
-RUN apk add --no-cache netcat-openbsd
+
 
 COPY --from=builder /app/server /app/server
 COPY --from=builder /app/migrations /app/migrations
