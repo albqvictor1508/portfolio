@@ -77,7 +77,11 @@ func main() {
 	g.GET("/commits", routes.GetGithubData)
 	g.GET("/cv", routes.SendCV)
 
-	if err := g.Run(":3333"); err != nil {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "3333"
+	}
+	if err := g.Run(":" + port); err != nil {
 		log.Fatal("Fail to initialize server: ", err)
 	}
 }
