@@ -11,6 +11,6 @@ until /app/goose -dir /app/migrations postgres "$DATABASE_URL" up; do
   sleep 5
 done
 
-# Start the API server
 echo "Starting API server"
 ./server
+
