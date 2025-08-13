@@ -14,10 +14,7 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Godotenv not loaded")
-	}
+	godotenv.Load()
 	databaseURL := os.Getenv("DATABASE_URL")
 
 	conn, err := db.NewConnection(databaseURL)
