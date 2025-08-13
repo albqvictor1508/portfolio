@@ -2,6 +2,7 @@
 set -ex
 
 echo "--- DEBUGGING START ---"
+echo "--- DEBUGGING START ---"
 echo "DATABASE_URL value is: [$DATABASE_URL]"
 echo "--- DEBUGGING END ---"
 
