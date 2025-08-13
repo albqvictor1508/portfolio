@@ -13,5 +13,5 @@ until /app/goose -dir /app/migrations postgres "$DATABASE_URL" up; do
 done
 
 echo "Starting API server"
-./server
+./app/server
 
