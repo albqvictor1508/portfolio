@@ -32,7 +32,7 @@ func SendEmail(params SendEmailParams) error {
 	conn, err := net.DialTimeout("tcp", "smtp.gmail.com:465", 5*time.Second)
 	if err != nil {
 		fmt.Println("Erro:", err)
-		return err
+		return fmt.Errorf("esse erro é de subir a connection", err)
 	}
 	defer conn.Close()
 
