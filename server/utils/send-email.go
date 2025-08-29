@@ -9,7 +9,7 @@ import (
 )
 
 type SendEmailParams struct {
-	ReplyTo string `json:"reply_to"`
+	From    string `json:"from"`
 	Subject string `json:"subject"`
 	Content string `json:"content"`
 }
@@ -26,17 +26,12 @@ func SendEmail(params SendEmailParams) error {
 		params.Subject = "By Portfolio"
 	}
 
-	if params.ReplyTo == "" {
-		return fmt.Errorf("ReplyTo is required")
-	}
-
 	message.SetHeader("From", myEmail)
-	// message.SetHeader("Reply-To", "netlinksape@gmail.com")
 	message.SetHeader("To", myEmail)
 	message.SetHeader("Subject", "salve salve teste")
 	message.SetBody("text/plain", "testando com body hardcoded")
 
-	dialer := gomail.NewDialer("smtp.gmail.com", 587, myEmail, myPassword)
+	dialer := gomail.NewDialer("smtp.gmail.com", 465, myEmail, myPassword)
 	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
 	if err := dialer.DialAndSend(message); err != nil {
