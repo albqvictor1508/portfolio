@@ -12,10 +12,12 @@ type SendEmailParams struct {
 	Content string  `json:"content"`
 }
 
-func SendEmail(params SendEmailParams) error {
-	myEmail := os.Getenv("MY_EMAIL")
-	myPassword := os.Getenv("MY_PASSWORD")
+var (
+	myEmail    string = os.Getenv("MY_EMAIL")
+	myPassword string = os.Getenv("MY_PASSWORD")
+)
 
+func SendEmail(params SendEmailParams) error {
 	message := gomail.NewMessage()
 
 	message.SetHeader("From", params.From)
