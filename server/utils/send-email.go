@@ -3,8 +3,11 @@ package utils
 import (
 	"crypto/tls"
 	"fmt"
+	"net"
 	"os"
+	"time"
 
+	"github.com/joho/godotenv"
 	gomail "gopkg.in/mail.v2"
 )
 
@@ -14,29 +17,37 @@ type SendEmailParams struct {
 	Content string `json:"content"`
 }
 
-var (
-	myEmail    string = os.Getenv("MY_EMAIL")
-	myPassword string = os.Getenv("MY_PASSWORD")
-)
-
 func SendEmail(params SendEmailParams) error {
+	godotenv.Load()
+	var (
+		myEmail    = os.Getenv("MY_EMAIL")
+		myPassword = os.Getenv("MY_PASSWORD")
+	)
 	message := gomail.NewMessage()
 
 	if params.Subject == "" {
 		params.Subject = "By Portfolio"
 	}
 
-	message.SetHeader("From", myEmail)
+	conn, err := net.DialTimeout("tcp", "smtp.gmail.com:465", 5*time.Second)
+	if err != nil {
+		fmt.Println("Erro:", err)
+		return err
+	}
+	defer conn.Close()
+
+	fmt.Println("Conexão aberta com sucesso!")
+
+	message.SetHeader("From", params.From)
 	message.SetHeader("To", myEmail)
-	message.SetHeader("Subject", "salve salve teste")
-	message.SetBody("text/plain", "testando com body hardcoded")
+	message.SetHeader("Subject", params.Subject)
+	message.SetBody("text/plain", params.Content)
 
 	dialer := gomail.NewDialer("smtp.gmail.com", 465, myEmail, myPassword)
 	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
 	if err := dialer.DialAndSend(message); err != nil {
-		return fmt.Errorf("error to send message: %v", err)
+		return err
 	}
-
 	return nil
 }

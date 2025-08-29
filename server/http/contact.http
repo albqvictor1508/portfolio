@@ -4,7 +4,7 @@ POST {{baseUrl}}/contact
 Content-Type: application/json
 
 {
-  "user_email": "victorarruda460@gmail.com",
+  "from": "victorarruda460@gmail.com",
   "subject": "test email",
   "content": "Só pra testar a paradinha aq"
 }

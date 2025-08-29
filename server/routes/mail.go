@@ -3,10 +3,13 @@ package routes
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/albqvictor1508/portfolio/utils"
 	"github.com/gin-gonic/gin"
 )
+
+var myEmail = os.Getenv("MY_EMAIL")
 
 func SendEmail(ctx *gin.Context) {
 	var params utils.SendEmailParams
@@ -23,6 +26,7 @@ func SendEmail(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"body": params,
+		"email": myEmail,
+		"body":  params,
 	})
 }
