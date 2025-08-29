@@ -42,7 +42,7 @@ func SendEmail(params SendEmailParams) error {
 	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
 	if err := dialer.DialAndSend(message); err != nil {
-		return err
+		return fmt.Errorf("error to send message: %v", err)
 	}
 
 	return nil
