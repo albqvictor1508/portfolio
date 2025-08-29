@@ -38,7 +38,7 @@ func SendEmail(params SendEmailParams) error {
 	message.SetHeader("Subject", params.Subject)
 	message.SetBody("text/plain", params.Content)
 
-	dialer := gomail.NewDialer("smtp.gmail.com", 567, myEmail, myPassword)
+	dialer := gomail.NewDialer("smtp.gmail.com", 587, myEmail, myPassword)
 	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
 	if err := dialer.DialAndSend(message); err != nil {
