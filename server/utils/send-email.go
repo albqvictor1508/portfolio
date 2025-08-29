@@ -22,6 +22,8 @@ var (
 func SendEmail(params SendEmailParams) error {
 	message := gomail.NewMessage()
 
+	fmt.Print(params)
+
 	if params.Subject == "" {
 		params.Subject = "By Portfolio"
 	}
@@ -31,7 +33,7 @@ func SendEmail(params SendEmailParams) error {
 	}
 
 	message.SetHeader("From", myEmail)
-	// message.SetHeader("Reply-To", params.ReplyTo)
+	message.SetHeader("Reply-To", params.ReplyTo)
 	message.SetHeader("To", myEmail)
 	message.SetHeader("Subject", params.Subject)
 	message.SetBody("text/plain", params.Content)
