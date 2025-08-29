@@ -7,9 +7,9 @@ import (
 )
 
 type SendEmailParams struct {
-	From    string  `json:"user_email"`
-	Subject *string `json:"subject"`
-	Content string  `json:"content"`
+	ReplyTo string `json:"reply_to"`
+	Subject string `json:"subject"`
+	Content string `json:"content"`
 }
 
 var (
@@ -20,9 +20,14 @@ var (
 func SendEmail(params SendEmailParams) error {
 	message := gomail.NewMessage()
 
-	message.SetHeader("From", params.From)
+	if params.Subject == "" {
+		params.Subject = "By Portfolio"
+	}
+
+	message.SetHeader("From", myEmail)
+	message.SetHeader("Reply-to", params.ReplyTo)
 	message.SetHeader("To", myEmail)
-	message.SetHeader("Subject", *params.Subject)
+	message.SetHeader("Subject", params.Subject)
 	message.SetBody("text/plain", params.Content)
 
 	dialer := gomail.NewDialer("smtp.gmail.com", 587, myEmail, myPassword)
