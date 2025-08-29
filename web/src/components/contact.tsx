@@ -6,6 +6,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea.tsx";
 
+console.log("s");
+
 const contactFormSchema = z.object({
 	name: z.string().min(1, "Name is required."),
 	email: z.email("Invalid email address."),
