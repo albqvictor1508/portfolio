@@ -25,7 +25,7 @@ func SendEmail(params SendEmailParams) error {
 	}
 
 	message.SetHeader("From", myEmail)
-	message.SetHeader("Reply-To", params.ReplyTo)
+	// message.SetHeader("Reply-To", params.ReplyTo)
 	message.SetHeader("To", myEmail)
 	message.SetHeader("Subject", params.Subject)
 	message.SetBody("text/plain", params.Content)
