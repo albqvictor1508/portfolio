@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"crypto/tls"
 	"fmt"
 	"os"
 
@@ -36,6 +37,7 @@ func SendEmail(params SendEmailParams) error {
 	message.SetBody("text/plain", params.Content)
 
 	dialer := gomail.NewDialer("smtp.gmail.com", 567, myEmail, myPassword)
+	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
 	if err := dialer.DialAndSend(message); err != nil {
 		return err
