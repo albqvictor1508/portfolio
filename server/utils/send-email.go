@@ -31,7 +31,7 @@ func SendEmail(params SendEmailParams) error {
 	}
 
 	message.SetHeader("From", myEmail)
-	message.SetHeader("Reply-To", "netlinksape@gmail.com")
+	// message.SetHeader("Reply-To", "netlinksape@gmail.com")
 	message.SetHeader("To", myEmail)
 	message.SetHeader("Subject", "salve salve teste")
 	message.SetBody("text/plain", "testando com body hardcoded")
