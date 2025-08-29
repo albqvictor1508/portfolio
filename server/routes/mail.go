@@ -19,6 +19,7 @@ func SendEmail(ctx *gin.Context) {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": fmt.Sprintf("ERROR ON SEND EMAIL: %v", err),
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
