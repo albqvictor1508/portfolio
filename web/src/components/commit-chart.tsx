@@ -33,7 +33,7 @@ export const CommitChart = () => {
 				const today = new Date();
 				const sinceDate = new Date(today);
 				sinceDate.setDate(today.getDate() - 89);
-				const formattedSinceDate = sinceDate.toISOString().split("T")[0]; // YYYY-MM-DD
+				const formattedSinceDate = sinceDate.toISOString().split("T")[0];
 
 				const response = await fetch(
 					`${import.meta.env.VITE_API_BASE_URL}/commits?since=${formattedSinceDate}`,
@@ -43,8 +43,8 @@ export const CommitChart = () => {
 				const last90DaysData: ChartData[] = [];
 				for (let i = 0; i < 90; i++) {
 					const date = new Date(today);
-					date.setDate(today.getDate() - (89 - i)); // Iterate from 89 days ago to today
-					const isoDate = date.toISOString().split("T")[0]; // YYYY-MM-DD for lookup
+					date.setDate(today.getDate() - (89 - i));
+					const isoDate = date.toISOString().split("T")[0];
 					last90DaysData.push({
 						date: date.toLocaleDateString("en-US", {
 							month: "short",

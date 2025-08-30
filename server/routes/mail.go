@@ -9,9 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var myEmail = os.Getenv("MY_EMAIL")
-
 func SendEmail(ctx *gin.Context) {
+	myEmail := os.Getenv("MY_EMAIL")
 	var params utils.SendEmailParams
 	if err := ctx.ShouldBindJSON(&params); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
