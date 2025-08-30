@@ -1,7 +1,0 @@
-### Get Projects
-GET http://localhost:3333/projects
-HTTP/1.1 200 OK
-
-# @_RES (formatted)
-{"projects":[{"id":7,"name":"plush api","description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee","github_url":"https://github.com/albqvictor1508/plush-api","demo_url":"","is_pinned":true,"category_id":5,"created_at":"2025-07-29T20:21:38.214416-03:00","updated_at":"2025-07-29T20:21:38.214416-03:00"},{"id":6,"name":"zentto chatbot","description":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset shee","github_url":"https://github.com/albqvictor1508/plush-api","demo_url":"","is_pinned":true,"created_at":"2025-07-29T20:20:49.16839-03:00","updated_at":"2025-07-29T20:20:49.16839-03:00"}]}
-# @_END
