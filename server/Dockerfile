@@ -21,6 +21,6 @@ COPY start.sh /app/start.sh
 
 RUN chmod +x /app/start.sh
 
-EXPOSE 3333
+EXPOSE 3303
 
 ENTRYPOINT ["/app/start.sh"]

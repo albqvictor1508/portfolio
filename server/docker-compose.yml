@@ -13,7 +13,7 @@ services:
   api:
     build: .
     ports:
-      - "3333:8000"
+      - "3303:8001"
     environment:
       - DATABASE_URL=postgres://albqvxc:lexsa@pg:5432/portfolio?sslmode=disable
     depends_on:
