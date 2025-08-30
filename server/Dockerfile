@@ -9,9 +9,7 @@ RUN go build -o portfolio ./cmd/api
 
 FROM alpine:3.20
 
-COPY --from=builder /app/server /app/server
-COPY --from=builder /app/migrations /app/migrations
-COPY --from=builder /go/bin/goose /app/goose
+COPY --from=builder /src/portfolio /src/portfolio
 
 EXPOSE 3303
 
