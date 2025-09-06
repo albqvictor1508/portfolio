@@ -3,15 +3,14 @@ package routes
 import (
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/albqvictor1508/portfolio/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func SendEmail(ctx *gin.Context) {
-	myEmail := os.Getenv("MY_EMAIL")
 	var params utils.SendEmailParams
+
 	if err := ctx.ShouldBindJSON(&params); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request body"})
 		return
@@ -25,7 +24,6 @@ func SendEmail(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"email": myEmail,
-		"body":  params,
+		"body": params,
 	})
 }
