@@ -26,7 +26,7 @@ func SendEmail(params SendEmailParams) error {
 	message := gomail.NewMessage()
 
 	if params.Subject == "" {
-		params.Subject = "By Portfolio"
+		params.Subject = fmt.Sprintf("%s - By Portfolio", params.From)
 	}
 
 	conn, err := net.DialTimeout("tcp", "smtp.gmail.com:465", 5*time.Second)
@@ -42,7 +42,6 @@ func SendEmail(params SendEmailParams) error {
 	message.SetHeader("To", myEmail)
 	message.SetHeader("Subject", params.Subject)
 	message.SetHeader("Reply-To", params.From)
-	message.SetBody("text/plain", params.Content)
 	message.SetBody("text/plain", fmt.Sprintf(
 		"Mensagem de:  %s\n\n%s",
 		params.From, params.Content,
